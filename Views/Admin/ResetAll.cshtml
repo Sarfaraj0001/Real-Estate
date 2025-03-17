@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "ResetAll";
+}
+
+<div class="page-content">
+
+                <div class="container">
+                    <div class="page-toolbar">
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Reset All Password</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                        
+                        <div class="page-toolbar-block pull-right">
+                            
+                        </div>           
+                        
+                    </div>
+
+                    @using(Html.BeginForm())
+                    {
+  <div class="row" style="width:100%">
+                        <div class="col-md-6" style="width:100%">
+                            
+                            <div class="block" style="width:100%">
+                                 <div class="block-content controls">
+                                      <div class="row-form">
+                                 <div class="col-md-9">
+        <div class="input-group">
+      
+
+    <button type="submit" class="btn btn-primary"><i class="fa fa-cog"></i> Reset Password</button>
+
+        </div>
+
+
+                                   
+   </div>
+
+                                          <div style="margin-left:10px;color:maroon;">&nbsp;@ViewBag.msg</div>   
+
+                                          </div>
+      <div class="row-form">  
+                                         
+   
+      </div> 
+                                       <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+                                                          
+                               
+                               
+                            </div>
+                        </div>
+                                   
+                                                                      
+                                                            
+                                    
+                                    
+                                </div>
+                                
+                            </div>
+                            </div>
+                          </div>    
+                    }
+                     
+                    </div>
+    </div>

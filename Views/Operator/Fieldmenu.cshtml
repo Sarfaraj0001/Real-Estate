@@ -1,0 +1,125 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var br = db.Operators.Single(b => b.OperatorId == User.Identity.Name);
+    var mr = db.Members.Single(m => m.Id == 1);
+ 
+    var plan1 = db.Plans.Single(p1 => p1.Plancode == 1);
+    var plan2 = db.Plans.Single(p2 => p2.Plancode == 2);
+    var plan3 = db.Plans.Single(p3 => p3.Plancode == 3);
+    var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
+    
+    var f1 = db.VFormatTabs.Single(f => f.Id == 1);
+    var f2 = db.VFormatTabs.Single(f => f.Id == 2);
+    var f3 = db.VFormatTabs.Single(f => f.Id == 3);
+
+    Layout = "~/Views/Shared/_OperatorLayout.cshtml";
+    ViewBag.Title = "Fieldmenu";
+}
+
+<div class="page-content">
+
+    <div class="container">
+
+        <div class="page-toolbar">
+
+            <div class="page-toolbar-block">
+                <div class="page-toolbar-title">Welcome @br.OperatorId</div>
+                <div class="page-toolbar-subtitle"></div>
+            </div>
+
+
+
+        </div>
+
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <i class="icon-list-alt"></i>
+                <h3>Field Reports</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+
+                <div class="shortcuts">
+                    <a href="~/Operator/Broker" class="shortcut">
+                        <img alt="" src="~/Images/icon/7.png" />
+                        <span class="shortcut-label">@mr.agentname List</span><br />
+                    </a>
+
+                    <a href="~/Operator/DatewiseBroker" class="shortcut">
+                        <img alt="" src="~/Images/icon/63.png" />
+                        <span class="shortcut-label">Datewise @mr.agentname List</span>
+                    </a>
+
+                    <a href="~/Operator/BrokerChain" class="shortcut">
+                        <img alt="" src="~/Images/icon/52.png" />
+                        <span class="shortcut-label">@mr.agentname Chain</span><br />
+                    </a>
+
+                    <a href="~/Operator/BrokerPaymentDetail" class="shortcut">
+                        <img alt="" src="~/Images/icon/20.png" />
+                        <span class="shortcut-label">@mr.agentname Payment Details</span>
+                    </a>
+                    <a href="~/Operator/Selfbusiness" class="shortcut">
+								<img alt="" src="~/Images/icon/33.png" />
+							<span class="shortcut-label">@mr.agentname Business Details</span>
+						</a>
+                    <a href="~/Operator/BrokerAccount" class="shortcut">
+                        <img alt="" src="~/Images/icon/33.png" />
+                        <span class="shortcut-label">@mr.agentname Account Details</span>
+                    </a>
+
+                    @*  <a href="~/Operator/AllSavingaccount" class="shortcut">
+							<img alt="" src="~/Images/icon/icon_taxfree.png" />
+							<span class="shortcut-label">Saving A/c List</span><br/>
+						</a>
+
+                         <a href="~/Operator/Datewisesaving" class="shortcut">
+							<img alt="" src="~/Images/icon/icon_taxfree.png" />
+							<span class="shortcut-label"> Datewise Saving A/c List</span>
+						</a>*@
+
+
+
+                    <a href="~/Operator/BrokerwiseAccountDetail" class="shortcut">
+                        <img alt="" src="~/Images/icon/16.png" />
+                        <span class="shortcut-label">Datewise @mr.agentname Account Details</span>
+                    </a>
+
+                    <a href="~/Operator/BrokerSelfCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/11.png" />
+                        <span class="shortcut-label">@mr.agentname Self Collection</span>
+                    </a>
+                   @* <a href="~/Operator/QuotaCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/quota_icon.gif" />
+                        <span class="shortcut-label">@mr.agentname Quota Collection</span>
+                    </a>*@
+                    <a href="~/Operator/BrokerChainCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/37.png" />
+                        <span class="shortcut-label">@mr.agentname Chain Collection</span>
+                    </a>
+
+                    <a href="~/Operator/BrokerSelfDueCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/28.png" />
+                        <span class="shortcut-label">@mr.agentname Self Due Collection</span>
+                    </a>
+                    <a href="~/Operator/BrokerChainDueCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/52.png" />
+                        <span class="shortcut-label">@mr.agentname Chain Due Collection</span>
+                    </a>
+
+
+
+
+                </div>
+                <!-- /shortcuts -->
+
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+    </div>
+
+</div>

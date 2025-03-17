@@ -1,0 +1,169 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var br = db.CompanyInfos.Single(b => b.AdminId == User.Identity.Name);
+    var logo = string.Empty;
+    var companyname = string.Empty;
+    var incometype = string.Empty;
+    var mr = db.Members.Single(m => m.Id == 1);
+    var r = db.CompanyInfos.Single(ci => ci.AdminId == User.Identity.Name);
+
+    logo = r.CompanyLogo;
+    companyname = r.CompanyName;
+    incometype = r.IncomeType;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "BranchReport";
+}
+
+<div class="page-content">
+      
+                <div class="container" style="width:775px; padding-left:0px;padding-right:0px;">
+                  
+<div class="page-toolbar" style="width:770px;">
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title"></div>
+                         
+                            
+                            <h4><b>Welcome, @br.CompanyName</b></h4>
+                        </div>
+                               <div style="margin-top:0px;float:right;margin-right:10px;">
+                            
+                        </div>    
+                      
+                    </div> 
+
+                    
+
+                     <div class="widget stacked">
+					
+				<div class="widget-header">
+					<i class="icon-list-alt"></i>
+					<h3>Field Reports</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">
+					
+					<div class="shortcuts">
+                        <a href="~/Admin/BrokerlistBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/7.png" />
+							<span class="shortcut-label">@mr.agentname List</span><br/>
+						</a>
+
+                         <a href="~/Admin/DatewiseBrokerBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/63.png" />
+							<span class="shortcut-label">Datewise @mr.agentname List</span>
+						</a>
+
+						
+                    </div> <!-- /shortcuts -->	
+				
+				</div> <!-- /widget-content -->
+				
+			</div>
+
+                                 <div class="widget stacked">
+					
+				<div class="widget-header">
+					<i class="icon-list-alt"></i>
+					<h3>Official Reports</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">
+					
+					<div class="shortcuts">
+                     	
+						
+						<a href="~/Admin/OperatorListBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/21.png" />
+							<span class="shortcut-label">Collection Point List</span>
+						</a>
+						
+						<a href="~/Admin/CustomerReportBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/26.png" />
+							<span class="shortcut-label">Customer List</span>	<br/>
+						</a>
+					      
+
+                      @*  <a href="~/Admin/BranchAllSavingaccount" class="shortcut">
+							<img alt="" src="~/Images/icon/icon_taxfree.png" />
+							<span class="shortcut-label">Saving A/c List</span><br/>
+						</a>
+
+                         <a href="~/Admin/BrnachDatewisesavingCollection" class="shortcut">
+							<img alt="" src="~/Images/icon/icon_taxfree.png" />
+							<span class="shortcut-label"> Datewise Saving A/c Collection</span>
+						</a>*@
+
+						<a href="~/Admin/DailyExpenseBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/76.png" />
+							<span class="shortcut-label">Daily Expense Details</span>
+						</a>
+                        <a href="~/Admin/ClosingBalanceBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/11.png" />
+							<span class="shortcut-label">RP Statement Report</span>	
+						</a>
+                        @* <a href="~/Admin/BranchCashReport" class="shortcut">
+							<img alt="" src="~/Images/icon/11.png" />
+							<span class="shortcut-label">Remaining Cash Report</span>
+						</a>*@
+						<a href="~/Admin/DailyCollectionBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/11.png" />
+							<span class="shortcut-label">Daily Collection</span><br/>
+						</a>
+
+                          <a href="~/Admin/DuplicatePrintReportBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/74.png" />
+							<span class="shortcut-label">Duplicate Print</span><br/>	
+						</a>
+                              
+                             <a href="~/Admin/CancelReceiptBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/75.png" />
+							<span class="shortcut-label">Cancel Receipt List</span>
+						</a>
+						
+						<a href="~/Admin/DateWiseCollectionBranch" class="shortcut">
+								<img alt="" src="~/Images/icon/74.png" />
+							<span class="shortcut-label">Datewise Business</span>
+					</a>
+                        <a href="~/Admin/CompleteDailyCollectionBranch" class="shortcut">
+								<img alt="" src="~/Images/icon/74.png" />
+							<span class="shortcut-label">Datewise Collection Detail</span>
+					</a>
+                        
+                        <a href="~/Admin/CsswiseCollectionBranch" class="shortcut">
+								<img alt="" src="~/Images/icon/21.png" />
+							<span class="shortcut-label">Csswise Business</span>
+						</a>
+
+						<a href="~/Admin/FundMobilisationBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/5.png" />
+							<span class="shortcut-label">Fund Mobilisation</span>
+						</a>
+						
+						<a href="MaturityPaidDetailsBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/27.png" />
+							<span class="shortcut-label">Maturity Paid Details</span>
+						</a>
+
+                        	 <a href="~/Admin/PaidVoucherBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/36.png" />
+							<span class="shortcut-label">Paid Voucher</span><br/>
+						</a>
+
+                        <a href="~/Admin/UnpaidvoucherBranch" class="shortcut">
+							<img alt="" src="~/Images/icon/65.png" />
+							<span class="shortcut-label">UnPaid Voucher</span><br/>
+						</a>
+						
+						
+
+					</div> <!-- /shortcuts -->	
+				
+				</div> <!-- /widget-content -->
+				
+			</div>
+
+                      </div>    
+                      
+                    </div> 

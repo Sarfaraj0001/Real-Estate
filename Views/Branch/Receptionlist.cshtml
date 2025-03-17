@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.DailyVisitor>
+
+    @{
+        ViewBag.Title = "Receptionlist";
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+    }
+    <div class="container-fluid mt-4 FormContainer">
+        <form method="post" action="../Branch/Receptionlist" enctype="multipart/form-data">
+            <table class="bg-white">
+                <thead>
+                    <tr>
+                        <th colspan="9" class="header-row border-0" style="border-radius: 8px 8px 0 0;">Receptionist List</th>
+                    </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>@Html.DisplayNameFor(model => model.EmailId)</th>
+                        <th>@Html.DisplayNameFor(model => model.Address)</th>
+                        <th>Register Date</th>
+                        @*<th>@Html.DisplayNameFor(model => model.CreaderBy)</th>*@
+                        <th>BranchCode</th>
+                        @*<th>@Html.DisplayNameFor(model => model.UserName)</th>*@
+                        <th>@Html.DisplayNameFor(model => model.Password)</th>
+                        @*<th>@Html.DisplayNameFor(model => model.Status)</th>*@
+                        @*<th></th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ReceptionistId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ReceptionistName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.MobileNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.EmailId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            @*<td>@Html.DisplayFor(modelItem => item.CreaderBy)</td>*@
+                            <td>@Html.DisplayFor(modelItem => item.OfficeCode)</td>
+                            @*<td>@Html.DisplayFor(modelItem => item.UserName)</td>*@
+                            <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                            @*<td>@Html.DisplayFor(modelItem => item.Status)</td>*@
+                            @*<td>
+                                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                           </td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+    </div>
+    @*<p>@Html.ActionLink("Create New", "Create")</p>*@
+    

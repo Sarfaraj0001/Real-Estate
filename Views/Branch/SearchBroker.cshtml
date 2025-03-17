@@ -1,0 +1,344 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.AgentDetail>
+@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var mr = db.Members.Single(m => m.Id == 1); 
+    Layout = "~/Views/Shared/_BranchLayout.cshtml";
+    ViewBag.Title = "SearchBroker";
+}
+
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#NewAgentId").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Admin/AutoCompleteAgentid",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.NewAgentId };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+
+<div class="container-fluid mt-4 FormContainer">
+    <h2 class="text-center mb-4">Search @mr.agentname</h2>
+
+    <!-- Search Form -->
+    <div method="post" class="border p-4 rounded shadow formtag">
+        @using (@Html.BeginForm())
+        {
+            <div class="mb-3 controls">
+                <label for="memberid" class="form-label formLabel">Enter Member Id:</label>
+                <input type="text" id="NewAgentId" class="form-control formInput" required name="NewAgentId" placeholder="Enter Member Id">
+            </div>
+            <div class="text-center d-grid gap-2">
+                <button id="submit" name="command" value="Search" class="btn btn-lg formButtom" type="submit"><i class="fa fa-search"></i>Search</button>
+            </div>
+        }
+    </div>
+    <div enctype="multipart/form-data" method="post" id="_submit" class="mt-3">
+        @using (Html.BeginForm())
+        {
+            foreach (var item in Model)
+            {
+                <div class="row justify-content-between ml-0" style="width:100%;">
+
+                    <!-- Personal Details -->
+                    <div class="column mb-4" style="width:49%;">
+                        <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                            <h4 class="text-center mb-1">Personal Details</h4>
+                            <!-- Branch Code -->
+                            <div class="mb-3">
+                                <label for="BranchCode" class="form-label formLabel">@mr.agentname Id:</label>
+                                <input type="text" class="form-control formInput" id="Broker" required name="formfee" style="color:#2f9fe0;" value="@item.NewAgentId" readonly="true" />
+                            </div>
+                            <!-- Form Fee -->
+                            <div class="mb-3">
+                                <label for="formfee" class="form-label formLabel">@mr.branchname Code:</label>
+                                <input type="text" class="form-control formInput" id="BranchCode" value="@item.BranchCode" name="BranchCode" readonly="true" />
+                                <input type="hidden" value="@item.NewAgentId" name="brokerid" id="brokerid">
+                            </div>
+                            <!-- Member Id -->
+                            <div class="mb-3">
+                                <label for="newmemberid" class="form-label formLabel">Form Fee: </label>
+                                <input type="text" class="form-control formInput" id="formfee" required name="formfee" value="@item.formfee" readonly="true" />
+                            </div>
+                            <!-- Name -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label formLabel">Name:</label>
+                                <input type="text" class="form-control formInput" id="name" required name="name" value="@item.name" readonly="true" />
+                            </div>
+                            <!-- Father's Name -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label formLabel">Father/Husband's Name:</label>
+                                <input type="text" class="form-control formInput" required name="Father" id="Father" value="@item.Father" readonly="true" />
+                            </div>
+                            <!-- Mother's Name -->
+                            <div class="mb-3">
+                                <label for="Mother" class="form-label formLabel">Mother's Name:</label>
+                                <input type="text" class="form-control formInput" id="Mother" name="Mother" value="@item.Mother" readonly="true" />
+                            </div>
+                            <!-- Father's Name -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label formLabel">Mobile No:</label>
+                                <input type='tel' title="Invalid mobile format" pattern="[789][0-9]{9}" maxlength="10" name="Mobile" id="Mobile" required class="form-control formInput" value="@item.Mobile" readonly="true" />
+                            </div>
+                            <!-- Introducer Code -->
+                            <div class="mb-3">
+                                <label for="NewIntroducerId" class="form-label formLabel">Introducer Code:</label>
+                                <input type="text" class="form-control formInput" required onmouseover="check(this.id)" id="NewIntroducerId" name="NewIntroducerId" value="@item.NewIntroducerId" readonly="true" />
+                            </div>
+                            <!-- Nationality -->
+                            <div class="mb-3 position-relative">
+                                <label for="Nationality" class="form-label formLabel">Introducer Name:</label>
+                                <input type="text" class="form-control formInput" required id="IntroName" name="IntroName" value="@item.IntroName" readonly="true" />
+                            </div>
+                            <!-- DOB -->
+                            <div class="mb-3">
+                                <label for="Dob" class="form-label formLabel">Nationality:</label>
+                                <input type="text" class="form-control formInput" id="Nationality" name="Nationality" readonly="readonly" value="@item.Nationality" />
+                            </div>
+                            <!-- Date of joining -->
+                            <div class="mb-3">
+                                <label for="Dob" class="form-label formLabel">Date Of Joining:</label>
+                                <input type="date" name="Doj" id="date" required class="form-control formInput" value="@item.Doj" readonly="true" />
+                            </div>
+                            <!-- Designation -->
+                            <div class="mb-3">
+                                <label for="Dob" class="form-label formLabel">DOB:</label>
+                                <input type="date" id="Dob" name="Dob" required class="form-control formInput" value="@item.Dob" readonly="true">
+                            </div>
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Gender:</label>
+                                <input type="text" id="Dob1" name="Dob" required class="form-control formInput" value="@item.Gender" readonly="true">
+                            </div>
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">@mr.rankname To be alloted:</label>
+                                <input type="text" id="Rank" required name="RankCode" class="form-control formInput" value="@item.RankCode" readonly="true" />
+                            </div>
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Blood Group:</label>
+                                <input type="text" id="Rank1" required name="RankCode" class="form-control formInput" value="@item.BloodGroup" readonly="true" />
+                            </div>
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Occupation:</label>
+                                <input type="text" id="Occupation" name="Occupation" class="form-control formInput" value="@item.Occupation" readonly="true" />
+                            </div>
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Qualification:</label>
+                                <input type="text" id="Rank2" required name="RankCode" class="form-control formInput" value="@item.Qualification" readonly="true" />
+                            </div>
+                        </div>
+                        <!-- Bank Details -->
+                        <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                            <h4 class="text-center mb-1">Bank & Other Details</h4>
+                            <!-- Address -->
+                            <div class="mb-3">
+                                <label for="Address" class="form-label formLabel">PAN No:</label>
+                                <input type="text" id="Panno" name="Panno" class="form-control formInput" value="@item.Panno" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">Passport Number:</label>
+                                <input type="text" id="Passportno" name="Passportno" class="form-control formInput" value="@item.Passportno" readonly="true" />
+                            </div>
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="District" class="form-label formLabel">Driving Licence No:</label>
+                                <input type="text" id="Drivinglno" name="Drivinglno" class="form-control formInput" value="@item.Drivinglno" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">I-Card Number:</label>
+                                <input type="text" id="Icardno" name="Icardno" class="form-control formInput" value="@item.Icardno" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Issue On:</label>
+                                <input type="date" id="Issueon" required name="Issueon" class="form-control formInput" value="@item.Issueon" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Valid Upto:</label>
+                                <input type="date" id="Validupto" required name="Validupto" class="form-control formInput" value="@item.Validupto" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Bank Name:</label>
+                                <input type="text" name="BankName" id="BankName" class="form-control formInput" value="@item.BankName" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Bank Code:</label>
+                                <input type="text" id="BankCode" name="BankCode" class="form-control formInput" value="@item.BankCode" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Account Number:</label>
+                                <input type="number" id="BankAccountno" name="BankAccountno" class="form-control formInput" value="@item.BankAccountno" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">IFSC Code:</label>
+                                <input type="text" id="IFCCode" name="IFCCode" class="form-control formInput" value="@item.IFCCode" readonly="true" />
+                            </div>
+                            <!-- Landline No -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Bank Address:</label>
+                                <textarea type="text" id="BankAddress" name="BankAddress" class="form-control formInput" value="" readonly="true">@item.BankAddress</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- second column -->
+                    <!-- Address and Nominee Details -->
+                    <div class="column mb-4" style="width:49%;">
+                        <!-- Guardian Details -->
+                        <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                            <h4 class="text-center mb-1">Upload Photo</h4>
+                            <!-- Address -->
+                            <div class="mb-3">
+                                @if (item.Photo == null)
+                                {
+                                    <img alt="" src="~/Photo/default.jpg" style="height:200px;width:150px; margin-bottom:10px;" />
+                                }
+                                else
+                                {
+                                    <img alt="" src="@Url.Content(item.Photo)" style="height:200px;width:150px;  margin-bottom:10px;" />
+                                }
+                            </div>
+                        </div>
+                        <!-- Guardian Details -->
+                        <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                            <h4 class="text-center mb-1">Address Details</h4>
+                            <!-- Address -->
+                            <div class="mb-3">
+                                <label for="Address" class="form-label formLabel">Address:</label>
+                                <textarea type="text" id="Address" value="" name="Address" required class="form-control formInput" readonly="true">@item.Address</textarea>
+                            </div>
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="District" class="form-label formLabel">District:</label>
+                                <input type="text" name="District" required class="form-control formInput" value="@item.District" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">State:</label>
+                                <input type="text" id="State" name="State" required class="form-control formInput" value="@item.State" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">Pin Code:</label>
+                                <input type="number" name="PinCode" class="form-control formInput" value="@item.PinCode" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">Land Line No:</label>
+                                <input type="number" id="Landlineno" name="Landlineno" class="form-control formInput" value="@item.Landlineno" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">Email:</label>
+                                <input type="email" id="Email" name="Email" class="form-control formInput" value="@item.Email" readonly="true" />
+                            </div>
+                        </div>
+                        <!-- Nominee Details -->
+                        <div class="p-4 rounded formtag mb-4" id="nomineeDiv" style="height: max-content;">
+                            <h4 class="text-center mb-1">Nominee Details</h4>
+                            <!-- Nominee name -->
+                            <div class="mb-3">
+                                <label for="Address" class="form-label formLabel">Nominee Name:</label>
+                                <input type="text" id="NomineeName" name="NomineeName" required class="form-control formInput" value="@item.NomineeName" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">Nominee Age:</label>
+                                <input type="text" id="NomineeAge" name="NomineeAge" required class="form-control formInput" value="@item.NomineeAge" readonly="true" />
+                            </div>
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="District" class="form-label formLabel">Relationship:</label>
+                                <input type="text" id="nomrel" name="Relationship" required class="form-control formInput" value="@item.Relationship" readonly="true" />
+                            </div>
+                            <!-- Pin Code -->
+                            <div class="mb-3">
+                                <label for="PinCode" class="form-label formLabel">Nominee Address:</label>
+                                <textarea type="text" id="NomineeAddress" name="NomineeAddress" required class="form-control formInput" value="@item.Address" readonly="true">@item.Address</textarea>
+                            </div>
+                        </div>
+                        <!-- Payment Details -->
+                        <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                            <h4 class="text-center mb-1">Experience Details</h4>
+                            <!-- Nominee name -->
+                            <div class="mb-3">
+                                <label for="Address" class="form-label formLabel">Name of Organization:</label>
+                                <input type="text" id="Organization" name="Organization" class="form-control formInput" value="@item.Organization" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">Area of Occupation:</label>
+                                <input type="text" id="areaofoccupation" class="form-control formInput" name="areaofoccupation" value="@item.Occupation" readonly="true" />
+                            </div>
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="District" class="form-label formLabel">Approximate No:</label>
+                                <input type="number" class="form-control formInput" id="approximatenoofactive" name="approximatenoofactive" value="@item.approximatenoofactive" readonly="true" />
+                            </div>
+                        </div>
+                        <!-- Payment Details -->
+                        <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                            <h4 class="text-center mb-1">Performance Details</h4>
+                            <!-- Nominee name -->
+                            <div class="mb-3">
+                                <label for="Address" class="form-label formLabel">Experience:</label>
+                                <input type="number" class="form-control formInput" id="Experience" name="approximatenoofactive" value="@item.Experience" readonly="true" />
+                            </div>
+                            <!-- State -->
+                            <div class="mb-3">
+                                <label for="State" class="form-label formLabel">Company Name:</label>
+                                <input type="text" id="Company" name="Company" class="form-control formInput" value="@item.Company" readonly="true" />
+                            </div>
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="District" class="form-label formLabel">Total Exp.(Yr.):</label>
+                                <input type="number" id="Yoe" name="Yoe" class="form-control formInput" value="@item.Yoe" readonly="true" />
+                            </div>
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="District" class="form-label formLabel">Contact Number:</label>
+                                <input type='tel' title="Invalid mobile format" pattern="[789][0-9]{9}" maxlength="10" id="Mobileno" name="Mobileno" class="form-control formInput" value="@item.Mobileno" readonly="true" />
+                            </div>
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="District" class="form-label formLabel">Company Address:</label>
+                                <textarea type="text" id="cmpnyaddress" name="cmpnyaddress" class="form-control formInput" value="" readonly="true">@item.cmpnyaddress</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-0">
+                    <button type="submit" name="command" value="PDF" class="btn btn-lg formButtom" onclick="target='_blank'">Download PDF</button>
+                </div>
+                <p>@ViewBag.msg</p>
+            }
+
+        }
+    </div>
+</div>

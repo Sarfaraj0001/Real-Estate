@@ -1,0 +1,195 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.temp_empatten>
+@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "display_attendance";
+    Layout = "~/Views/Shared/_HRLayout.cshtml";
+    UsersContext db = new UsersContext();
+    var a = 0;
+    var gender = "";
+   DateTime firstofmonth =Convert.ToDateTime(ViewData["sdate"]);
+   DateTime lastofmonth = Convert.ToDateTime(ViewData["edate"]);
+   String atten = Convert.ToString(ViewData["idd"]);
+   Int32 status = Convert.ToInt32(ViewData["ad"]);
+}
+<script>
+    function showatten(_empid) {
+        var firstmonth = $("#firstofmonth").val();
+        var lastmonth = $("#lastofmonth").val();
+        $("#mytable tbody").empty();
+        $.ajax({
+            url: "/HR/getemployeelist",
+            type: "POST",
+            dataType: "json",
+            data: { empid: _empid, sdate: firstmonth, edate: lastmonth },
+            success: function (d) {
+                debugger;
+                for (var i = 0; i <= d.length; i++) {
+                    var date = new Date(parseInt(d[i].Attendencedate.replace("/Date(", "").replace(")/", ""), 10));
+                    var day = ('0' + date.getDate()).slice(-2);
+                    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                    var parsedDate = (day) + "/" + (month) + "/" + date.getFullYear();
+
+                    $("#mytable tbody").append('<tr><td>' + d[i].empid + '</td><td>' + d[i].name + '</td><td>' + d[i].timingfrom + '</td><td>' + d[i].timingto + '</td><td>' + d[i].atten + '</td><td>' + parsedDate + '</td></tr>')
+                }
+
+            }
+        })
+    }
+</script>
+
+<div class="page-content">
+
+    <div class="container">
+
+        <div class="page-toolbar">
+
+            <div class="page-toolbar-block">
+                <div class="page-toolbar-title">Monthly Attendence Details</div>
+                <div class="page-toolbar-subtitle"></div>
+            </div>
+
+
+
+        </div>
+        <input type="hidden" value="@firstofmonth" id="firstofmonth" />
+        <input type="hidden" value="@lastofmonth" id="lastofmonth" />
+
+        @using (Html.BeginForm("display_attendance", "HR", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+    
+                        
+            <div class="row">
+                <div class="col-md-6" style="width: 100%">
+
+                    <div class="block">
+
+                        <div class="block-content controls">
+                            <div class="row-form">
+
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <label class="width">Select Month</label></span>
+                                       @* <input type="date" id="intro" required name="sdate" value="" class="form-control">*@
+                                        <select name="month" class="form-control">
+                                            <option value="" selected>Select Month</option>
+                                            <option value="1">Jan</option>
+                                            <option value="2">Feb</option>
+                                            <option value="3">Mar</option>
+                                            <option value="4">Apr</option>
+                                            <option value="5">May</option>
+                                            <option value="6">Jun</option>
+                                            <option value="7">Jul</option>
+                                            <option value="8">Aug</option>
+                                            <option value="9">Sep</option>
+                                            <option value="10">Oct</option>
+                                            <option value="11">Noc</option>
+                                            <option value="12">Dec</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <label class="width">Select Year</label></span>
+                                       @* <input type="date" id="intro" required name="sdate" value="" class="form-control">*@
+                                        <select name="year" class="form-control">
+                                            <option value="" selected>Select Year</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" name="command" class="btn btn-info" value="search">Search</button>
+                                </div>
+
+                            </div>
+                        
+
+                            @if (Model!=null)
+                            {
+                           
+                                    
+                                <div class="row-form">
+                                    <div class="col-md-9">
+                                        <table class="table table-responsive">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>Employee Id</th>
+                                                    <th>Employee Name</th>
+                                                    <th>View Attendance</th>
+                                                    <th>Remaining_Leaves</th>
+                                                </tr>
+                                            </thead>
+                                             @foreach(var item in Model)
+                            {
+                                var empname = db.Emp_Regs.Single(x => x.empid == item.empid).name;
+                                            <tbody>
+                                                <tr>
+                                                    <td>@item.empid</td>
+                                                    <td>@empname</td>
+                                                    <td><a href="showattendence?empid=@item.empid&firstofmonth=@firstofmonth&lastofmonth=@lastofmonth"><button type="button" class="btn btn-primary" @*data-toggle="modal"*@  @*data-target="#exampleModal"*@ id="@item.empid"  onclick="showatten(this.id)">View Attendence</button></a></td>
+                                                    <td><a href="Totalleave?empid=@item.empid&atten=@atten&status=@status&firstofmonth=@firstofmonth&lastofmonth=@lastofmonth"><button type="button" class="btn btn-primary" @*data-toggle="modal"*@  @*data-target="#exampleModal"*@ id="@item.empid" onclick="showatten(this.id)">Remaining_Leaves</button></a></td>
+                                                </tr>
+                                            </tbody>
+                                             }
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <p>@ViewBag.msg</p>
+                </div>
+
+            </div>
+                        
+                        
+                        
+        }
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="background-color:#115663;color:#fff;">Attendence From : @firstofmonth.ToString("dd/MM/yyyy") - To @lastofmonth.ToString("dd/MM/yyyy")</h5>
+
+      </div>
+      <div class="modal-body">
+       <table class="table table-responsive" id="mytable" style="border:1px solid #1a0404;">
+           <thead style="border:1px solid #1a0404;">
+               
+               <tr>
+                   <th>Employee Id</th>
+                   <th>Employee Name</th>
+                   <th>From</th>
+                   <th>To</th>
+                   <th>Status</th>
+                   <th>Attendence Date</th>
+               </tr>
+           </thead>
+           <tbody style="border:1px solid #1a0404;">
+
+           </tbody>
+       </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      
+      </div>
+    </div>
+  </div>
+</div>

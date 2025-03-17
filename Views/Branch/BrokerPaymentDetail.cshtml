@@ -1,0 +1,138 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.BrokerPayment>
+    @using ODHDEVELOPERS.Models;
+    @{
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "BrokerPaymentDetail";
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        var a = 0;
+        var br = db.Branchtabs.Single(o => o.BranchCode == User.Identity.Name);
+        Double commissiom = 0, TDS = 0, Amount = 0, business = 0;
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#newagent").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Admin/AutoCompleteAgentid",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.name, value: item.NewAgentId };
+                            }))
+
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
+
+
+    <div class="container-fluid mt-4 FormContainer">
+        <h2 class="text-center mb-4">@mr.agentname Payment Details</h2>
+        <div class="border p-4 rounded shadow formtag">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Select @mr.agentname Id:</label>
+                    <input type="text" id="newagent" name="newagentid" class="form-control formInput" placeholder="Select @mr.agentname Id" required>
+                </div>
+
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                    <button class="btn btn-lg formButtom"><i class="fa fa-search"></i>Search</button>
+                </div>
+            }
+        </div>
+        <table class=" mt-3 bg-light">
+            @foreach (var item in Model)
+            {
+                if (a == 0)
+                {
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="header-row border-0" style="border-radius: 8px 0 0 0;">@mr.branchname Name:@br.BranchName</th>
+                            <th colspan="2" class="header-row" style="border-radius: 0px;">@mr.agentname Payment Details</th>
+                            <th colspan="3" class="header-row border-0" style="border-radius: 0 8px 0 0;">@Convert.ToDateTime(DateTime.Now.Date).ToString("dd/MM/yyyy")</th>
+
+                        </tr>
+                        <tr>
+                            <th colspan="4"><b>@mr.agentname Id:@item.newagentid</b></th>
+                            <th colspan="4"> <b>@mr.agentname Name:@item.name</b></th>
+                        </tr>
+                        <tr>
+                            <th><label id="sn"><b>S.N.</b></label></th>
+                            <th><label id="Business"><b>Business</b></label></th>
+                            <th><label id="commission"><b>Commission</b></label></th>
+                            <th><label id="tds"><b>TDS</b></label></th>
+                            <th><label id="netamount"><b>Amount</b></label></th>
+                            <th><label id="month"><b>Month</b></label></th>
+                            <th><label id="Year"><b>Year</b></label></th>
+                            <th><label id="Date"><b>Payment Date</b></label></th>
+                        </tr>
+                    </thead>
+                }
+                a = a + 1;
+                <tbody>
+                    <tr>
+                        <td>@a</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Business)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.commission)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tds)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.netamount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.month)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.year)
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.pdate).ToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                </tbody>
+                commissiom = commissiom + Convert.ToDouble(item.commission);
+                TDS = TDS + Convert.ToDouble(item.tds);
+                Amount = Amount + Convert.ToDouble(item.netamount);
+                business = business + Convert.ToDouble(item.Business);
+            }
+            @if (a > 0)
+            {
+                <tr>
+                    <td><b>Grand Total</b></td>
+                    <td><b>@business</b></td>
+                    <td><b>@commissiom</b></td>
+                    <td><b>@TDS</b></td>
+                    <td><b>@Amount</b></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+        @if (a > 0)
+        {
+            <div class="text-center mt-3">
+                <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintBrokerPaymentReport")" target="_blank">Get Report In PDF</a>
+            </div>
+        }
+
+    </div>
+
+   

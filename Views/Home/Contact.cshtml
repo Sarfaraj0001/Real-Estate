@@ -1,0 +1,184 @@
+﻿
+@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutNew1.cshtml";
+    UsersContext db = new UsersContext();
+    var comp = db.commission_tabs.Where(x => x.Id == 1).ToList();
+    var countachive = db.Acheviers.Where(x => x.status == 1).Count();
+    var ban_img = db.banner_tabs.Where(x => x.status == 1).ToList();
+}
+
+
+
+
+
+
+<div class="ttm-page-title-row">
+    <div class="ttm-page-title-row-inner">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="page-title-heading">
+                        <h2 class="title">Contact Us</h2>
+                    </div>
+                    <div class="breadcrumb-wrapper">
+                        <div class="container">
+                            <div class="breadcrumb-wrapper-inner">
+                                <span>
+                                    <a title="" href="index-2.html" class="home"><i class="themifyicon ti-home"></i>&nbsp;&nbsp;Home</a>
+                                </span>
+                                <span class="ttm-bread-sep">&nbsp; / &nbsp;</span>
+                                <span>Contact Us</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--site-main start-->
+<div class="site-main">
+
+
+    <section class="ttm-row pt-85 res-991-pt-45 pb-0 res-991-pb-0 clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!--featured-icon-box-->
+                    <div class="featured-icon-box icon-align-top-content style7">
+                        <div class="featured-inner">
+                            <div class="featured-icon">
+                                <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md ttm-icon_element-style-square">
+                                    <i class="flaticon flaticon-call-1"></i>
+                                </div>
+                            </div>
+                            <div class="featured-content">
+                                <div class="featured-title">
+                                    <h3>Phone Number</h3>
+                                </div>
+                                <div class="featured-desc" style="margin-left: 122px">
+                                    <p><a href="tel:7081617501">+91-7081617501</a></p>
+                                    <p><a href="tel:7985447117">+91-7985447117</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-icon-box end-->
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!--featured-icon-box-->
+                    <div class="featured-icon-box icon-align-top-content style7">
+                        <div class="featured-inner">
+                            <div class="featured-icon">
+                                <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md ttm-icon_element-style-square">
+                                    <i class="flaticon flaticon-email"></i>
+                                </div>
+                            </div>
+                            <div class="featured-content">
+                                <div class="featured-title">
+                                    <h3>Email Address</h3>
+                                </div>
+                                <div class="featured-desc" style="margin-left: 122px">
+                                    <p><a href="mailto:axisarth@gmail.com">axisarth@gmail.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-icon-box end-->
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!--featured-icon-box-->
+                    <div class="featured-icon-box icon-align-top-content style7">
+                        <div class="featured-inner">
+                            <div class="featured-icon">
+                                <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md ttm-icon_element-style-square">
+                                    <i class="flaticon flaticon-navigation"></i>
+                                </div>
+                            </div>
+                            <div class="featured-content">
+                                <div class="featured-title">
+                                    <h3>Visit Us On</h3>
+                                </div>
+                                <div class="featured-desc" style="margin-left:20px">
+                                    <p>3/569 Awas Vikas Hanshpuram, Naubasta, Kanpur</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-icon-box end-->
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!--- conatact-section -->
+    <section class="ttm-row conatact-section bg-layer-equal-height mt_15 clearfix">
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-5">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3574.029036325948!2d80.32202391681064!3d26.3902495433147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c4777b0ab6e43%3A0x536d58c71098d22f!2sAxisarth%20homes%20pvt.ltd.!5e0!3m2!1sen!2sin!4v1678874229896!5m2!1sen!2sin" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <!-- col-img-bg-img-eight end-->
+                </div>
+                <div class="col-lg-7">
+                    <!-- col-img-img-eight -->
+                    <div class="ttm-bg ttm-col-bgcolor-yes ttm-right-span spacing-12">
+                        <div class="ttm-col-wrapper-bg-layer ttm-bg-layer"></div>
+                        <div class="layer-content">
+                            <!-- section title -->
+                            <div class="section-title">
+                                <div class="title-header">
+                                    <h2 class="title">Send Your Message To Us</h2>
+                                </div>
+                            </div><!-- section title end -->
+                            <div>
+                                <form class="contact_form wrap-form clearfix" novalidate="novalidate" action="#" method="post">
+                                    <div class="row ttm-boxes-spacing-20px">
+                                        <div class="col-md-6">
+                                            <label>
+                                                <span class="text-input"><input name="name" type="text" value="" placeholder="First Name..." required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>
+                                                <span class="text-input"><input name="subject" type="text" value="" placeholder="Subject..." required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>
+                                                <span class="text-input"><input name="mail" type="text" value="" placeholder="Email Address..." required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>
+                                                <span class="text-input"><input name="phone" type="text" value="" placeholder="Phone Number..." required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>
+                                                <span class="text-input"><textarea name="message" cols="50" rows="5" placeholder="Enter Message Here..." required="required"></textarea></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <button type="submit" name="submit" style="background:#000; color:white;">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- col-img-bg-img-two end-->
+                </div>
+            </div><!-- row end -->
+        </div>
+    </section>
+    <!-- conatact-section end -->
+
+
+
+
+
+
+</div><!--site-main end-->

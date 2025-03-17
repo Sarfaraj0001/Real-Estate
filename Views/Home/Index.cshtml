@@ -1,0 +1,1102 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutNew1.cshtml";
+    UsersContext db = new UsersContext();
+    var comp = db.commission_tabs.Where(x => x.Id == 1).ToList();
+    var countachive = db.Acheviers.Where(x => x.status == 1).Count();
+    var ban_img = db.banner_tabs.Where(x => x.status == 1).ToList();
+}
+
+
+
+<div class="ttm-rev_slider-wide">
+    <!-- START homemainclassicslider REVOLUTION SLIDER 6.1.8 -->
+    <rs-module-wrap id="rev_slider_2_1_wrapper" data-source="gallery">
+
+        <rs-module id="rev_slider_2_1" style="display:none;" data-version="6.1.8">
+
+            <rs-slides>
+
+                <rs-slide data-key="rs-1" data-title="Slide" data-thumb="~/assets/axisarth/images/slider.jpg" data-anim="ei:d;eo:d;s:d;r:0;t:grayscalecross;sl:d;">
+
+                    <img src="~/assets/axisarth/images/slider.jpg" title="slider-bg01" width="1920" height="850" class="rev-slidebg" data-no-retina>
+
+
+                    <rs-layer id="slider-1-slide-1-layer-1"
+                              data-type="text"
+                              data-rsp_ch="on"
+                              data-xy="x:c;xo:0px,0px,0,0;yo:293px,293px,132px,127px;"
+                              data-text="w:normal;s:90,90,60,40;l:100,100,70,48;fw:600;a:center;"
+                              data-frame_0="y:100%;"
+                              data-frame_0_mask="u:t;"
+                              data-frame_1="st:200;sp:1000;"
+                              data-frame_1_mask="u:t;"
+                              data-frame_999="o:0;st:w;"
+                              style="z-index:11;font-family:Saira Semi Condensed;">
+                        Welcome to<span class="ttm-textcolor-skincolor">Axisarth Homes</span>
+                    </rs-layer>
+
+                    <rs-layer id="slider-1-slide-1-layer-2"
+                              data-type="text"
+                              data-rsp_ch="on"
+                              data-xy="x:c;xo:0,0,0,0px;yo:397px,397px,197px,175px;"
+                              data-text="w:normal;s:90,90,60,40;l:100,100,70,48;fw:600;a:center;"
+                              data-frame_0="y:100%;"
+                              data-frame_0_mask="u:t;"
+                              data-frame_1="st:350;sp:1000;"
+                              data-frame_1_mask="u:t;"
+                              data-frame_999="o:0;st:w;"
+                              style="z-index:10;font-family:Saira Semi Condensed;">
+                        Private Limited
+                    </rs-layer>
+
+                    <!--<a
+                        id="slider-1-slide-1-layer-3"
+                        class="rs-layer"
+                        href="about-us.html" target="_self"
+                        data-type="button"
+                        data-color="#07332f"
+                        data-rsp_ch="on"
+                        data-xy="x:c;xo:0,0,0,0px;yo:532px,532px,283px,239px;"
+                        data-text="w:normal;s:18,18,15,14;l:18,18,12,14;fw:600;a:center;"
+                        data-dim="h:auto,auto,37px,31px;"
+                        data-padding="t:15,15,13,8;r:30,30,25,20;b:15,15,12,10;l:30,30,25,20;"
+                        data-border="bos:solid;bow:1px,1px,1px,1px;bor:50px,50px,50px,50px;"
+                        data-frame_0="y:100%;"
+                        data-frame_0_mask="u:t;"
+                        data-frame_1="st:380;sp:1200;"
+                        data-frame_1_mask="u:t;"
+                        data-frame_999="o:0;st:w;"
+                        data-frame_hover="c:#07332f;bgc:#ffb120;bor:50px,50px,50px,50px;bos:solid;bow:1px,1px,1px,1px;"
+                        style="z-index:12;background-color:#ffffff;font-family:Saira Semi Condensed;"
+                    >Details More
+                    </a>
+
+                    <rs-layer
+                        id="slider-1-slide-1-layer-4"
+                        class="tm-custome-shape-style"
+                        data-type="text"
+                        data-color="#2f2f2f"
+                        data-rsp_ch="on"
+                        data-xy="x:c;xo:0px,0px,0,0;yo:231px,231px,86px,81px;"
+                        data-text="w:normal;s:18,18,16,16;l:26,26,15,15;fw:600;a:center;"
+                        data-dim="w:260px,260px,auto,auto;h:40px,40px,35px,31px;"
+                        data-padding="t:7,7,9,8;r:10,10,6,4;"
+                        data-border="bos:solid;bow:0px,0,0px,20px;bor:0px,0,0,0px;"
+                        data-frame_0="sX:2;sY:2;"
+                        data-frame_0_mask="u:t;"
+                        data-frame_1="e:power2.out;st:150;sp:1000;"
+                        data-frame_1_mask="u:t;"
+                        data-frame_999="o:0;st:w;"
+                        style="z-index:9;background-color:rgba(255,177,32,0);font-family:Saira Semi Condensed;"
+                    >Interior Inter Art Design
+                    </rs-layer>
+
+                    <rs-layer
+                        id="slider-1-slide-1-layer-5"
+                        data-type="image"
+                        data-rsp_ch="on"
+                        data-xy="x:c;xo:0,0,0px,0px;y:m;yo:-123px,-123px,-97px,-79px;"
+                        data-text="w:normal;s:20,20,11,6;l:0,0,14,8;"
+                        data-frame_1="e:power4.inOut;st:80;sp:1000;"
+                        data-frame_1_sfx="se:blocktotop;"
+                        data-dim="w:260px,260px,260px,260px;h:39px,39px,39px,39px;"
+                        data-frame_999="o:0;st:w;"
+                        style="z-index:8;"
+                    ><img src="images/slides/shap.png" alt="img" class="tp-rs-img" width="260" height="39" data-no-retina>
+                    </rs-layer>-->
+
+
+                </rs-slide>
+
+                <rs-slide data-key="rs-4" data-title="Slide" data-thumb="~/assets/axisarth/images/slider1.jpg" data-anim="ei:d;eo:d;s:d;r:0;t:grayscalecross;sl:d;">
+
+                    <img src="~/assets/axisarth/images/slider1.jpg" title="slider-bg002" width="1920" height="850" class="rev-slidebg" data-no-retina>
+
+
+                    <rs-layer id="slider-1-slide-4-layer-1"
+                              data-type="text"
+                              data-rsp_ch="on"
+                              data-xy="x:c;xo:0px,0px,0,0;yo:287px,287px,132px,127px;"
+                              data-text="w:normal;s:90,90,60,40;l:110,110,70,48;fw:600;a:center;"
+                              data-frame_0="y:100%;"
+                              data-frame_0_mask="u:t;"
+                              data-frame_1="st:200;sp:1000;"
+                              data-frame_1_mask="u:t;"
+                              data-frame_999="o:0;st:w;"
+                              style="z-index:11;font-family:Saira Semi Condensed;">
+                        Welcome To <span class="ttm-textcolor-skincolor">  Axisarth Homes</span>
+                    </rs-layer>
+
+                    <rs-layer id="slider-1-slide-4-layer-2"
+                              data-type="text"
+                              data-rsp_ch="on"
+                              data-xy="x:c;xo:0,0,0,0px;yo:390px,390px,197px,175px;"
+                              data-text="w:normal;s:90,90,60,40;l:110,110,70,48;fw:600;a:center;"
+                              data-frame_0="y:100%;"
+                              data-frame_0_mask="u:t;"
+                              data-frame_1="st:350;sp:1000;"
+                              data-frame_1_mask="u:t;"
+                              data-frame_999="o:0;st:w;"
+                              style="z-index:10;font-family:Saira Semi Condensed;">
+                        Private Limited
+                    </rs-layer>
+
+                    <!-- <a
+                        id="slider-1-slide-4-layer-3"
+                        class="rs-layer"
+                        href="about-us.html" target="_self"
+                        data-type="button"
+                        data-color="#07332f"
+                        data-rsp_ch="on"
+                        data-xy="x:c;xo:0,0,0,0px;yo:532px,532px,283px,239px;"
+                        data-text="w:normal;s:18,18,15,14;l:18,18,12,14;fw:600;a:center;"
+                        data-dim="h:auto,auto,37px,31px;"
+                        data-padding="t:15,15,13,8;r:30,30,25,20;b:15,15,12,10;l:30,30,25,20;"
+                        data-border="bos:solid;bow:1px,1px,1px,1px;bor:50px,50px,50px,50px;"
+                        data-frame_0="y:100%;"
+                        data-frame_0_mask="u:t;"
+                        data-frame_1="st:380;sp:1200;"
+                        data-frame_1_mask="u:t;"
+                        data-frame_999="o:0;st:w;"
+                        data-frame_hover="c:#07332f;bgc:#ffb120;bor:50px,50px,50px,50px;bos:solid;bow:1px,1px,1px,1px;"
+                        style="z-index:12;background-color:#ffffff;font-family:Saira Semi Condensed;"
+                    >Details More
+                    </a>
+
+                    <rs-layer
+                        id="slider-1-slide-4-layer-4"
+                        class="tm-custome-shape-style"
+                        data-type="text"
+                        data-color="#2f2f2f"
+                        data-rsp_ch="on"
+                        data-xy="x:c;xo:0px,0px,0,0;yo:231px,231px,86px,81px;"
+                        data-text="w:normal;s:18,18,16,16;l:26,26,15,15;fw:600;a:center;"
+                        data-dim="w:260px,260px,auto,auto;h:40px,40px,35px,31px;"
+                        data-padding="t:7,7,9,8;r:10,10,6,4;"
+                        data-border="bos:solid;bow:0px,0,0px,20px;bor:0px,0,0,0px;"
+                        data-frame_0="sX:2;sY:2;"
+                        data-frame_0_mask="u:t;"
+                        data-frame_1="e:power2.out;st:150;sp:1000;"
+                        data-frame_1_mask="u:t;"
+                        data-frame_999="o:0;st:w;"
+                        style="z-index:9;background-color:rgba(255,177,32,0);font-family:Saira Semi Condensed;"
+                    >Interior Inter Art Design
+                    </rs-layer>
+
+                    <rs-layer
+                        id="slider-1-slide-4-layer-5"
+                        data-type="image"
+                        data-rsp_ch="on"
+                        data-xy="x:c;xo:0,0,0px,0px;y:m;yo:-123px,-123px,-97px,-79px;"
+                        data-text="w:normal;s:20,20,11,6;l:0,0,14,8;"
+                        data-frame_1="e:power4.inOut;st:80;sp:1000;"
+                        data-frame_1_sfx="se:blocktotop;"
+                        data-dim="w:260px,260px,260px,260px;h:39px,39px,39px,39px;"
+                        data-frame_999="o:0;st:w;"
+                        style="z-index:8;"
+                    ><img src="images/slides/shap.png" alt="img" class="tp-rs-img" width="260" height="39" data-no-retina>
+                    </rs-layer>-->
+
+                </rs-slide>
+
+
+            </rs-slides>
+
+            <rs-progress class="rs-bottom" style="visibility: hidden !important;"></rs-progress>
+        </rs-module>
+
+    </rs-module-wrap>
+    <!-- END REVOLUTION SLIDER -->
+
+</div>
+
+<!--site-main start-->
+<div class="site-main">
+
+
+    <!--welcome-section-->
+    <section class="ttm-row welcome-section_1 bg-img6 clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 col-lg-6 col-md-12">
+                    <div class="pl-10 res-991-pl-0 pt-70 res-991-pt-40">
+                        <!-- section title -->
+                        <div class="section-title">
+                            <div class="title-header">
+                                <h3>Welcome to</h3>
+                                <h2 class="title">Axisarth Homes Private Limited</h2>
+                            </div>
+                        </div><!-- section title end -->
+                        <div class="ttm-horizontal_sep width-100 mt-50 res-991-mt-30 mb-35"></div>
+                        <div class="pb-30 res-991-pb-20">
+                            <p><strong>Axisarth Homes Private Limited,</strong> a top and best real estate firm in Kanpur that has so many properties for sale including plots/land and farm houses in Kanpur by analysing the increasing demand of properties in Kanpur city. With focus on best planning, attention toward architectural comfort with the latest technology, Axisarth Homes Private Limited aims to renovate the real estate system; we are known for providing efficient housing solutions in best budget prices including, Kanpur Road .</p>
+                        </div>
+                        <!--<a class="ttm-btn ttm-btn-size-md ttm-btn-shape-round ttm-btn-style-fill ttm-icon-btn-right ttm-btn-color-skincolor" href="contact-us.php" tabindex="0">Detailed Info!</a>-->
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-12">
+                    <!-- ttm_single_image-wrapper -->
+                    <div class="ttm_single_image-wrapper position-relative z-index-1">
+                        <img width="470" height="537" class="img-fluid" src="~/assets/axisarth/images/Beautiful-House-Elevation-design.jpg" alt="single_15">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!--welcome-section_1 end-->
+    <!--welcome-section end-->
+    <!--MD Desk-Section-->
+    <!-- <section class="ttm-row bolg-section_2 clearfix">
+        <div class="container">
+            <!--row--
+            <div class="row">
+                <div class="col-lg-10 col-md-8">
+                    <!--section title--
+                    <div class="section-title">
+                        <div class="title-header">
+                            <h3>MD Desk</h3>
+                            <h2 class="title">Director's Message</h2>
+                        </div>
+                    </div><!--section title end--
+                </div>
+            </div><!--row end--
+            <!--row--
+            <div class="row pt-25 res-991-pt-0">
+                <div class="ttm-box-col-wrapper col-lg-2">
+                    <!--featured-imagebox-post--
+                    <div class="featured-imagebox featured-imagebox-post style4">
+                        <div class="featured-thumbnail">
+                            <img class="img-fluid" width="650" height="433" src="https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png" alt="image">
+                         </div>
+                         </div><!--featured-imagebox-post end--
+                </div>
+                <div class="ttm-box-col-wrapper col-lg-10">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!--featured-imagebox-blog--
+                            <div class="featured-imagebox featured-imagebox-post style5">
+                                <div class="featured-content">
+                                    <div class="ttm-box-post-date">
+                                       <i class="fa fa-user" aria-hidden="true"></i>
+                                        <span class="ttm-entry-date">Managing Director</span>
+                                    </div>
+                                    <div class="featured-title">
+                                        <h3>Satya Prakash Tiwari</h3>
+                                        <p>We always work on expanding our growth, productivity, effectiveness and efficiency through clear strategy.
+                                        All along our journey, we continue to develop our strategic management plan by adding challenging goals that extend beyond the pursuit of
+                                        numerical targets to leap forward to our next period of growth.</p>
+                                    </div>
+                                </div>
+                            </div><!--featured-imagebox-post end--
+                        </div>
+
+
+                    </div>
+                </div>
+            </div><!--row end--
+        </div>
+    </section>-->
+    <!--MD Desk End-->
+
+
+    <section class="ttm-row broken-section mt_80 mb-80 res-991-mb-0 res-991-mt-0 bg-layer-equal-height clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="col-bg-img-two ttm-bg ttm-col-bgimage-yes ttm-left-span z-index-2">
+                        <div class="ttm-col-wrapper-bg-layer ttm-bg-layer"></div>
+                        <div class="layer-content">
+                        </div>
+                    </div>
+                    <!-- col-img-bg-img-one end-->
+                    <img src="~/assets/axisarth/images/bg-image/col-bgimage-1.jpg" class="ttm-equal-height-image" alt="bg-image">
+                </div>
+                <div class="col-lg-7">
+                    <!-- col-img-img-two -->
+                    <div class="ttm-bg ttm-col-bgcolor-yes ttm-bgcolor-darkgrey ttm-right-span spacing-4">
+                        <div class="ttm-col-wrapper-bg-layer ttm-bg-layer"></div>
+                        <div class="layer-content">
+                            <!-- section title -->
+                            <div class="section-title">
+                                <div class="title-header">
+                                    <h3>Amazing Features</h3>
+                                    <h2 class="title">Why You Should Choose Us</h2>
+                                </div>
+                            </div><!-- section title end -->
+                            <ul class="ttm-list ttm-list-style-icon ttm-list-icon-color-skincolor">
+                                <li>
+                                    <i class="flaticon-work-done ttm-textcolor-skincolor"></i>
+                                    <span class="ttm-list-li-content">Highly Experienced</span>
+                                </li>
+                                <li>
+                                    <i class="flaticon-work-done ttm-textcolor-skincolor"></i>
+                                    <span class="ttm-list-li-content">Our Site Near Government Project</span>
+                                </li>
+                                <li>
+                                    <i class="flaticon-work-done ttm-textcolor-skincolor"></i>
+                                    <span class="ttm-list-li-content">Honesty Is A Our Best Policy</span>
+                                </li>
+                                <li>
+                                    <i class="flaticon-work-done ttm-textcolor-skincolor"></i>
+                                    <span class="ttm-list-li-content">We Help You To Make Beneficial Decision</span>
+                                </li>
+                            </ul>
+                            <div class="pt-35 res-991-pt-10">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-2 col-sm-12">
+                                        <img class="img-fluid" src="~/assets/axisarth/images/star1.png" alt="images" width="98" height="14">
+                                    </div>
+                                    <div class="col-lg-9 col-md-10 col-sm-12">
+                                        <p class="ml_20 res-767-ml-0 res-767-pt-10 mb-0 sectionh3"><span class="ttm-underline-strong"><strong>99.9% Customer satisfaction&nbsp;</strong></span> based on 750+ reviews and 20,000 Objective Resource</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div><!-- col-img-bg-img-two end-->
+                </div>
+            </div><!-- row end -->
+        </div>
+    </section>
+
+
+    <!--grid-section-->
+    <!-- <section class="ttm-row grid-section clearfix">
+        <div class="container">
+            <!-- row --
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <!-- featured-imagebox-team --
+                    <div class="featured-imagebox featured-imagebox-team style1">
+                        <div class="featured-thumbnail">
+                            <img width="450" height="500" class="img-fluid" src="images/satyaprakashtiwari.jpg" alt="image">
+                        </div>
+                       <div class="featured-content">
+                            <div class="featured-title">
+                                <h3><a href="">Mr. Satya Prakash Tiwari</a></h3>
+                            </div>
+                            <p class="team-position">Founder</p>
+                        </div>
+                    </div><!-- featured-imagebox-team end--
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <!-- featured-imagebox-team --
+                    <div class="featured-imagebox featured-imagebox-team style1">
+                        <div class="featured-thumbnail">
+                            <img width="450" height="500" class="img-fluid" src="images/rahees.jpg" alt="image">
+                        </div>
+                       <div class="featured-content">
+                            <div class="featured-title">
+                                <h3><a href="">Mr. Rahees</a></h3>
+                            </div>
+                            <p class="team-position">Manager</p>
+                        </div>
+                    </div><!-- featured-imagebox-team end--
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <!-- featured-imagebox-team --
+                    <div class="featured-imagebox featured-imagebox-team style1">
+                        <div class="featured-thumbnail">
+                            <img width="450" height="500" class="img-fluid" src="images/jitendrapal.jpg" alt="image">
+                        </div>
+                        <div class="featured-content">
+                            <div class="featured-title">
+                                <h3><a href="">Mr. Jitendra Pal</a></h3>
+                            </div>
+                            <p class="team-position">Manager</p>
+                        </div>
+                    </div><!-- featured-imagebox-team end--
+                </div>
+                 <div class="col-lg-3 col-md-3 col-sm-6">
+                    <!-- featured-imagebox-team --
+                    <div class="featured-imagebox featured-imagebox-team style1">
+                        <div class="featured-thumbnail">
+                            <img width="450" height="500" class="img-fluid" src="images/Iqbal Ahmed.jpg" alt="image">
+                        </div>
+                        <div class="featured-content">
+                            <div class="featured-title">
+                                <h3><a href="">Mr. Iqbal Ahmad</a></h3>
+                            </div>
+                            <p class="team-position">Legal Advisor</p>
+                        </div>
+                    </div><!-- featured-imagebox-team end--
+                </div>
+            </div>
+        </div>
+    </section>-->
+    <!--grid-section end-->
+    <!--project-section-->
+    <section class="ttm-row client-section_1 ttm-bgcolor-grey clearfix" id="portfolio">
+        <div class="container">
+            <div class="section-title title-style-center_text">
+                <div class="title-header">
+                    <h3>Knowledge corner</h3>
+                    <h2 class="title">Our Gallery</h2>
+                </div>
+            </div>
+            <ul class="row portfolio-item ttm-list ttm-list-style-icon">
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/Screenshot_20230926-103748_2.png" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/Screenshot_20230926-103748_2.png">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/SALEMPUR%20BALAJI%20NAGAR.jpg" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/SALEMPUR%20BALAJI%20NAGAR.jpg">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/de52ee66-46dd-46dc-a02b-8877f87a7ec8.jpg" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/de52ee66-46dd-46dc-a02b-8877f87a7ec8.jpg">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/0e5936d2-4dd9-4392-a686-20465279681f.jpg" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/0e5936d2-4dd9-4392-a686-20465279681f.jpg">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/2641ac00-ef59-46c6-b5bc-ec19a1241df2.jpg" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/2641ac00-ef59-46c6-b5bc-ec19a1241df2.jpg">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/97286e24-9f34-4bae-811d-bc91d73921fe.jpg" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/97286e24-9f34-4bae-811d-bc91d73921fe.jpg">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/a69773fd-cd4b-4f7c-9a6a-754e30f856bb.jpg" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/a69773fd-cd4b-4f7c-9a6a-754e30f856bb.jpg">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mix dev col-xl-3 col-md-4 col-12 col-sm-6 pd">
+                    <img src="~/assets/axisarth/admin/images/4cf2a7e8-a8e6-4d4a-841f-c4d15830077c.jpg" itemprop="thumbnail" alt="Image description" />
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <!--<p class="category">Project Name</p>
+                            <a href="#" title="View Project" target="_blank">
+                              <div class="magnify-icon">
+                                <p><span><i class="fa fa-link" aria-hidden="true"></i></span></p>
+                              </div>
+                            </a>-->
+                            <a data-fancybox="item" title="click to zoom-in" href="~/assets/axisarth/admin/images/4cf2a7e8-a8e6-4d4a-841f-c4d15830077c.jpg">
+                                <div class="magnify-icon">
+                                    <p style="text-align:center"><span><i class="fa fa-search" aria-hidden="true"></i></span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+            <center><a class="ttm-btn ttm-btn-size-md ttm-btn-shape-square ttm-btn-style-fill ttm-icon-btn-right ttm-btn-color-dark mt-45 res-991-mt-35" href="galley.html" tabindex="0">View More</a></center>
+        </div>
+    </section>
+    <!--project-section-->
+    <!--fid-section_1 end-->
+    <section class="ttm-row fid-section_1 bg-img5 position-relative clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 text-center ttm-play-icon-box">
+                    <div class="ttm-play-icon-btn style1">
+                        <div class="ttm-play-icon-animation">
+                            <a href="https://youtu.be/7e90gBu4pas" target="_self" class="ttm_prettyphoto">
+                                <div class="ttm-icon ttm-icon_element-fill ttm-icon_element-color-skincolor ttm-icon_element-size-lg ttm-icon_element-style-rounded">
+                                    <i class="flaticon flaticon-play-button" style="color: #fff;"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row ttm-textcolor-white">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="pt-40 text-left res-575-mb-15">
+                        <!-- section title -->
+                        <div class="section-title">
+                            <div class="title-header">
+                                <h2 class="title">Our Amenities</h2>
+                            </div>
+                        </div><!-- section title end -->
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12">
+                    <div class="row no-gutters">
+                        <div class="col-lg-3 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-workspace"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Vastu Friendly</h3>
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-blueprint"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">School</h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-decorating"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Residential Plots</h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-interior-design"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Parks</h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- row end -->
+            <br>
+            <div class="row ttm-textcolor-white">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row no-gutters">
+                        <div class="col-lg-2 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-workspace"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title"> Dammer Road</h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-blueprint"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Near Metro Station</h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-decorating"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Electricity Pole</h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                        <!--<div class="col-lg-2 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid --
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-interior-design"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Community Center </h3>
+
+                                </div>
+                            </div><!-- ttm-fid end --
+                        </div>-->
+                        <div class="col-lg-2 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-interior-design"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Gated Colony </h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 ttm-box-col-wrapper">
+                            <!-- ttm-fid -->
+                            <div class="ttm-fid inside ttm-fid-with-icon ttm-fid-view-top_icon style4">
+                                <div class="ttm-fid-icon-wrapper">
+                                    <i class="flaticon flaticon-interior-design"></i>
+                                </div>
+                                <div class="ttm-fid-contents">
+                                    <h3 class="ttm-fid-title">Commercial Shops</h3>
+
+                                </div>
+                            </div><!-- ttm-fid end -->
+                        </div>
+                    </div>
+                </div>
+            </div><!-- row end -->
+        </div>
+    </section>
+    <!--fid-section_1 end-->
+    <!--broken-section-->
+    <!-- <section class="ttm-row broken-section mt_230 res-991-mt-0 bg-layer-equal-height clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="ttm-bg ttm-col-bgcolor-yes ttm-bgcolor-darkgrey ttm-right-span spacing-18">
+                        <div class="ttm-col-wrapper-bg-layer ttm-bg-layer"></div>
+                        <div class="layer-content">
+                            <h2>We Create The Art Of Stylish Living Stylishly interior</h2>
+                            <p>Interior design consultancy firm that brings sensitivity to the design of top restaurants, hotels, offices & homes around the world. We stand for quality, safety, and credibility.</p>
+                            <!-- ttm-progress-bar --
+                            <div class="pt-20 res-991-pt-40">
+                                <!-- ttm-progress-bar --
+                                <div class="ttm-progress-bar style1" data-percent="85%">
+                                    <div class="progressbar-title">Exterior Designer</div>
+                                    <div class="progress-bar-inner">
+                                        <div class="progress-bar progress-bar-color-bar_skincolor"></div>
+                                    </div>
+                                    <div class="progress-bar-percent" data-percentage="85">85%</div>
+                                </div><!-- ttm-progress-bar end --
+                                <!-- ttm-progress-bar --
+                                <div class="ttm-progress-bar style1" data-percent="70%">
+                                    <div class="progressbar-title">Happy Clients</div>
+                                    <div class="progress-bar-inner">
+                                        <div class="progress-bar progress-bar-color-bar_skincolor"></div>
+                                    </div>
+                                    <div class="progress-bar-percent" data-percentage="70">70%</div>
+                                </div><!-- ttm-progress-bar end --
+                                <!-- ttm-progress-bar --
+                                <div class="ttm-progress-bar style1" data-percent="75%">
+                                    <div class="progressbar-title">Riding Trainer</div>
+                                    <div class="progress-bar-inner">
+                                        <div class="progress-bar progress-bar-color-bar_skincolor"></div>
+                                    </div>
+                                    <div class="progress-bar-percent" data-percentage="75">75%</div>
+                                </div><!-- ttm-progress-bar end --
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <!-- col-img-img-eleven --
+                    <div class="col-bg-img-eleven ttm-bg ttm-col-bgimage-yes ttm-bgcolor-grey box-shadow spacing-19">
+                        <div class="ttm-col-wrapper-bg-layer ttm-bg-layer"></div>
+                        <div class="layer-content">
+                            <h3 class="text-center font-size-24">Book Online Appointment</h3>
+                            <div class="padding_top30">
+                                <form id="contact_form_1" class="contact_form_1 wrap-form clearfix" method="post" novalidate="novalidate" action="#">
+                                    <div class="row ttm-boxes-spacing-30px">
+                                        <div class="ttm-box-col-wrapper col-md-6">
+                                            <label>
+                                                <i class="fa fa-user"></i>
+                                                <span class="text-input"><input name="name" type="text" value="" placeholder="Enter Name" required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="ttm-box-col-wrapper col-md-6">
+                                            <label>
+                                                <i class="fa fa-envelope"></i>
+                                                <span class="text-input"><input name="address" type="text" value="" placeholder="Emails" required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="ttm-box-col-wrapper col-md-6">
+                                            <label>
+                                                <i class="fa fa-phone"></i>
+                                                <span class="text-input"><input name="phone" type="text" value="" placeholder="Phone Number" required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="ttm-box-col-wrapper col-md-6">
+                                            <label>
+                                                <i class="fa fa-calendar"></i>
+                                                <span class="text-input"><input name="calendar" type="text" value="" placeholder="dd-mm-yy" required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="ttm-box-col-wrapper col-md-12">
+                                            <label>
+                                                <span class="text-input"><input type="text" value="" placeholder="Types Of Services" required="required"></span>
+                                            </label>
+                                        </div>
+                                        <div class="ttm-box-col-wrapper col-lg-12">
+                                            <p class="cookies">
+                                                <input id="cookies-consent" name="cookies-consent" type="checkbox" value="yes">
+                                                <label for="cookies-consent"> It would be great to hear from you! If you got any questions.</label>
+                                            </p>
+                                            <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-round ttm-btn-style-fill ttm-icon-btn-right ttm-btn-color-skincolor w-100 text-center" href="#" tabindex="0">Make A Appiontment</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- col-img-bg-img-two end--
+                </div>
+            </div><!-- row end --
+        </div>
+    </section>-->
+    <!--broken-section end-->
+    <!--project-section-->
+    <div class="ttm-row client-section_1 ttm-bgcolor-grey clearfix">
+        <div class="container">
+            <!-- row -->
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <div class="section-title title-style-center_text">
+                        <div class="title-header">
+                            <h3>Knowledge corner</h3>
+                            <h2 class="title">Our Projects</h2>
+                        </div>
+                    </div>
+                    <!-- slick_slider -->
+                    <div class="row slick_slider" data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "arrows":false, "autoplay":true, "infinite":true, "responsive": [{"breakpoint":1200,"settings":{"slidesToShow": 5}}, {"breakpoint":1024,"settings":{"slidesToShow": 4}}, {"breakpoint":777,"settings":{"slidesToShow": 3}}, {"breakpoint":575,"settings":{"slidesToShow": 2}}]}'>
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img class="img-fluid" src="~/assets/axisarth/admin/images/parsauli%20-1_page-0001.jpg" alt="image">
+                                </div>
+                                <center><span style=" color:black;"><b></b></span></center>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img class="img-fluid" src="~/assets/axisarth/admin/images/PFD_page-0001%20-%20Copy.jpg" alt="image">
+                                </div>
+                                <center><span style=" color:black;"><b></b></span></center>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img class="img-fluid" src="~/assets/axisarth/admin/images/8ec16f9e-d4eb-40c2-829c-7ac3542c35af.jpg" alt="image">
+                                </div>
+                                <center><span style=" color:black;"><b></b></span></center>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img class="img-fluid" src="~/assets/axisarth/admin/images/SALEMPUR%20BALAJI%20NAGAR.jpg" alt="image">
+                                </div>
+                                <center><span style=" color:black;"><b></b></span></center>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img class="img-fluid" src="~/assets/axisarth/admin/images/Parsauli%20240923%20revise%20ni%20FEET%20PLOTTING-%20FINAL%20DR_230924_154953%20(6).html" alt="image">
+                                </div>
+                                <center><span style=" color:black;"><b></b></span></center>
+                            </div>
+                        </div>
+
+
+
+                    </div><!-- ttm-client end -->
+                </div>
+            </div><!-- row end -->
+        </div>
+    </div>
+    <!--project-section-->
+
+
+
+</div>
+<!--site-main e
+
+
+<!--Main Slider-->
+<!--<section class="main-slider style-one">
+
+    <div class="tp-banner-container">
+        <div class="tp-banner">
+            <ul>
+                @foreach(var ii in ban_img)
+                {
+                <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="" data-saveperformance="off" data-title="Awesome Title Here">
+                    <img src="@Url.Content(ii.Image)" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    <div class="tp-caption sfl sfb tp-resizeme"
+                        data-x="left" data-hoffset="15"
+                        data-y="center" data-voffset="0"
+                        data-speed="1500"
+                        data-start="500"
+                        data-easing="easeOutExpo"
+                        data-splitin="none"
+                        data-splitout="none"
+                        data-elementdelay="0.01"
+                        data-endelementdelay="0.3"
+                        data-endspeed="1200"
+                        data-endeasing="Power4.easeIn">
+                    </div>
+                </li>
+                }-->
+@*
+    </li>
+    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="~/assets/images/main-slider/frontpic-12.jpg" data-saveperformance="off" data-title="Awesome Title Here">
+        <img src="~/assets/images/main-slider/frontpic-12.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+        <div class="tp-caption sfr sfb tp-resizeme"
+            data-x="right" data-hoffset="0"
+            data-y="center" data-voffset="0"
+            data-speed="1500"
+            data-start="500"
+            data-easing="easeOutExpo"
+            data-splitin="none"
+            data-splitout="none"
+            data-elementdelay="0.01"
+            data-endelementdelay="0.3"
+            data-endspeed="1200"
+            data-endeasing="Power4.easeIn">
+        </div>
+
+    </li>
+    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="~/assets/images/main-slider/frontpic-13.jpg" data-saveperformance="off" data-title="Awesome Title Here">
+        <img src="~/assets/images/main-slider/frontpic-13.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+        <div class="tp-caption sfr sfb tp-resizeme"
+            data-x="right" data-hoffset="0"
+            data-y="center" data-voffset="0"
+            data-speed="1500"
+            data-start="500"
+            data-easing="easeOutExpo"
+            data-splitin="none"
+            data-splitout="none"
+            data-elementdelay="0.01"
+            data-endelementdelay="0.3"
+            data-endspeed="1200"
+            data-endeasing="Power4.easeIn">
+        </div>
+    </li>
+    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="~/assets/images/main-slider/frontpic-14.jpg" data-saveperformance="off" data-title="Awesome Title Here">
+        <img src="~/assets/images/main-slider/frontpic-14.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+        <div class="tp-caption sfr sfb tp-resizeme"
+            data-x="right" data-hoffset="0"
+            data-y="center" data-voffset="0"
+            data-speed="1500"
+            data-start="500"
+            data-easing="easeOutExpo"
+            data-splitin="none"
+            data-splitout="none"
+            data-elementdelay="0.01"
+            data-endelementdelay="0.3"
+            data-endspeed="1200"
+            data-endeasing="Power4.easeIn">
+        </div>
+    </li>*@
+<!--</ul>
+            <div class="tp-bannertimer"></div>
+        </div>
+    </div>
+</section>-->
+@*<section class="property-info-sec">
+        <div class="auto-container">
+            <div class="sec-title text-center">
+                        <h2><strong><U>OUR ACHIVERS</U></strong></h2>
+                    </div>
+            <div class="testimonials-carousel"">
+                     @if (countachive != 0)
+                     {
+                         var list = db.Acheviers.Where(x => x.status == 0).ToList();
+                         foreach (var ii in list)
+                         {
+                <!--Slide Item-->
+                <div class="slide-item"  style="box-shadow: 5px 5px  #888888;">
+                    <div class="inner-box">
+                        <div class="quote-icon"></div>
+                        <div class="content">
+                            <img src="@Url.Content(ii.Slide1)" height="200" alt="@ii.Slide2.ToUpper() @ii.Slide3.ToUpper()">
+                            <div class="info clearfix">
+                                <div class="author-title"> @ii.Slide2.ToUpper()</div>
+                                <div class="author-title">Prize: (@ii.Slide3.ToUpper())</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                         }
+                     }
+
+
+            </div>
+        </div>
+    </section>*@
+
+<!--Property Info Section-->
+<!--<section class="property-info-sec">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <!--Description Column-->
+<!--<div class="desc-column col-md-12 col-sm-12 col-xs-12">-->
+<!--Section Title-->
+<!--<div class="sec-title text-center">
+    <h2><strong>OUR SERVICES</strong></h2>
+    <div class="subtitle-text" style="color:black">This time there's no stopping us. Straightnin' the curves. Flatnin' the hills Someday the mountain might get ‘em but the law never will. The weather started getting rough - the tiny ship was tossed.</div>
+
+</div>
+
+<div class="row clearfix">-->
+<!--Circular Image Column-->
+<!--<div class="circular-image-column col-md-3 col-sm-3 col-xs-4">
+    <figure class="image-box wow zoomInStable" data-wow-duration="1500ms" data-wow-delay="0ms">-->
+@*<a href="~/assets/images/resource/residential&commercial.jpg" class="lightbox-image" title="Commercial and Residential">
+    <img src="~/assets/images/resource/residential&commercial.jpg" alt=""></a>*@
+<!--<a href="~/assets/images/resource/odh1.jpg"  class="lightbox-image" title="Commercial and Residential">
+            <img src="~/assets/images/resource/odh1.jpg" alt=""></a>
+    </figure>
+</div>-->
+<!--Circular Image Column-->
+<!--<div class="circular-image-column col-md-3 col-sm-3 col-xs-4">
+    <figure class="image-box wow zoomInStable" data-wow-duration="1500ms" data-wow-delay="300ms">-->
+@*  <a href="~/assets/images/resource/Duplex&Simplex.jpg" class="lightbox-image" title="Duplex and Simplex">
+    <img src="~/assets/images/resource/Duplex&Simplex.jpg" alt=""></a>*@
+<!--<a href="~/assets/images/resource/odh4.jpg"  class="lightbox-image" title="Commercial and Residential">
+            <img src="~/assets/images/resource/odh4.jpg" alt=""></a>
+    </figure>
+</div>-->
+<!--Circular Image Column-->
+<!--<div class="circular-image-column col-md-3 col-sm-3 col-xs-4">
+    <figure class="image-box wow zoomInStable" data-wow-duration="1500ms" data-wow-delay="600ms">
+       <a href="~/assets/images/resource/odh5.jpg"  class="lightbox-image" title="Commercial and Residential">
+            <img src="~/assets/images/resource/odh5.jpg" alt=""></a>
+    </figure>
+</div>
+<div class="circular-image-column col-md-3 col-sm-3 col-xs-4">
+    <figure class="image-box wow zoomInStable" data-wow-duration="1500ms" data-wow-delay="600ms">
+       <a href="~/assets/images/resource/odh6.jpg"  class="lightbox-image" title="Commercial and Residential">
+            <img src="~/assets/images/resource/odh6.jpg" alt=""></a>
+    </figure>
+</div>-->
+@* <div class="circular-image-column col-md-4 col-sm-4 col-xs-6">
+        <figure class="image-box wow zoomInStable" data-wow-duration="1500ms" data-wow-delay="600ms"><a href="~/assets/images/resource/featured-image-3.jpg" class="lightbox-image" title="Image Title Here">
+            <img src="~/assets/images/resource/featured-image-3.jpg" alt=""></a></figure>
+    </div>*@
+<!--</div>-->
+@* <div class="documents"><strong>DOCUMENTS</strong> &ensp;-&ensp; Energetic Certificate PDF <a href="#"><span class="fa fa-cloud-download"></span></a>&ensp;&ensp; Another PDF Sample <a href="#"><span class="fa fa-cloud-download"></span></a></div>*@
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!--Property Info Section-->

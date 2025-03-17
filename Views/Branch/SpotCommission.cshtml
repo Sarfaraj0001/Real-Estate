@@ -1,0 +1,114 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.SpotCommList>
+    @using ODHDEVELOPERS.Models;
+    @{
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "SpotCommission";
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        var a = 0;
+        var br = db.Branchtabs.Single(o => o.BranchCode == User.Identity.Name);
+        Double businesssum = 0, commsum = 0;
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#newagentid").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Admin/AutoCompleteAgentid",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.NewAgentId, value: item.NewAgentId };
+                            }))
+
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
+
+    <div class="container-fluid mt-4 FormContainer">
+        <h2 class="text-center mb-4">Payment Spot Commission</h2>
+        <div id="branchForm" class="border p-4 rounded shadow formtag">
+            @using (Html.BeginForm())
+            {
+                <!-- Associate ID -->
+                <div class="mb-3">
+                    <label for="associateId" class="form-label formLabel">Enter @mr.agentname Id:</label>
+                    <input type="text" id="newagentid" name="newagentid" class="form-control formInput" required placeholder="Enter @mr.agentname Id">
+                </div>
+                <!-- Search Button -->
+                <div class="text-center d-grid gap-2">
+                    <button type="submit" class="btn btn-lg formButtom">Search</button>
+                </div>
+            }
+        </div>
+        <table class="bg-light">
+            @foreach (var item in Model)
+            {
+                if (a == 0)
+                {
+                    <div class="header-row mt-4">Spot Commition Table</div>
+                    <thead>
+                        <tr>
+                            <th><label id="sn" style="text-align: center;"><b>S.N.</b></label></th>
+                            <th> <label id="NewAgentId"><b>@mr.agentname Id</b></label></th>
+                            <th id="c2c"><b>@mr.agentname Id</b></th>
+                            <th><label><b>@mr.custname Name</b></label></th>
+                            <th> <label id="Business"><b>Business</b></label> </th>
+                            <th> <label id="Commission"><b>Commission</b></label> </th>
+                            <th> <label><b>Date</b></label> </th>
+                            <th><label id="Action"><b>Action</b></label> </th>
+                        </tr>
+                    </thead>
+                }
+                a++;
+                <tbody>
+                    <tr class="firstrow">
+                        <td>@a </td>
+                        <td> @Html.DisplayFor(modelItem => item.newagentid) </td>
+                        <td> @Html.DisplayFor(modelItem => item.newbondid) </td>
+                        <td>@Html.DisplayFor(modelItem => item.name) </td>
+                        <td> @Html.DisplayFor(modelItem => item.Business) </td>
+                        <td> @Html.DisplayFor(modelItem => item.Commission) </td>
+                        <td>@Convert.ToDateTime(item.date).ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <div class="btn btn-primary">
+                                @Html.ActionLink("Pay", "SCV", new { newagentid = item.newagentid, newbondid = item.newbondid, date = item.date, commission = item.Commission }, new { onclick = "return confirm('Are you sure to Pay this Commission?');" })
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+                businesssum = businesssum + Convert.ToDouble(item.Business);
+                commsum = commsum + Convert.ToDouble(item.Commission);
+            }
+            @if (a > 0)
+            {
+                <tr style="text-align: center;">
+                    <td colspan="4">
+                        <b>GRAND TOTAL:</b>
+                    </td>
+                    <td>
+                        <b>@businesssum</b>
+                    </td>
+                    <td>
+                        <b>@commsum</b>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+            }
+        </table>
+        <p style="color: maroon;"><b>@ViewBag.msg</b></p>
+        @if (ViewBag.msg == "Spot Commission Paid Successfully")
+        {
+            @Html.ActionLink("Print Report", "PrintSpotCommission", new { newagentid = ViewData["newagentid"], newbondid = ViewData["newbondid"] }, new { onclick = "target='_blank'" })
+        }
+    </div>
+        

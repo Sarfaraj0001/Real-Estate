@@ -1,0 +1,219 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.HRTab>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "UpdateHR";
+    var a = 0;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#hrid").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Admin/AutoCompleteHRId",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.HRName, value: item.HRId };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<div class="page-content">
+
+                <div class="container">
+
+<div class="page-toolbar">
+                        
+
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Update HR</div>
+                            <div class="page-toolbar-subtitle"> </div>
+                        </div>
+                              <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+                                <div >                                            
+                                <label>@DateTime.Now</label>
+                                </div>                            
+                            </div>
+                        </div> 
+                      </div>  
+                      @using (Html.BeginForm("UpdateHR", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                      {
+                       <div class="row" >
+                        <div class="col-md-6" style="width:100%;">
+                            
+                            <div class="block" >
+                               
+                                <div class="block-content controls">
+                                      
+                                    <div class="row-form">
+           <div class="input-group" style="margin-left:1%;margin-right:1%;">
+                        <span class="input-group-addon">Enter HR Id or Name</span>
+                    <input type="text" id="hrid" class="form-control" required name="hrid">
+                         
+                </div>   </div>
+                                     
+                                       <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+                                                          
+                               <button id="btnsearch" name="command" type="submit" class="btn btn-primary" value="Search">Search</button>                            
+                                
+                            </div>
+                        </div>  
+                                   </div>           
+                        
+                    </div>  
+                             </div>    </div>
+                          foreach (var item in Model)
+                          {
+                              if (a == 0)
+                              {
+                                  
+                                    <div class="row" >
+                    <div class="col-md-6">
+                            
+                                
+                                     <div class="block" >
+                            <div class="block-content">
+                                    <h2><strong>HR Details</strong> </h2>
+                                   
+                                </div>
+                                <div class="block-content controls">
+                                  <div class="row-form">
+     <div class="col-md-9">
+         
+          <div class="input-group">
+         <span class="input-group-addon"><label class="width">HR Id</label></span>
+         <input type="text" class="form-control"  required  name="nhrid" id="bnid" value="@Html.DisplayFor(modelItem => item.HRId)" readonly="true" />
+                </div>
+
+         
+
+     </div>
+   
+                     </div>
+                                 
+                                  <div class="row-form">
+                                          
+    <div class="col-md-9">
+         
+         <div class="input-group">
+         <span class="input-group-addon"><label class="width">HR Name</label></span>
+              <input type="text" class="form-control" name="hrname" id="opname" value="@Html.DisplayFor(modelItem => item.HRName)" required>
+                </div>
+        
+        </div> 
+         
+                       </div>
+
+                                 
+         
+       
+         
+                                  <div class="row-form">
+       <div class="col-md-9">
+             <div class="input-group">
+         <span class="input-group-addon"><label class="width">Address</label></span>
+          <input type="text" class="form-control" required  name="address" id="address" value="@Html.DisplayFor(modelItem => item.Address)" />
+                </div>
+
+
+        
+
+
+       </div>
+      
+                                       </div>
+         
+                                  <div class="row-form">                      
+                                <div class="col-md-9">
+         <div class="input-group">
+         <span class="input-group-addon"><label class="width">E-Mail</label></span>
+          
+        <input type="text" class="form-control" name="email" id="email" value="@Html.DisplayFor(modelItem => item.emailid)" />      
+         </div>
+        
+
+    </div>
+                                   
+ 
+        </div> 
+         
+                                
+                          
+                                  
+         
+                                  <div class="row-form">                      
+    <div class="col-md-9">
+        
+        
+            <div class="input-group">
+         <span class="input-group-addon"><label class="width">Mobile</label></span>
+        <input type="number" class="form-control" required  name="mobile" id="mobile" value="@Html.DisplayFor(modelItem => item.Mobile)">
+                </div>
+
+
+    
+
+
+
+    </div>
+                                   
+    
+</div> 
+         
+                                 
+                               
+                             
+         
+                          
+       
+                                       </div>
+                          
+                             
+                          
+                        
+                            
+         
+                          <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+                                <button id="btnupdate" name="command" type="submit" class="btn btn-primary" value="Update" formnovalidate="formnovalidate">Update</button> 
+        
+                                </div>
+                                             </div>
+   </div>
+                                         </div>
+                            
+                      
+                      
+                        </div>
+                          
+                                       
+                              }
+                          }
+                                   
+           <p style="color:maroon;margin-left:15px;"><b> @ViewBag.msg</b></p>     
+                               
+                           
+                         
+                      }
+              
+      
+                    
+          </div>
+                          </div>
+
+
+                    
+

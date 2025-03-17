@@ -1,0 +1,110 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.DatewiseCustomerList>
+    @using ODHDEVELOPERS.Models
+    @{
+        ViewBag.Title = "AssignPlotCustomer";
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        var a = 0;
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(c => c.Id == 1);
+
+    }
+
+
+
+
+    <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet">
+    <script src="~/Content/datepicker/jquery.plugin.js"></script>
+    <script src="~/Content/datepicker/jquery.datepick.js"></script>
+    <script>
+        $(function () {
+            $('#popupDatepicker').datepick();
+            $('#popupDatepicker1').datepick();
+            $('#inlineDatepicker').datepick({ onSelect: showDate });
+        });
+
+        function showDate(date) {
+            alert('The date chosen is ' + date);
+        }
+    </script>
+
+    <div class="container-fluid mt-4 FormContainer" id="divid">
+        <h2 class="text-center mb-4">Assign Plot @mr.custname List</h2>
+        <div class="border p-4 rounded shadow formtag" style="margin-top:25px">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Start Date:</label>
+                    <input type="date" class="form-control formInput" name="sdate" required>
+                </div>
+
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">End Date:</label>
+                    <input type="date" class="form-control formInput" name="edate" required>
+                </div>
+
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                    <button class="btn btn-lg formButtom">Search</button>
+                </div>
+            }
+        </div>
+        <table class="bg-white mt-3">
+            @using (Html.BeginForm())
+            {
+                foreach (var item in Model)
+                {
+                    if (a == 0)
+                    {
+                        <thead>
+                        <tr>
+                            <th colspan="4" class="header-row" style="border-radius: 8px 0 0 0; border: none;">@mr.branchname Name:@User.Identity.Name</th>
+                            <th colspan="4" class="header-row" style="border-radius: 0 0 0 0;">@mr.custname List</th>
+                            <th colspan="4" class="header-row" style="border-radius: 0 8px 0 0; border: none;">Dated:@DateTime.Now.Date.ToString("dd/MM/yyyy")</th>
+                        </tr>
+                        <tr>
+                            <th><label id="sn"><b>S.N.</b></label></th>
+                            <th><label id="newid"><b>@mr.custname Id</b></label></th>
+                            <th><label id="introducerid"><b>Name</b></label></th>
+                            <th><label id="spilid"><b>Introducer Id</b></label></th>
+                            <th><label><b>Booking Amount</b></label></th>
+                            <th><label><b>Phase</b></label></th>
+                            <th><label><b>Block</b></label></th>
+                            <th><label><b>Plot Size</b></label></th>
+                            <th><label><b>Plot No</b></label></th>
+                            <th><label id="doj"><b>Payment </b></label></th>
+                            <th><label id="email"><b>Mobile No</b></label></th>
+                            <th><label><b>Date of Joining</b></label></th>
+                        </tr>
+                        </thead>
+
+                    }
+                    a = a + 1;
+                    <tbody>
+                        <tr>
+                            <td>@a</td>
+                            <td>@Html.DisplayFor(modelItem => item.newbondid)</td>
+                            <td>@Html.DisplayFor(modelItem => item.name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.newintroducerid)</td>
+                            <td>@Html.DisplayFor(modelItem => item.bookingamount)</td>
+                            <td>@Html.DisplayFor(modelItem => item.plan)</td>
+                            <td>@Html.DisplayFor(modelItem => item.block)</td>
+                            <td>@Html.DisplayFor(modelItem => item.plotsize)</td>
+                            <td>@Html.DisplayFor(modelItem => item.plotno)</td>
+                            <td>@Html.DisplayFor(modelItem => item.payment)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Mobile)</td>
+                            <td>@Convert.ToDateTime(item.formdate).ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    </tbody>
+                }
+            }
+        </table>
+
+        @if (a > 0)
+        {
+            <div class="text-center mt-3">
+                <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintAssignPlotCustomer")" target="_blank">Get Report In PDF</a>
+            </div>
+        }
+    </div>

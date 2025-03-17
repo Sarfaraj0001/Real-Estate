@@ -1,0 +1,330 @@
+﻿
+@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    // Safely retrieve the company info
+    var comp = db.CompanyInfos.Single(x => x.Id == 1);
+
+    // Check if 'comp' is null and assign a fallback value
+    //string companyName = comp.CompanyName ?? "Default Company Name";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<!-- Mirrored from axisarthgroup.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 May 2024 09:48:04 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content=" width=device-width, initial-scale=1, maximum-scale=2">
+    <title>@comp.CompanyName</title>
+
+    @*<title>comp.CompanyName</title>*@
+    <link rel="shortcut icon" href="~/assets/axisarth/images/favicon.png">
+    @*<img src="~/assets/axisarth/admin/images/0e5936d2-4dd9-4392-a686-20465279681f.jpg" />*@
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/twentytwenty.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/shortcodes.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/main.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/megamenu.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/axisarth/css/responsive.css">
+    <link rel='stylesheet' id='rs-plugin-settings-css' href="~/assets/axisarth/revolution/css/rs6.css">
+
+    <!--Gallery Css Start-->
+    <!-- fancybox -->
+    @* <link rel='stylesheet prefetch' href='../cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css'>*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" integrity="sha512-WEQNv9d3+sqyHjrqUZobDhFARZDko2wpWdfcpv44lsypsSuMO0kHGd3MQ8rrsBn/Qa39VojphdU6CMkpJUmDVw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- magnific-popup -->
+    @* <link rel="stylesheet" href="../cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />*@
+    <!--Gallery Css End-->
+    <style>
+        .ttm-list.ttm-list-style-icon li i {
+            position: inherit;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!--page start-->
+    <div class="page ttm-bgcolor-grey">
+
+        <!--header start-->
+        <!--header start-->
+        <header id="masthead" class="header ttm-header-style-01">
+            <!-- top_bar -->
+            <div class="top_bar ttm-topbar-wrapper ttm-bgcolor-grey clearfix">
+            </div>
+            <!-- top_bar end-->
+            <!-- site-header-menu -->
+            <div id="site-header-menu" class="site-header-menu">
+                <div class="site-header-menu-inner ttm-stickable-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!--site-navigation -->
+                                <div class="site-navigation d-flex flex-row align-items-center justify-content-between">
+                                    <!-- site-branding -->
+                                    <div class="site-branding ">
+                                        <a class="home-link" href="../Home/Index" title="Inoterior" rel="home">
+                                            <img class="img-fluid" src="~/assets/axisarth/images/axisarth.png" alt="logo-img" id="logoid">
+                                        </a>
+                                    </div><!-- site-branding end -->
+                                    <div class="d-flex flex-row">
+                                        <div class="btn-show-menu-mobile menubar menubar--squeeze">
+                                            <span class="menubar-box">
+                                                <span class="menubar-inner"></span>
+                                            </span>
+                                        </div>
+                                        <!-- menu -->
+                                        <nav class="main-menu menu-mobile" id="menu">
+                                            <ul class="menu">
+                                                <li class="mega-menu-item active">
+                                                    <a href="../Home/Index">Home</a>
+                                                </li>
+                                                <li class="mega-menu-item">
+                                                    <a href="../Home/About">About Us</a>
+
+                                                </li>
+
+                                                <li class="mega-menu-item">
+                                                    <a href="../Home/Project">Our Projects</a>
+
+                                                </li>
+                                                <li class="mega-menu-item">
+                                                    <a href="../Home/Gallerys">Gallery</a>
+
+                                                </li>
+
+
+                                                <li class="mega-menu-item">
+                                                    <a href="../Home/Gallerys">Plot Search</a>
+                                                </li>
+                                                <li class="mega-menu-item">
+                                                    <a href="../Home/Contact">Reach Us</a>
+                                                </li>
+                                                <li class="mega-menu-item">
+                                                    <a class="ttm-btn ttm-btn-size-md ttm-btn-style-fill ttm-icon-btn-right ttm-btn-color-skincolor" id="color-id" href="../Home/Login">Login</a>
+                                                </li>
+                                            </ul>
+                                        </nav><!-- menu end -->
+
+                                    </div>
+                                </div><!-- site-navigation end-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- site-header-menu end-->
+        </header><!--header end-->
+        <!--header end-->
+
+        @RenderBody()
+  
+        <!--footer start-->
+        <!--footer start-->
+        <footer class="footer ttm-bg ttm-bgcolor-darkgrey widget-footer clearfix">
+            <div class="ttm-row-wrapper-bg-layer ttm-bg-layer" style="background-color:#a90c04"></div>
+            <div class="container">
+                <div class="second-footer">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 widget-area">
+                            <div class="widget widget_text clearfix">
+                                <div class="footer-logo">
+                                    <img width="150" height="65" id="footer-logo-img" class="img-fluid" src="~/assets/axisarth/images/logo-footer.png" alt="image">
+                                </div>
+                                <div class="textwidget widget-text">
+                                    <p>Axisarth Homes Pvt. Ltd, a top and best real estate firm in Kanpur that has so many properties for sale including plots/land and farm houses in Kanpur,</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 widget-area">
+                            <div class="widget widget_nav_menu clearfix">
+                                <h3 class="widget-title">Quick Links</h3>
+                                <ul id="menu-footer-service-link" class="menu">
+                                    <li><a href="about-us.html">About Us</a></li>
+                                    <li><a href="our-projects.html">Our Projects</a></li>
+                                    <li><a href="gallery.html">Gallery</a></li>
+                                    <li><a href="plot-search.html">Plot Searching</a></li>
+                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-12 col-lg-4 widget-area">
+                            <div class="widget widget-timing clearfix">
+                                <h3 class="widget-title">Contact</h3>
+                                <div class="featured-icon-box icon-align-before-content icon-ver_align-top style1">
+                                    <div class="featured-icon">
+                                        <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-xs">
+                                            <i class="flaticon flaticon-call-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="featured-content">
+                                        <!--<div class="featured-title">
+                                        <h3>Phone Number</h3>
+                                    </div>-->
+                                        <div class="featured-desc">
+                                            <p><a href="tel:7081617501" class="ttm-textcolor-gray">+91-7081617501</a></p>
+                                            <p><a href="tel:7985447117" class="ttm-textcolor-gray">+91-7985447117</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="featured-icon-box icon-align-before-content icon-ver_align-top style1">
+                                    <div class="featured-icon">
+                                        <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-xs">
+                                            <i class="flaticon flaticon-email"></i>
+                                        </div>
+                                    </div>
+                                    <div class="featured-content">
+                                        <!-- <div class="featured-title">
+                                         <h3>Email Address</h3>
+                                     </div>-->
+                                        <div class="featured-desc">
+                                            <p><a href="mailto:axisarth@gmail.com" class="ttm-textcolor-gray">axisarth@gmail.com</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="featured-icon-box icon-align-before-content icon-ver_align-top style1">
+                                    <div class="featured-icon">
+                                        <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-xs">
+                                            <i class="flaticon flaticon-navigation"></i>
+                                        </div>
+                                    </div>
+                                    <div class="featured-content">
+                                        <!--<div class="featured-title">
+                                        <h3>Location</h3>
+                                    </div>-->
+                                        <div class="featured-desc">
+                                            <p>3/569 Awas Vikas Hanshpuram, Naubasta, Kanpur-208021</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-footer-text ttm-bg ttm-bgcolor-darkgrey widget-footer" style="border-radius: 20px 20px 0px 0px;background-color:#a90c04">
+                    <div class="row copyright">
+                        <div class="col-lg-6 col-md-8">
+                            <span>Copyright © 2023&nbsp;Design & Developed By&nbsp;<a href="www.webmiracle.in/index.html" class="ttm-textcolor-white">Web Miracle Technology&nbsp;</a> All rights reserved.</span>
+
+                        </div>
+                        <div class="col-lg-6 col-md-4">
+                            <div class="social-icons d-flex align-items-center justify-content-end">
+                                <ul class="list-inline">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--footer end-->
+        <!--footer end-->
+        <!--back-to-top start-->
+        <a id="totop" href="#top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!--back-to-top end-->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <a href="tel:7985447117" class="floatph">
+            <div class="contact_icon" id="box-id">
+                <i class="fa fa-phone my-floatp"></i>
+            </div>
+        </a>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <a href="https://api.whatsapp.com/send?phone=7081617501%20&amp;text=Hello%20I%20am%20contacting%20your%20from%20your%20website" class="floatw" target="_blank">
+            <div class="contact_icon">
+                <i class="fa fa-whatsapp wp-button"></i>
+            </div>
+        </a>
+
+        <!--footer end-->
+
+
+    </div><!-- page end -->
+    <!-- Javascript -->
+
+    <script src="~/assets/axisarth/js/jquery.min.js"></script>
+    <script src="~/assets/axisarth/js/jquery-migrate-1.4.1.min.js"></script>
+    <script src="~/assets/axisarth/js/tether.min.js"></script>
+    <script src="~/assets/axisarth/js/bootstrap.min.js"></script>
+    <script src="~/assets/axisarth/js/jquery.easing.js"></script>
+    <script src="~/assets/axisarth/js/jquery-waypoints.js"></script>
+    <script src="~/assets/axisarth/js/jquery-validate.js"></script>
+    <script src="~/assets/axisarth/js/jquery.prettyPhoto.js"></script>
+    <script src="~/assets/axisarth/js/slick.min.js"></script>
+    <script src="~/assets/axisarth/js/numinate.min.js"></script>
+    <script src="~/assets/axisarth/js/imagesloaded.min.js"></script>
+    <script src="~/assets/axisarth/js/jquery-isotope.js"></script>
+    <script src="~/assets/axisarth/js/jquery.event.move.js"></script>
+    <script src="~/assets/axisarth/js/jquery.twentytwenty.js"></script>
+    <script src="~/assets/axisarth/js/circle-progress.min.js"></script>
+    <script src="~/assets/axisarth/js/main.js"></script>
+
+    <!-- Revolution Slider -->
+    <script src="~/assets/axisarth/revolution/js/slider.js"></script>
+    <script src='~/assets/axisarth/revolution/js/revolution.tools.min.js'></script>
+    <script src='~/assets/axisarth/revolution/js/rs6.min.js'></script>
+    <!-- Javascript end-->
+    <!--Gallery Start-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js%401.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- Mixitup -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.2.2/mixitup.min.js'></script>
+    <!-- fancybox -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js'></script>
+    <!-- Fancybox js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        /*Downloaded from https://www.codeseek.co/ezra_siton/mixitup-fancybox3-JydYqm */
+        // 1. querySelector
+        var containerEl = document.querySelector(".portfolio-item");
+        // 2. Passing the configuration object inline
+        //https://www.kunkalabs.com/mixitup/docs/configuration-object/
+        var mixer = mixitup(containerEl, {
+            animation: {
+                effects: "fade translateZ(-100px)",
+                effectsIn: "fade translateY(-100%)",
+                easing: "cubic-bezier(0.645, 0.045, 0.355, 1)"
+            }
+        });
+        // fancybox insilaze & options //
+        $("[data-fancybox]").fancybox({
+            loop: true,
+            hash: true,
+            transitionEffect: "slide",
+            /* zoom VS next////////////////////
+            clickContent - i modify the deafult - now when you click on the image you go to the next image - i more like this approach than zoom on desktop (This idea was in the classic/first lightbox) */
+            clickContent: function (current, event) {
+                return current.type === "image" ? "next" : false;
+            }
+        });
+    </script>
+
+
+</body>
+
+
+<!-- Mirrored from axisarthgroup.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 May 2024 09:48:29 GMT -->
+</html>
+

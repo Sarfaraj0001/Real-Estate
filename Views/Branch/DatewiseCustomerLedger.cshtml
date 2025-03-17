@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.DatewiseCustomerList>
+    @using ODHDEVELOPERS.Models
+    @{
+        ViewBag.Title = "DatewiseCustomerLedger";
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        var a = 0;
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(c => c.Id == 1);
+        var planlist = (from p in db.Plans where p.status == 1 select p).ToList();
+    }
+
+    <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet">
+    <script src="~/Content/datepicker/jquery.plugin.js"></script>
+    <script src="~/Content/datepicker/jquery.datepick.js"></script>
+    <script>
+        $(function () {
+            $('#popupDatepicker').datepick();
+            $('#popupDatepicker1').datepick();
+            $('#inlineDatepicker').datepick({ onSelect: showDate });
+        });
+
+        function showDate(date) {
+            alert('The date chosen is ' + date);
+        }
+    </script>
+
+    <div class="container-fluid mt-4 FormContainer" id="divid">
+        <h2 class="text-center mb-4">Datewise @mr.custname</h2>
+        <div class="border p-4 rounded shadow formtag" style="margin-top:25px">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Start Date:</label>
+                    <input type="date" class="form-control formInput" name="sdate" required>
+                </div>
+
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">End Date:</label>
+                    <input type="date" class="form-control formInput" name="edate" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Select @mr.planname Type</label>
+                    <select name="planname" class="form-control formInput">
+                        <option selected value="">--Select--</option>
+                        @foreach (var plan in planlist)
+                        {
+                            <option value="@plan.shortcutname">@plan.shortcutname</option>
+                        }
+                    </select>
+                </div>
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                     <button class="btn btn-lg formButtom" onclick="target='_blank'">Search</button>
+                </div>
+            }
+        </div>
+    </div>
+
+        

@@ -1,0 +1,279 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.Emp_atten>
+@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "updateatten";
+    Layout = "~/Views/Shared/_HRLayout.cshtml";
+    UsersContext db= new UsersContext();
+    var a = 0;
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#memberid").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/HR/AutoCompletemember_Atten",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.empid };
+
+
+                        }))
+
+                    }
+                })
+            }
+        }),
+        $("#date1").datepicker();
+       
+        $("#attendencefrom").removeAttr('readonly');
+        $("#attendenceto").removeAttr('readonly');
+       
+    });
+</script>
+<script>
+    function getvalue()
+    {
+        debugger;
+        var value=$("#att").val();
+        if(value=="L")
+        {
+            $("#attendencefrom").attr('readonly',true);
+            $("#attendencefrom").val('empty');
+            $("#attendenceto").attr('readonly',true);
+            $("#attendenceto").val('empty');
+           
+            
+        }
+        else
+        {
+            $("#attendencefrom").removeAttr('readonly');
+            $("#attendenceto").removeAttr('readonly');
+          
+        }
+    }
+</script>
+
+
+
+                    <div class="page-content">
+
+                <div class="container">
+
+<div class="page-toolbar">
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Update Attendance</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                        
+                      
+
+                    </div> 
+                    <form method="post" action="~/HR/updateatten">
+                   <div class="row">
+                       
+               @if (TempData["msg"] != null)
+               {
+                   <span style="color:red">@TempData["msg"]</span> 
+               }
+                   
+                   <div class="col-md-6" style="width: 100%">
+
+                       <div class="block">
+
+                           <div class="block-content controls">
+
+                               <div class="row-form">
+
+                                   <div class="col-md-9">
+                                       <div class="input-group">
+                                           <span class="input-group-addon">
+                                               <label class="width">Select Date</label></span>
+                                           <input type="text" class="form-control" name="date1" id="date1"><span class="input-group-addon"><label class="width" style="width:15px;"><span class="fa fa-calender-alt"></span></label></span> 
+                                       </div>
+                                   </div>
+                               </div>
+
+
+                               <div class="page-toolbar-block pull-right">
+                                   <div class="widget-info widget-from">
+
+                                       <button value="Search" type="submit" name="command" class="btn btn-primary"><i class="fa fa-search"></i>Search</button>
+
+                                   </div>
+                               </div>
+
+
+                             
+                           </div>
+
+
+                       </div>
+                   </div>
+                   
+                   
+                       </div>
+ 
+  
+                  <div id="1">
+
+                      @if (Model != null)
+                      {
+                     
+<table border="1" style="margin-left:1%; margin-right:1px; width:98%; margin-bottom:30px; ">
+    @using (Html.BeginForm())
+                {
+                    foreach (var item in Model)
+                    {
+                        var newdate = Convert.ToDateTime(TempData["date1"]);
+                        var countemp=db.Emp_attens.Where(aa=>aa.empid==item.empid && aa.Attendencedate==newdate).Count();
+                        var attenstatus = "NA";
+                        if (countemp > 0)
+                        {
+                            attenstatus = db.Emp_attens.Where(aa => aa.empid == item.empid && aa.Attendencedate == newdate).FirstOrDefault().atten;     
+                        }
+                        
+                        if (a == 0)
+                        {
+                         
+    <tr>
+        <th style="width:8%;text-align:center;">
+           <label id="sn" ><b>S.N.</b></label>
+            </th>
+        <th style="width:12%;text-align:center;">
+           <label id="empid"><b>Emp ID</b></label>
+            </th>
+         <th style="width:20%;text-align:center;">
+           <label id="name"><b>Name</b></label>
+        </th>
+        <th style="width:10%;text-align:center;">
+           <label ><b>Current Status</b></label>
+        </th>
+      <th style="width:10%;text-align:center;">
+           <label ><b>Action</b></label>
+        </th>
+        <th style="width:10%;text-align:center;">
+           <label ><b>Timming(From)</b></label>
+        </th>
+        <th style="width:10%;text-align:center;">
+           <label ><b>Timming(To)</b></label>
+        </th>
+       
+        <th style="width:17%;text-align:center;">
+           <label ><b>Attendencedate</b></label>
+        </th>
+    </tr>
+        
+                        }
+                        a = a + 1;
+
+
+    <tr style="text-align:center;">
+        <td>
+            @a
+            
+        </td>
+         <td>
+            <span id="db">@Html.DisplayFor(modelItem => item.empid)</span>
+        </td>
+            <td>
+            <span id="ab">@Html.DisplayFor(modelItem => item.name)</span>
+        </td>
+         <td>
+            <span >@attenstatus</span>
+        </td>
+       <td>
+         
+           <select id="att" name="att" onchange="getvalue()">
+               <option selected="selected" value="A">Absent</option>
+               <option value="P">Present</option>
+               <option value="A">Week Off</option>
+
+               
+               </select>
+           </td>
+        <td>
+       <input type="time" name="From" id="attendencefrom">
+             </td>
+         <td>
+       <input type="time" name="To" id="attendenceto">
+             </td>
+
+        
+         <td>
+           <input type="text" name="Attendencedate1" id="time" value="@TempData["date1"]" readonly="true">
+           </td>
+
+         </tr>
+        <tr>
+           
+        </tr>
+                    
+        
+                    }
+                }
+    
+</table>
+                          <button value="submit" type="submit" name="command" class="btn btn-primary pull-right" onclick="gedrecord(id)">Enter</button>
+                      }
+              </div> 
+                     </form>
+                    </div>
+                        </div>
+<script>
+    $(document).ready(function () {
+        $('#gedrecord(id)').click(function () {
+            var empid = $('#db').val(empid);
+            var name = $('#ab').val(name);
+            var atten = $('#att').val(atten);
+            var From = $('#endtime').val(From);
+            var To = $('#end').val(To);
+            var Attendencedate = $('#Time').val(Attendencedate);
+ //var Data = 'empid=' + empid & 'name=' + name & 'atten=' + atten & 'From=' + From & 'To=' + To & 'Attendencedate=' + Attendencedate;
+            $.ajax({
+                type: "Get",
+                Url: "/attandance/HR",
+                Data:{employeid:empid,attend:atten,Namee:name,Fromm:From,Too:To,Attendence:Attendencedate},
+                success: function (ht) {
+                    $('#gedrecord(id)').val('data sent');
+                }
+            });
+            return false;
+        });
+    });
+    </script>
+<script type="text/javascript">
+
+    $('#gedrecord(id)').click(function () {
+        var empid = $('#db').val(empid);
+        var name = $('#ab').val(name);
+        var atten = $('#att').val(atten);
+        var From = $('#endtime').val(From);
+        var To = $('#end').val(To);
+        var Attendencedate = $('#Time').val(Attendencedate);
+                $.ajax({
+                    url: "/HR/AutoCompletemember_Atten",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.empid };
+
+
+                        }))
+
+                    }
+              
+            }
+        });
+
+
+    
+</script>
+

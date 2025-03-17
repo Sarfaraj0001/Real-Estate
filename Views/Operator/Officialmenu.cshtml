@@ -1,0 +1,154 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var br = db.Operators.Single(b => b.OperatorId == User.Identity.Name);
+    var mr = db.Members.Single(m => m.Id == 1);
+ 
+    var plan1 = db.Plans.Single(p1 => p1.Plancode == 1);
+    var plan2 = db.Plans.Single(p2 => p2.Plancode == 2);
+    var plan3 = db.Plans.Single(p3 => p3.Plancode == 3);
+    var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
+    
+    var f1 = db.VFormatTabs.Single(f => f.Id == 1);
+    var f2 = db.VFormatTabs.Single(f => f.Id == 2);
+    var f3 = db.VFormatTabs.Single(f => f.Id == 3);
+
+    Layout = "~/Views/Shared/_OperatorLayout.cshtml";
+    ViewBag.Title = "Officialmenu";
+}
+
+<div class="page-content">
+
+                <div class="container">
+
+<div class="page-toolbar">
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Welcome @br.OperatorId</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                        
+                      
+
+                    </div>
+
+                    <div class="widget stacked">
+					
+				<div class="widget-header">
+					<i class="icon-list-alt"></i>
+					<h3>Official Reports</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">
+					
+					<div class="shortcuts">
+						
+						<a href="~/Operator/Customer" class="shortcut">
+							<img alt="" src="~/Images/icon/26.png" />
+							<span class="shortcut-label">@mr.custname List</span><br/><br/>
+						</a>
+                        <a href="~/Operator/DatewiseCustomer" class="shortcut">
+							<img alt="" src="~/Images/icon/26.png" />
+							<span class="shortcut-label">Datewise @mr.custname List</span><br/>
+						</a>
+						@*<a href="~/Operator/Datewisesaving" class="shortcut">
+							<img alt="" src="~/Images/icon/26.png" />
+							<span class="shortcut-label">Datewise Saving Account</span><br/>
+						</a>
+
+                        <a href="~/Operator/DateWiseMember" class="shortcut">
+							<img alt="" src="~/Images/icon/MemberIcon.png" />
+							<span class="shortcut-label">Datewise Member List</span><br/>	
+						</a>*@
+						  <a href="~/Operator/MemberWiseAccountDetail" class="shortcut">
+							<img alt="" src="~/Images/icon/MemberIcon.png" />
+							<span class="shortcut-label">All Member List</span>	<br/>	<br/> 
+						</a>
+						@*<a href="~/Operator/RdPlanList" class="shortcut">
+							<img alt="" src="~/Images/icon/rd.jpg" />
+							<span class="shortcut-label">@plan1.Planname List</span>
+						</a>
+                     
+                       <a href="~/Operator/FDPlanList" class="shortcut">
+							<img alt="" src="~/Images/icon/fd.png" />
+							<span class="shortcut-label">@plan2.Planname List</span><br/>
+						</a>			
+                          <a href="~/Operator/NFPlanList" class="shortcut">
+							<img alt="" src="~/Images/icon/futureplans.jpg" />
+							<span class="shortcut-label">@plan3.Planname List</span><br/>
+						</a>
+                     
+                        <a href="~/Operator/PPlanList" class="shortcut">
+								<img alt="" src="~/Images/icon/pension.jpg" />
+							<span class="shortcut-label">@plan4.Planname List</span><br/>
+						</a>*@
+                           
+                       <a href="~/Operator/RankList" class="shortcut">
+							<img alt="" src="~/Images/icon/28.png" />
+							<span class="shortcut-label">@mr.rankname List</span><br/>
+						</a>
+
+                        <a href="~/Operator/CustumerInstallmentReport" class="shortcut">
+								<img alt="" src="~/Images/icon/73.png" />
+							<span class="shortcut-label">@mr.custname Ledger-Details</span>
+						</a>
+                        
+						<a href="~/Operator/DailyExpense" class="shortcut">
+							<img alt="" src="~/Images/icon/76.png" />
+							<span class="shortcut-label">Daily Expense Details</span>
+						</a>
+                        <a href="~/Operator/RPStatementReport" class="shortcut">
+							<img alt="" src="~/Images/icon/11.png" />
+							<span class="shortcut-label">RP Statement Report</span>
+						</a>
+                        <a href="~/Operator/CompleteDailyCollection" class="shortcut">
+							<img alt="" src="~/Images/icon/11.png" />
+							<span class="shortcut-label">Datewise Collection Details</span>
+						</a>
+						<a href="~/Operator/DailyCollectionReport" class="shortcut">
+							<img alt="" src="~/Images/icon/11.png" />
+							<span class="shortcut-label">Daily Collection</span><br/>
+						</a>
+                         <a href="~/Operator/DateWiseChequeCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/cheq.png" />
+                        <span class="shortcut-label">Datewise Cheque Collection</span>
+                    </a>
+                      
+						<a href="~/Operator/DateWiseCollection" class="shortcut">
+								<img alt="" src="~/Images/icon/74.png" />
+							<span class="shortcut-label">Datewise Business</span>	
+						</a>
+						
+					@*<a href="~/Operator/CsswiseCollection" class="shortcut">
+								<img alt="" src="~/Images/icon/74.png" />
+							<span class="shortcut-label">Css Wise Business</span>
+						</a>*@
+						
+						<a href="~/Operator/FundMobilisation" class="shortcut">
+							<img alt="" src="~/Images/icon/5.png" />
+							<span class="shortcut-label">Fund Mobilisation</span>
+						</a>
+                        	<a href="~/Operator/MaturityPaidDetails" class="shortcut">
+							<img alt="" src="~/Images/icon/27.png" />
+							<span class="shortcut-label">Maturity Paid Details</span>
+						</a>
+					@*	<a href="~/Operator/AccBalanceReport" class="shortcut">
+							<img alt="" src="~/Images/icon/Balanceicon.jpg" />
+							<span class="shortcut-label">A/c Balance Report</span>
+						</a>
+                        <a href="~/Operator/AccStatementReport" class="shortcut">
+							<img alt="" src="~/Images/icon/trans.png" />
+							<span class="shortcut-label">A/c Statement Report</span>	
+						</a>*@
+                        <a href="~/Operator/Advancepaymentreport" class="shortcut">
+							<img alt="" src="~/Images/icon/advancepay.jpg" />
+							<span class="shortcut-label">Advance Payment Report</span>
+						</a>
+					</div> <!-- /shortcuts -->	
+				
+				</div> <!-- /widget-content -->
+				
+			</div>
+                     </div>
+
+     </div>

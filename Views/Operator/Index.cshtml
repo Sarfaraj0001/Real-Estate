@@ -1,0 +1,321 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.Operator>
+@using ODHDEVELOPERS.Models;
+@{
+    
+    UsersContext db = new UsersContext();
+    var plan1 = db.Plans.Single(p1 => p1.Plancode == 1);
+    var plan2 = db.Plans.Single(p2 => p2.Plancode == 2);
+    var plan3 = db.Plans.Single(p3 => p3.Plancode == 3);
+    var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
+    var item = db.Operators.Single(b => b.OperatorId == User.Identity.Name);
+    Layout = "~/Views/Shared/_OperatorLayout.cshtml";
+    ViewBag.Title = "Index";
+
+    var mr = db.Members.Single(m => m.Id == 1);
+    var fromyear = 0;
+    DateTime today1 = DateTime.Now.Date;
+    DateTime yesterday1 = DateTime.Now.AddDays(-1).Date;
+    int month1 = DateTime.Now.Month;
+    int year1 = DateTime.Now.Year;
+    if(month1 <=3)
+    {
+        fromyear = DateTime.Now.Year-1;
+    }
+    else
+    {
+        fromyear = DateTime.Now.Year;
+    }
+    var frommonth = 4;
+    var days = 01;
+    DateTime from2 = Convert.ToDateTime(frommonth + "-" + days + "-" + fromyear);
+    var toyear = fromyear + 1;
+    var tomonth = 3;
+    var daysto = 31;
+    DateTime to2 = Convert.ToDateTime(tomonth + "-" + daysto + "-" + toyear);
+    var finyear = fromyear + "-" + toyear;
+    var tbd = (from ap in db.appltabs where ap.status == 1 select ap.bondid);
+
+    var bcr = db.Database.SqlQuery<Dashboard>("exec Dashboard '" + item.OperatorId + "'").Single();    
+
+    
+}
+
+
+<div class="page-content">
+    <div class="container">
+        <div class="page-toolbar">
+            <div class="page-toolbar-block">
+                <div class="page-toolbar-title">Welcome @item.OperatorName</div>
+                <div class="page-toolbar-subtitle"></div>
+            </div>
+        </div>
+
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <i class="icon-home"></i>
+                <h3><b>Home</b></h3>
+            </div>
+            <!-- /widget-header -->
+
+          <div class="widget-content">
+
+                    <div class="shortcuts">
+                        <div class="widget-header">
+
+                            <h3><b>Total Collection(@item.OperatorName)</b></h3>
+                        </div>
+
+                        <a href="#" class="shortcut" style="width: 210px; padding: 0px; margin: 0px; text-align: left;">
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Type</b></h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Booking Amount</b></h3>
+                        </div>
+                      
+
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Renewal </b></h3>
+                        </div>
+                     
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Advance Amount</b></h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>@mr.custname Fees </b></h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>@mr.agentname Fees </b></h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Member Fees</b></h3>
+                        </div>
+                    
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Late Fees</b></h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Relief </b></h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Spot</b></h3>
+                        </div>
+                          <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Voucher</b></h3>
+                        </div>
+                          <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Expense</b></h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Total </b></h3>
+                        </div>
+                    </a>
+
+                    <a href="#" class="shortcut" style="width: 115px; padding: 0px; margin: 0px;">
+                        <div class="widget-header">
+                            <h3><b>Today's </b></h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.todaybooking</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.todayRenewalcoll</h3>
+                        </div>
+                      
+                        <div class="widget-header">
+                            <h3>@bcr.todayadvance</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.todayappfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.todayagfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.todaymemberfee</h3>
+                        </div>
+
+                       <div class="widget-header">
+                            <h3>@bcr.TodayLateFee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.TodayReleaf</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.todayspot  </h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.todayvoucher</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.todayexpense</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.todaybalance  </h3>
+                        </div>
+
+                    </a>
+                    <a href="#" class="shortcut" style="width: 115px; padding: 0px; margin: 0px;">
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;"><b>Yesterday's </b></h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdaybooking</h3>
+                        </div>
+                       
+
+
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayRenewalcoll</h3>
+                        </div>
+                     
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayadvance</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayappfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayagfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdaymemberfee</h3>
+                        </div>
+                         <div class="widget-header">
+                            <h3>@bcr.yesterdayLateFee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayReleaf</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayspot  </h3>
+                        </div>
+                   
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayvoucher</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.yesterdayexpense</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3 style="margin-left: 10px;">@bcr.yesterdaybalance  </h3>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="shortcut" style="width: 115px; padding: 0px; margin: 0px;">
+                        <div class="widget-header">
+                            <h3><b>@DateTime.Now.Date.ToString("MMMM")</b> </h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.monthlybooking</h3>
+                        </div>
+                      
+
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyRenewalcoll</h3>
+                        </div>
+                      
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyadvance</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyappfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyagfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.monthlymemberfee</h3>
+                        </div>
+                      <div class="widget-header">
+                            <h3>@bcr.monthlyLateFee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyReleaf</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyspot  </h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyvoucher</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.monthlyexpense</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.monthlybalance </h3>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="shortcut" style="width: 115px; padding: 0px; margin: 0px;">
+                        <div class="widget-header">
+                            <h3><b>@finyear </b></h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.totalbooking</h3>
+                        </div>
+                       
+
+                        <div class="widget-header">
+                            <h3>@bcr.totalRenewalcoll</h3>
+                        </div>
+                      
+                        <div class="widget-header">
+                            <h3>@bcr.totaladvance</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.totalappfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.totalagfee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.totalmemberfee</h3>
+                        </div>
+
+                      <div class="widget-header">
+                            <h3>@bcr.totalLateFee</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.totalReleaf</h3>
+                        </div>
+
+                        <div class="widget-header">
+                            <h3>@bcr.totalspot  </h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.totalvoucher</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.totalexpense</h3>
+                        </div>
+                        <div class="widget-header">
+                            <h3>@bcr.totalbalance </h3>
+                        </div>
+                    </a>
+                    </div>
+                    <!-- /shortcuts -->
+
+                </div>
+            <!-- /widget-content -->
+
+        </div>
+    </div>
+
+</div>

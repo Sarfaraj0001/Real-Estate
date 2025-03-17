@@ -1,0 +1,289 @@
+﻿@using ODHDEVELOPERS.Models;
+@model DealSheet
+@{
+    ViewBag.Title = "DealSheetShow";
+    Layout = "~/Views/Shared/_BranchLayout.cshtml";
+    UsersContext db = new UsersContext();
+    var item = Model;
+    var chk1 = ""; var chk2 = "";
+}
+
+@*<style>
+    input {
+        pointer-events:none;
+    }     
+   
+</style>*@
+<script>
+    $(document).ready(function () {
+        $("input").attr("disabled", true).css("color","#444");
+    });
+
+</script>
+<div class="container-fluid mt-4 FormContainer">
+    <h2 class="text-center mb-4">Deal Sheet</h2>
+    <form enctype="multipart/form-data" method="post" id="_submit" class="mt-3">
+        <div class="row justify-content-between ml-0" style="width:100%;">
+            <!-- Personal Details -->
+            <div class="column mb-4" style="width:49%;">
+                <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                    <h4 class="text-center mb-1">Personal Details</h4>
+                    <!-- Branch Code -->
+                    <div class="mb-3">
+                        <label for="BranchCode" class="form-label formLabel">Deal Id:</label>
+                        <input type="text" class="form-control formInput " id="userid" required name="userid" value=" @item.userid" readonly="true" />
+                    </div>
+                    <!-- Form Fee -->
+                    <div class="mb-3">
+                        <label for="formfee" class="form-label formLabel">Customer Name:</label>
+                        <input type="text" class="form-control formInput " id="name" value=" @item.customername" required name="customername" readonly="true"/>
+                    </div>
+                    <!-- Member Id -->
+                    <div class="mb-3">
+                        <label for="newmemberid" class="form-label formLabel">Email Id:</label>
+                        <input type="text" class="form-control formInput " id="email" value=" @item.email" name="email" />
+                    </div>
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label formLabel">Mobile No:</label>
+                        <input type='tel' title="Invalid mobile format" pattern="[6789][0-9]{9}" maxlength="10" name="mobile" id="mobile" value=" @item.mobile" required class="form-control formInput " />
+
+                    </div>
+                    <!-- Father's Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label formLabel">Alt. Mobile No:</label>
+                        <input type='tel' title="Invalid mobile format" pattern="[6789][0-9]{9}" maxlength="10" name="almobile" id="almobile" value=" @item.almobile" required class="form-control formInput " />
+
+                    </div>
+                    <!-- Mother's Name -->
+                    <div class="mb-3">
+                        <label for="Mother" class="form-label formLabel">Present Occupation:</label>
+                        <input type="text" class="form-control formInput " id="occupation" value=" @item.occupation" name="occupation" />
+                    </div>
+                    <!-- Father's Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label formLabel">Introducer Name:</label>
+                        <input type="text" name="introname" id="introname" value=" @item.introname" required class="form-control formInput " />
+                    </div>
+                    <!-- Introducer Code -->
+                    <div class="mb-3">
+                        <label for="NewIntroducerId" class="form-label formLabel">Introducer Mobile No:</label>
+                        <input type="text" id="intromobile" name="intromobile" value=" @item.intromobile" required class="form-control formInput">
+                    </div>
+                    <!-- Nationality -->
+                    <div class="mb-3 position-relative">
+                        <label for="Nationality" class="form-label formLabel">Select Gender:</label>
+                        <select name="Gender" id="Gender" class="form-control formInput" required>
+                            <option selected value="@item.gender">@item.gender</option>
+                            <option value="@item.gender">@item.gender</option>
+                        </select>
+                    </div>
+                    <!-- DOB -->
+                    <div class="mb-3">
+                        <label for="Dob" class="form-label formLabel">Customer Pic:</label>
+                        <input type="file" name="intropic" id="intropic" @item.intropic class="form-control formInput" />
+                    </div>
+                </div>
+                <!-- Bank Details -->
+                <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                    <h4 class="text-center mb-1">Address Details</h4>
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="Address" class="form-label formLabel">Address:</label>
+                        <textarea type="text" id="Address" name="Address" value="" required class="form-control formInput">@item.address</textarea>
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">City:</label>
+                        <input type="text" required name="city" value="@item.city" class="form-control formInput" />
+                    </div>
+                    <!-- District -->
+                    <div class="mb-3">
+                        <label for="District" class="form-label formLabel">State:</label>
+                        <input type="text" id="state" name="state" value="@item.state" required class="form-control formInput" />
+                    </div>
+                    <!-- Landline No -->
+                    <div class="mb-3">
+                        <label for="PinCode" class="form-label formLabel">District:</label>
+                        <input type="text" required name="district" value="@item.district" class="form-control formInput" />
+                    </div>
+                    <!-- Landline No -->
+                    <div class="mb-3">
+                        <label for="PinCode" class="form-label formLabel">Pincode:</label>
+                        <input type="number" name="pincode" value="@item.pincode" class="form-control formInput" />
+                    </div>
+                </div>
+            </div>
+            <!-- second column -->
+            <!-- Address and Nominee Details -->
+            <div class="column mb-4" style="width:49%;">
+                <!-- Guardian Details -->
+                <div class="p-4 rounded formtag mb-4" style="height: max-content;">
+                    <h4 class="text-center mb-1">Details of Pricing</h4>
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="Address" class="form-label formLabel">Unit No:</label>
+                        <input type="text" id="unitno" name="unitno" value="@item.unitno" required class="form-control formInput" />
+                    </div>
+                    <!-- District -->
+                    <div class="mb-3">
+                        <label for="District" class="form-label formLabel">Phase No:</label>
+                        <input type="number" id="phaseno" name="phaseno" required value="@item.phaseno" class="form-control formInput" />
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">Block No:</label>
+                        <input type="text" id="blockno" name="blockno" value="@item.blockno" required class="form-control formInput" />
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">Unit Area In Sq. Ft:</label>
+                        <input type="number" id="unitarea" name="unitarea" required value="@item.unitarea" class="form-control formInput" />
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">Unit Type:</label>
+                        @if (item.unittype == "Residential")
+                        {
+                            chk1 = "checked";
+                        }
+
+                        else if (item.unittype == "Residential cum commercial")
+                        {
+                            chk2 = "checked";
+                        }
+                        <input type="radio" id="Residential" name="unittype" value="@item.unittype" @chk1>
+                        Residential
+                        <input type="radio" id="commercial" name="unittype" value="@item.unittype" @chk2>
+                        Residential cum commercial
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">Unit Dimensions:</label>
+                        @{
+                            chk1 = "";
+                            chk2 = "";
+                        }
+                        @if (item.unitdimension == "30*60")
+
+                        {
+
+                            chk1 = "checked";
+                        }
+                        else if (item.unitdimension == "20*45")
+
+                        {
+                            chk2 = "checked";
+                        }
+                        <input type="radio" id="Unit1" name="unitdimension" value="@item.unitdimension" @chk1>
+                        30*60
+                        <input type="radio" id="Unit2" name="unitdimension" value="@item.unitdimension" @chk2>
+                        20*45
+                    </div>
+                    <!-- Nominee name -->
+                    <div class="mb-3">
+                        <label for="Address" class="form-label formLabel">Preference of Unit :</label>
+                        @*@if (item.preferenceofunit == "Normal")
+
+                        {
+                            chk = "checked";
+                        }
+                         else if (item.preferenceofunit == "Corner")
+
+                        {
+                            chk = "checked";
+                        }
+                         else if (item.preferenceofunit == "Park Facing")
+
+                        {
+                            chk = "checked";
+                        }
+                         else if (item.preferenceofunit == "30’ wide Road")
+
+                        {
+                            chk = "checked";
+                        }*@
+                        <input type="hidden" id="hiddenpref" value="@item.preferenceofunit">
+                        <input type="radio" id="Normal" name="preferenceofunit" value="Normal">
+                        Normal
+                        <input type="radio" id="Corner" name="preferenceofunit" value="Corner">
+                        Corner
+                        <input type="radio" id="ParkFacing" name="preferenceofunit" value="Park Facing">
+                        Park Facing
+                        <input type="radio" id="wideRoad" name="preferenceofunit" value="30’ wide Road">
+                        30’ wide Road
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">Basic Sale Price in Rs:</label>
+                        <input type="number" id="basesaleprice" value="@item.basesaleprice" name="basesaleprice" required class="form-control formInput" />
+                    </div>
+                    <!-- District -->
+                    <div class="mb-3">
+                        <label for="District" class="form-label formLabel">Plot Cost:</label>
+                        <input type="number" id="totalplotcost" value="@item.plotcost" name="plotcost" required class="form-control formInput" />
+                    </div>
+                    <!-- Pin Code -->
+                    <div class="mb-3">
+                        <label for="PinCode" class="form-label formLabel">Preferential Location Charges:</label>
+                        <input type="number" id="preloccharge" name="preloccharge" value="@item.preloccharge" required class="form-control formInput" />
+                    </div>
+                    <!-- Nominee name -->
+                    <div class="mb-3">
+                        <label for="Address" class="form-label formLabel">Club Membership Charges:</label>
+                        <input type="number" id="cmembershipcharge" name="cmembershipcharge" value="@item.cmembershipcharge" required class="form-control formInput" />
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">Power Backup Charges:</label>
+                        <input type="number" id="pbackupcharge" name="pbackupcharge" value="@item.pbackupcharge" required class="form-control formInput" />
+                    </div>
+                    <!-- District -->
+                    <div class="mb-3">
+                        <label for="District" class="form-label formLabel">Discount if any:</label>
+                        <input type="number" id="discount" name="discount" value="@item.discount" required class="form-control formInput" />
+                    </div>
+                    <!-- Nominee name -->
+                    <div class="mb-3">
+                        <label for="Address" class="form-label formLabel">Total Unit Cost Rs:</label>
+                        <input type="number" id="totalunitcost" name="totalunitcost" value="@item.totalunitcost" required class="form-control formInput" />
+                    </div>
+                    <!-- State -->
+                    <div class="mb-3">
+                        <label for="State" class="form-label formLabel">Valid Days:</label>
+                        <input type="number" id="dealdays" name="dealdays" value="@item.dealdays" required class="form-control formInput" />
+                    </div>
+                    <!-- District -->
+                    <div class="mb-3">
+                        <label for="District" class="form-label formLabel">Valid Date:</label>
+                        <input type="text" readonly="true" id="validdate" value="@item.validdate" name="validdate" required class="form-control formInput" />
+                    </div>
+                    <!-- District -->
+                    <div class="mb-3">
+                        <label for="District" class="form-label formLabel">Remark:</label>
+                        <input type="text" readonly="true" id="Remark" value="@item.extra2" name="validdate" required class="form-control formInput" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        var getvalue = $("#hiddenpref").val();
+        $("[name=preferenceofunit]").each(function () {
+            var c = $(this), v = c.val();
+            if (v == getvalue) {
+                c.attr("checked", true);
+                return false;
+            }
+
+        });
+
+    });
+
+</script>

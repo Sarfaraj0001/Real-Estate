@@ -1,0 +1,49 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var br = db.CompanyInfos.Single(b => b.Id == 1);
+    var mr = db.Members.Single(m => m.Id == 1);    
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "AppMenu";
+}
+
+<div class="page-content">
+
+    <div class="container">
+
+        <div class="page-toolbar">
+
+            <div class="page-toolbar-block">
+                <div class="page-toolbar-title">Welcome @br.CompanyName</div>
+                <div class="page-toolbar-subtitle"></div>
+            </div>
+        </div>
+
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <i class="icon-credit-card"></i>
+                <h3>App Setting</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/Admin/SetPaymethod" class="shortcut">
+                        <img alt="" src="~/Images/icon/icons-wallet.PNG" class="imgTag" />
+                        <span class="shortcut-label">Pay Method</span>                        
+                    </a>
+                     <a href="~/Admin/Updatecertificate" class="shortcut">
+                        <img alt="" src="~/Images/icon/icon-api-key.PNG" class="imgTag" />
+                        <span class="shortcut-label">API Key</span>                       
+                    </a>
+                </div>
+                <!-- /shortcuts -->
+
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,446 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var logo = string.Empty;
+    var companyname = string.Empty;
+    var incometype = string.Empty;
+    var mr = db.Members.Single(m => m.Id == 1);
+    var r = db.CompanyInfos.Single(ci => ci.AdminId == User.Identity.Name);
+    var plan1 = db.Plans.Single(p1 => p1.Plancode == 1);
+    var plan2 = db.Plans.Single(p2 => p2.Plancode == 2);
+    var plan3 = db.Plans.Single(p3 => p3.Plancode == 3);
+    var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
+    
+    logo = r.CompanyLogo;
+    companyname = r.CompanyName;
+    incometype = r.IncomeType;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "CompleteReport";
+}
+
+<div class="page-content">
+
+    <div class="container" style="width: 775px; padding-left: 0px; padding-right: 0px;">
+
+        <div class="page-toolbar" style="width: 770px;">
+
+            <div class="page-toolbar-block">
+                <div class="page-toolbar-title"></div>
+                @*  <div class="page-toolbar-subtitle">Welcome, @br.CompanyName</div>*@
+
+                <h4><b>Welcome, @r.CompanyName</b></h4>
+            </div>
+            <div style="margin-top: 0px; float: right; margin-right: 10px;">
+            </div>
+
+        </div>
+
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <i class="icon-list-alt"></i>
+                <h3>Field Reports</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+
+                <div class="shortcuts">
+
+
+                    <a href="~/Admin/AllBroker" class="shortcut">
+                        <img alt="" src="~/Images/icon/7.png" />
+                        <span class="shortcut-label">@mr.agentname List</span><br />
+                    </a>
+
+                    <a href="~/Admin/DatewiseBroker" class="shortcut">
+                        <img alt="" src="~/Images/icon/63.png" />
+                        <span class="shortcut-label">Datewise @mr.agentname List</span>
+                    </a>
+
+                    <a href="~/Admin/BrokerChain" class="shortcut">
+                        <img alt="" src="~/Images/icon/52.png" />
+                        <span class="shortcut-label">@mr.agentname Chain</span><br />
+                    </a>
+
+
+                    <a href="~/Admin/BrokerPaymentDetail" class="shortcut">
+                        <img alt="" src="~/Images/icon/20.png" />
+                        <span class="shortcut-label">@mr.agentname Payment Details</span>
+                    </a>
+                    <a href="~/Admin/Selfbusiness" class="shortcut">
+								<img alt="" src="~/Images/icon/33.png" />
+							<span class="shortcut-label">@mr.agentname Business Details</span>
+						</a>
+
+                    <a href="~/Admin/BrokerAccount" class="shortcut">
+                        <img alt="" src="~/Images/icon/33.png" />
+                        <span class="shortcut-label">@mr.agentname Account Details</span>
+                    </a>
+
+
+
+                    <a href="~/Admin/BrokerwiseAccountDetail" class="shortcut">
+                        <img alt="" src="~/Images/icon/16.png" />
+                        <span class="shortcut-label">Datewise @mr.agentname Account Details</span>
+                    </a>
+
+                    <a href="~/Admin/BrokerSelfCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/11.png" />
+                        <span class="shortcut-label">@mr.agentname Self Collection</span>
+                    </a>
+                   @* <a href="~/Admin/QuotaCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/quota_icon.gif" />
+                        <span class="shortcut-label">@mr.agentname Quota Collection</span>
+                    </a>
+                     <a href="~/Admin/QuotaAchive" class="shortcut">
+							<img alt="" src="~/Images/icon/quota_icon.gif" />
+							<span class="shortcut-label"> Quota Collection</span>
+						</a>*@
+                    <a href="~/Admin/BrokerChainCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/37.png" />
+                        <span class="shortcut-label">@mr.agentname Chain Collection</span>
+                    </a>
+
+                    <a href="~/Admin/BrokerSelfDueCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/28.png" />
+                        <span class="shortcut-label">@mr.agentname Self Due Collection</span>
+                    </a>
+                    <a href="~/Admin/BrokerChainDueCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/53.png" />
+                        <span class="shortcut-label">@mr.agentname Chain Due Collection</span>
+                    </a>
+
+                    <a href="~/Admin/Voucher" class="shortcut">
+                        <img alt="" src="~/Images/icon/36.png" />
+                        <span class="shortcut-label">@mr.agentname Monthly Payment</span>
+                    </a>
+
+                       <a href="~/Admin/PromotionList" class="shortcut">
+                        <img alt="" src="~/Images/icon/promotion.png"/>
+                        <span class="shortcut-label">@mr.agentname Promotion Report</span>
+                    </a>
+                    <a href="~/Admin/BDCReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/54.png" />
+                        <span class="shortcut-label">TDS Report</span><br />
+                    </a>
+
+                    <a href="~/Admin/DWDueCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/54.png" />
+                        <span class="shortcut-label">Bondwise Due Collection</span>
+                    </a>
+                   
+                </div>
+                <!-- /shortcuts -->
+
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+
+
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <i class="icon-list-alt"></i>
+                <h3>Official Reports</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+
+                <div class="shortcuts">
+
+                    <a href="~/Admin/BranchlLoginDetail" class="shortcut">
+                        <img alt="" src="~/Images/icon/77.png" />
+                        <span class="shortcut-label">@mr.branchname Login Details</span>
+                    </a>
+
+                    <a href="~/Admin/OperatorLoginDetails" class="shortcut">
+                        <img alt="" src="~/Images/icon/32.png" />
+                        <span class="shortcut-label">Collection Point Login Details</span>
+                    </a>
+
+                    <a href="~/Admin/HRLoginDetails" class="shortcut">
+                        <img alt="" src="~/Images/icon/16.png" />
+                        <span class="shortcut-label">HR Login Details</span><br />
+                    </a>
+
+                    <a href="~/Admin/BranchList" class="shortcut">
+                        <img alt="" src="~/Images/icon/28.png" />
+                        <span class="shortcut-label">@mr.branchname List</span><br />
+                    </a>
+
+
+
+                    <a href="~/Admin/OperatorList" class="shortcut">
+                        <img alt="" src="~/Images/icon/21.png" />
+                        <span class="shortcut-label">Collection Point List</span>
+                    </a>
+
+                    <a href="~/Admin/HRList" class="shortcut">
+                        <img alt="" src="~/Images/icon/7.png" />
+                        <span class="shortcut-label">HR List</span><br />
+                    </a>
+
+                    <a href="~/Admin/AllCustomer" class="shortcut">
+                        <img alt="" src="~/Images/icon/26.png" />
+                        <span class="shortcut-label">@mr.custname List</span><br />
+                    </a>
+
+                    <a href="~/Admin/DatewiseCustomer" class="shortcut">
+                        <img alt="" src="~/Images/icon/26.png" />
+                        <span class="shortcut-label">Datewise @mr.custname List</span>
+                    </a>
+                     <a href="~/Admin/FilterCustomer" class="shortcut">
+                        <img alt="" src="~/Images/icon/26.png" />
+                        <span class="shortcut-label">Filter @mr.custname</span><br />
+                    </a>
+                     <a href="~/Admin/AssignPlotCustomer" class="shortcut">
+                        <img alt="" src="~/Images/icon/assign.jpg" />
+                        <span class="shortcut-label">Assign Plot @mr.custname List</span>
+                    </a>
+                      <a href="~/Admin/DatewiseCustomerLedger" class="shortcut">
+                        <img alt="" src="~/Images/icon/ledger.png" />
+                        <span class="shortcut-label">Datewise @mr.custname Ledger</span>
+                    </a>
+                    <a href="~/Admin/DateWiseMember" class="shortcut">
+                        <img alt="" src="~/Images/icon/MemberIcon.png" />
+                        <span class="shortcut-label">Datewise Member List</span>
+                    </a>
+                    <a href="~/Admin/MemberWiseAccountDetail" class="shortcut">
+                        <img alt="" src="~/Images/icon/MemberIcon.png" />
+                        <span class="shortcut-label">All Member List</span>
+                        <br />
+                    </a>
+                    @* <a href="~/Admin/AllSavingaccount" class="shortcut">
+							<img alt="" src="~/Images/icon/icon_taxfree.png" />
+							<span class="shortcut-label">Saving A/c List</span><br/>
+						</a>
+
+                        
+                         <a href="~/Admin/Datewisesaving" class="shortcut">
+							<img alt="" src="~/Images/icon/icon_taxfree.png" />
+							<span class="shortcut-label"> Datewise Saving A/c List</span>
+						</a>
+
+                          <a href="~/Admin/DatewisesavingCollection" class="shortcut">
+							<img alt="" src="~/Images/icon/icon_taxfree.png" />
+							<span class="shortcut-label">Datewise Saving A/c Collection</span><br/>
+						</a>*@
+
+
+                    @* @if(@mr.type=="Old")
+                                    {
+
+						<a href="~/Admin/RdPlanList" class="shortcut">
+							<img alt="" src="~/Images/icon/rd.jpg" />
+							<span class="shortcut-label">@plan1.Planname List</span>
+						</a>
+                     
+                        <a href="~/Admin/FDPlanList" class="shortcut">
+								<img alt="" src="~/Images/icon/fd.png" />
+							<span class="shortcut-label">@plan2.Planname List</span>
+						</a>
+                            <a href="~/Admin/NFPlanList" class="shortcut">
+							<img alt="" src="~/Images/icon/futureplans.jpg" />
+							<span class="shortcut-label">@plan3.Planname List</span>
+						</a>
+                     
+                        <a href="~/Admin/PPlanList" class="shortcut">
+								<img alt="" src="~/Images/icon/pension.jpg" />
+							<span class="shortcut-label">@plan4.Planname List</span>
+						</a>					
+                        }*@
+
+                    @if (@mr.type == "New")
+                    {
+
+                        <a href="~/Admin/RdPlanList" class="shortcut">
+                            <img alt="" src="~/Images/icon/28.png" />
+                            <span class="shortcut-label">@plan1.Planname List</span>
+                        </a>
+                     
+                        <a href="~/Admin/FdPlanList" class="shortcut">
+                            <img alt="" src="~/Images/icon/19.png" />
+                            <span class="shortcut-label">@plan2.Planname List</span><br />
+                        </a>	
+                              		
+                                     }
+
+                    <a href="~/Admin/RankList" class="shortcut">
+                        <img alt="" src="~/Images/icon/28.png" />
+                        <span class="shortcut-label">@mr.rankname List</span><br />
+                    </a>
+
+                    <a href="~/Admin/CustumerInstallmentReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/73.png" />
+                        <span class="shortcut-label">@mr.custname Ledger-Details</span>
+                    </a>
+
+                    <a href="~/Admin/DailyExpense" class="shortcut">
+                        <img alt="" src="~/Images/icon/76.png" />
+                        <span class="shortcut-label">Datewise Expense Details</span>
+                    </a>
+                    <a href="~/Admin/HeadWiseExpense" class="shortcut">
+                        <img alt="" src="~/Images/icon/76.png" />
+                        <span class="shortcut-label">Head Wise Expense Details</span>
+                    </a>
+
+                    @* <a href="~/Admin/AllCashReport" class="shortcut">
+							<img alt="" src="~/Images/icon/11.png" />
+							<span class="shortcut-label">Remaining Cash Report</span>
+						</a>*@
+
+                    <a href="~/Admin/AllDailyCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/11.png" />
+                        <span class="shortcut-label">Daily Collection</span><br />
+                    </a>
+                     <a href="~/Admin/DateWiseChequeCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/cheq.png" />
+                        <span class="shortcut-label">Datewise Cheque Collection</span>
+                    </a>
+                     <a href="~/Admin/DateWiseChequeClearCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/cheq.png" />
+                        <span class="shortcut-label">Clear Cheque Collection</span>
+                    </a>
+                    <a href="~/Admin/CompleteDailyCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/datewise.png" />
+                        <span class="shortcut-label">Datewise Collection Details</span>
+                    </a>
+
+                    <a href="~/Admin/DateWiseCollection" class="shortcut">
+                        <img alt="" src="~/Images/icon/74.png" />
+                        <span class="shortcut-label">Datewise Business</span>
+                    </a>
+                    <a href="~/Admin/FundMobilisation" class="shortcut">
+                        <img alt="" src="~/Images/icon/5.png" />
+                        <span class="shortcut-label">Fund Mobilisation</span>
+                    </a>
+                    <a href="~/Admin/AllClosingBalance" class="shortcut">
+                        <img alt="" src="~/Images/icon/11.png" />
+                        <span class="shortcut-label">RP Statement Report</span>
+                    </a>
+                    @*<a href="~/Admin/AccBalanceReport" class="shortcut">
+							<img alt="" src="~/Images/icon/Balanceicon.jpg" />
+							<span class="shortcut-label">A/c Balance Report</span>
+						</a>*@
+                    <a href="~/Admin/DuplicatePrintReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/74.png" />
+                        <span class="shortcut-label">Duplicate Print</span><br />
+                    </a>
+
+                    <a href="~/Admin/CancelReceiptReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/75.png" />
+                        <span class="shortcut-label">Cancel Receipt List</span>
+                    </a>
+
+
+
+
+                    <a href="~/Admin/PaidVoucher" class="shortcut">
+                        <img alt="" src="~/Images/icon/36.png" />
+                        <span class="shortcut-label">Paid Voucher</span><br />
+                    </a>
+
+                    <a href="~/Admin/Unpaidvoucher" class="shortcut">
+                        <img alt="" src="~/Images/icon/65.png" />
+                        <span class="shortcut-label">UnPaid Voucher</span><br />
+                    </a>
+                    <a href="~/Admin/DatewiseSVoucherList" class="shortcut">
+                        <img alt="" src="~/Images/icon/spotcomm.jpg" />
+                        <span class="shortcut-label">Datewise Spot Commission List</span>
+                    </a>
+
+                   @*  <a href="~/Admin/DatewisePaidSVoucherList" class="shortcut">
+                        <img alt="" src="~/Images/icon/spotcomm.jpg"/>
+                        <span class="shortcut-label">Datewise Paid Spot Commission List</span>
+                    </a>*@
+
+                    <a href="~/Admin/DatewiseVoucherList" class="shortcut">
+                        <img alt="" src="~/Images/icon/voucher.png" />
+                        <span class="shortcut-label">Datewise Voucher List</span>
+                    </a>
+                    <a href="~/Admin/RenewalList" class="shortcut">
+                        <img alt="" src="~/Images/icon/28.png" />
+                        <span class="shortcut-label">Monthly Renewal Report</span>
+                    </a>
+
+                    <a href="~/Admin/LiabalityReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/28.png" />
+                        <span class="shortcut-label">Liability Report</span><br />
+                    </a>
+                     <a href="~/Admin/PlotRegistryReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/home_registration.png" style="width:80px;height:70px;"  />
+                        <span class="shortcut-label">Plot Registry Report</span>
+                    </a>
+
+                    <a href="~/Admin/DailyHolding" class="shortcut">
+                        <img alt="" src="~/Images/icon/plot.png" style="width:80px;height:80px;"  />
+                        <span class="shortcut-label">Daily Plot Holding</span>
+                    </a>
+
+                    @*  <a href="~/Admin/AllAccStatement" class="shortcut">
+							<img alt="" src="~/Images/icon/trans.png" />
+							<span class="shortcut-label">Company Statement Report</span>	
+						</a>
+                         <a href="~/Admin/AccStatementReport" class="shortcut">
+							<img alt="" src="~/Images/icon/trans.png" />
+							<span class="shortcut-label">A/c Statement Report</span>	
+						</a>*@
+                    <a href="~/Admin/Advancepaymentreport" class="shortcut">
+                        <img alt="" src="~/Images/icon/advancepay.jpg"/>
+                        <span class="shortcut-label">Advance Payment Report</span>
+                    </a>
+                       <a href="~/Admin/RevivalCustomerList" class="shortcut">
+                        <img alt="" src="~/Images/icon/Revival.png"/>
+                        <span class="shortcut-label">Revival List</span>
+                    </a>
+                     <a href="~/Admin/RevivalReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/Revival.png"/>
+                        <span class="shortcut-label">Plot Unrelease Report</span>
+                    </a>
+                    <a href="~/Admin/VisitorReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/visitor.png"/>
+                        <span class="shortcut-label">Visitors Report</span>
+                    </a>
+                     <a href="~/Admin/BondApproval" class="shortcut">
+                        <img alt="" src="~/Images/icon/Approved-Stamp-Icon.png"/>
+                        <span class="shortcut-label">Bond Approval</span>
+                    </a>
+                      <a href="~/Admin/ApproveRenewal" class="shortcut">
+                        <img alt="" src="~/Images/icon/Approved-Stamp-Icon.png"/>
+                        <span class="shortcut-label">Renewal Approval</span>
+                    </a>
+                     <a href="~/Admin/PreSurrenderReport" class="shortcut">
+                        <img alt="" src="~/Images/icon/icon-reports.jpg"/>
+                        <span class="shortcut-label">Pre Surrender Report</span>
+                    </a>
+                      <a href="~/Admin/RejectedCheque" class="shortcut">
+                        <img alt="" src="~/Images/icon/54.png" />
+                        <span class="shortcut-label">Rejected Cheque Report</span>
+                    </a>
+                      <a href="~/Admin/Plotholding" class="shortcut">
+                        <img alt="" src="~/Images/icon/holding_plot.jpg" />
+                        <span class="shortcut-label">Plot Holding</span>
+                    </a>
+                    <a href="~/Admin/AgentBankDetail" class="shortcut">
+                        <img alt="" src="~/Images/icon/icon-reports.jpg" />
+                        <span class="shortcut-label">Agent Bank Detail Report</span>
+                    </a>
+                     <a href="~/Admin/ApproveDailyClosing" class="shortcut">
+                        <img alt="" src="~/Images/icon/icon-reports.jpg" />
+                        <span class="shortcut-label">Approve Closing</span>
+                    </a>
+                    
+                </div>
+                <!-- /shortcuts -->
+
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+
+    </div>
+
+</div> 

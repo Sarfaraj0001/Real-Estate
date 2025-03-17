@@ -1,0 +1,369 @@
+﻿@*@{
+        ViewBag.Title = "About";
+    }
+
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+
+    <article>
+        <p>
+            Use this area to provide additional information.
+        </p>
+
+        <p>
+            Use this area to provide additional information.
+        </p>
+
+        <p>
+            Use this area to provide additional information.
+        </p>
+    </article>
+
+    <aside>
+        <h3>Aside Title</h3>
+        <p>
+            Use this area to provide additional information.
+        </p>
+        <ul>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+        </ul>
+    </aside>*@
+
+
+
+
+@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutNew1.cshtml";
+    UsersContext db = new UsersContext();
+    var comp = db.commission_tabs.Where(x => x.Id == 1).ToList();
+    var countachive = db.Acheviers.Where(x => x.status == 1).Count();
+    var ban_img = db.banner_tabs.Where(x => x.status == 1).ToList();
+}
+
+
+
+<div class="ttm-page-title-row">
+    <div class="ttm-page-title-row-inner">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="page-title-heading">
+                        <h2 class="title">About Us</h2>
+                    </div>
+                    <div class="breadcrumb-wrapper">
+                        <div class="container">
+                            <div class="breadcrumb-wrapper-inner">
+                                <span>
+                                    <a title="" href="index-2.html" class="home"><i class="themifyicon ti-home"></i>&nbsp;&nbsp;Home</a>
+                                </span>
+                                <span class="ttm-bread-sep">&nbsp; / &nbsp;</span>
+                                <span>About Us</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--site-main start-->
+<div class="site-main">
+
+    <!--welcome-section-->
+    <section class="ttm-row welcome-section clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8">
+                    <!-- ttm_single_image-wrapper -->
+                    <div class="ttm_single_image-wrapper">
+                        <img width="570" height="484" class="img-fluid" src="~/assets/axisarth/images/single-floor-house-design.jpg" alt="single_02">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="pl-30 res-991-pl-0 res-991-mt-40">
+                        <!-- section title -->
+                        <div class="section-title">
+                            <div class="title-header">
+                                <h2 class="title">About Us</h2>
+                            </div>
+                        </div><!-- section title end -->
+                        <div class="pb-10 res-991-pb-30">
+                            <p class="fontweight-Medium">
+                                We endeavour to achieve the best while delivering world-class developments. We are firmly committed to provide excellence in real-estate development.
+                                We believe in unlocking values to achieve all round prosperity and success to our patrons, investors and associates. To move a step further towards growth we have accumulated a vast land bank. Our standards, high degree of professionalism and credibility that we have infused in development of our projects prove this. Having executed such large projects, we at Axisarth Homes Pvt. Ltd. haven’t forgotten our commitment to the society and as part of our commitment we pledge to do all our developments social and environment friendly.
+                            </p>
+                        </div>
+                        <!--<div class="d-flex pl-5 mt-20 mb-30 ttm-bgcolor-skincolor position-relative z-index-2">
+                            <div class="d-inline pl-25 pr-25 pt-15 pb-15 w-100 ttm-bgcolor-grey ttm-textcolor-darkgrey">
+                                <p class="mb-0 font-size-17">“A great design aesthetic often blooms from strong roots of inspiration. When it comes to, this translates quite literally and truly. Almost umbilical connect with Nature combined”</p>
+                            </div>
+                        </div>
+                        <div class="d-sm-flex align-items-center mt-60 res-767-mt-0">
+                            <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-round ttm-btn-style-border ttm-icon-btn-right ttm-btn-color-darkgrey mr-30 res-767-mt-20" href="about-us.html" tabindex="0">Read More</a>
+                            <div class="res-767-mt-20">
+                                <img width="186" height="53" class="img-fluid" src="images/author-sign.png" alt="sign">
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--welcome-section end-->
+    <!--services-section end-->
+    <!-- <section class="ttm-row services-section ttm-bgcolor-darkgrey bg-img2 clearfix">
+         <div class="container">
+             <!-- row --
+             <div class="row">
+                 <div class="col-lg-4 col-md-6 col-sm-6">
+                     <div class="pt-10 text-left">
+                         <!-- section title --
+                         <div class="section-title">
+                             <div class="title-header">
+                                 <h3>Services</h3>
+                                 <h2 class="title">Services We’re Providing</h2>
+                             </div>
+                         </div><!-- section title end --
+                         <div class="title-desc">
+                             <p>We are working primarily in and around London and the Home Counties, on schemes that range from small intimate spaces to large projects.</p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-lg-4 col-md-6 col-sm-6">
+                     <!-- featured-icon-box --
+                     <div class="featured-icon-box icon-align-top-content style2">
+                         <div class="featured-icon">
+                             <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                 <i class="flaticon flaticon-apartment"></i>
+                             </div>
+                         </div>
+                         <div class="featured-content">
+                             <div class="featured-title">
+                                 <h3>Residential Interior</h3>
+                             </div>
+                             <div class="featured-desc">
+                                 <p>We do all types of the interior designing,  decoration & furnishing.</p>
+                             </div>
+                             <div class="ttm-footer">
+                                 <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-white" href="architecture.html">Read More</a>
+                             </div>
+                         </div>
+                     </div><!-- featured-imagebox-portfolio end--
+                 </div>
+                 <div class="col-lg-4 col-md-6 col-sm-6">
+                     <!-- featured-icon-box --
+                     <div class="featured-icon-box icon-align-top-content style2">
+                         <div class="featured-icon">
+                             <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                 <i class="flaticon flaticon-interior-design-1"></i>
+                             </div>
+                         </div>
+                         <div class="featured-content">
+                             <div class="featured-title">
+                                 <h3>Custom Solutionse</h3>
+                             </div>
+                             <div class="featured-desc">
+                                 <p>Our creative 3D artists are always ready to translate your designs</p>
+                             </div>
+                             <div class="ttm-footer">
+                                 <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-white" href="retail-designs.html">Read More</a>
+                             </div>
+                         </div>
+                     </div><!-- featured-imagebox-portfolio end--
+                 </div>
+                 <div class="col-lg-4 col-md-6 col-sm-6">
+                     <!-- featured-icon-box --
+                     <div class="featured-icon-box icon-align-top-content style2">
+                         <div class="featured-icon">
+                             <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                 <i class="flaticon flaticon-bed-1"></i>
+                             </div>
+                         </div>
+                         <div class="featured-content">
+                             <div class="featured-title">
+                                 <h3>Renovate Rooms</h3>
+                             </div>
+                             <div class="featured-desc">
+                                 <p>We are master of renovation & innovation of existing any kind of rooms</p>
+                             </div>
+                             <div class="ttm-footer">
+                                 <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-white" href="layout.html">Read More</a>
+                             </div>
+                         </div>
+                     </div><!-- featured-imagebox-portfolio end--
+                 </div>
+                 <div class="col-lg-4 col-md-6 col-sm-6">
+                     <!-- featured-icon-box --
+                     <div class="featured-icon-box icon-align-top-content style2">
+                         <div class="featured-icon">
+                             <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                 <i class="flaticon flaticon-decorating"></i>
+                             </div>
+                         </div>
+                         <div class="featured-content">
+                             <div class="featured-title">
+                                 <h3>3D Design Layouts</h3>
+                             </div>
+                             <div class="featured-desc">
+                                 <p>We Do All Types Of 2D And 3D design  Computerized Designs.</p>
+                             </div>
+                             <div class="ttm-footer">
+                                 <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-white" href="layout.html">Read More</a>
+                             </div>
+                         </div>
+                     </div><!-- featured-imagebox-portfolio end--
+                 </div>
+                 <div class="col-lg-4 col-md-6 col-sm-6">
+                     <!-- featured-icon-box --
+                     <div class="featured-icon-box icon-align-top-content style2">
+                         <div class="featured-icon">
+                             <div class="ttm-icon ttm-icon_element-onlytxt ttm-icon_element-color-skincolor ttm-icon_element-size-md">
+                                 <i class="flaticon flaticon-door"></i>
+                             </div>
+                         </div>
+                         <div class="featured-content">
+                             <div class="featured-title">
+                                 <h3>Outsourced Service InHouse</h3>
+                             </div>
+                             <div class="featured-desc">
+                                 <p>Enforces & strengthens your brand identity by integrating rich experience</p>
+                             </div>
+                             <div class="ttm-footer">
+                                 <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-white" href="decoration-art.html">Read More</a>
+                             </div>
+                         </div>
+                     </div><!-- featured-imagebox-portfolio end--
+                 </div>
+             </div><!-- row end --
+         </div>
+     </section>-->
+    <!--services-section end-->
+    <!--faq-section-->
+    <section class="ttm-row faq-section pb-90 clearfix" style="background: #8080801f;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="res-991-pb-40 pr-10 res-991-pr-0">
+                        <!-- section title -->
+                        <div class="section-title mb-10">
+                            <div class="title-header">
+                                <h2 class="title">Who We Are</h2>
+                            </div>
+                        </div><!-- section title end -->
+                        <p class="fontweight-Medium">
+                            Axisarth Homes Pvt. Ltd., a top and best real estate firm in Kanpur that has so many properties for sale
+                            including plots/land and farm houses in Kanpur by analysing the increasing demand of properties in Kanpur city. With focus on best planning,
+                            attention toward architectural comfort with the latest technology, Axisarth Homes Pvt. Ltd. aims to renovate the real estate system;
+                            we are known for providing efficient housing solutions in best budget prices including, residential plots/land In Kanpur.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6">
+                                <!-- ttm-fid -->
+                                <!-- ttm-fid end -->
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <!-- ttm-fid-->
+                                <!-- ttm-fid end -->
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <!-- ttm-fid-->
+                                <!-- ttm-fid end-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="accordion">
+                        <!-- toggle -->
+                        <div class="toggle ttm-toggle_style_classic ttm-toggle-title-bgcolor-grey">
+                            <div class="toggle-title"><a href="#" class="active">Ous Mission</a></div>
+                            <div class="toggle-content show">
+                                <p>
+                                    To enable employees and associates to achieve and unleash their full potential to deliver outcomes in a sustainable way through
+                                    our transparent and efficient eco platform so as to be a part of our customer’s competitive edge
+                                </p>
+                            </div>
+                        </div><!-- toggle end -->
+                        <!-- toggle -->
+                        <div class="toggle ttm-toggle_style_classic ttm-toggle-title-bgcolor-grey">
+                            <div class="toggle-title"><a href="#">Our Vision</a></div>
+                            <div class="toggle-content">
+                                <p>To be the loeading and a global benchmark for creation of values and deliverance of quality services.</p>
+                            </div>
+                        </div><!-- toggle end -->
+                        <!-- toggle -->
+                        <!-- toggle end -->
+                        <!-- toggle -->
+                        <!-- toggle end -->
+                    </div>
+                </div>
+            </div><!-- row end -->
+        </div>
+    </section><!--faq-section end-->
+    <!--client-section_1-->
+    <!--<div class="ttm-row client-section_1 ttm-bgcolor-darkgrey clearfix">
+        <div class="container">
+            <!-- row --
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <!-- slick_slider --
+                    <div class="row slick_slider" data-slick='{"slidesToShow": 5, "slidesToScroll": 1, "arrows":false, "autoplay":true, "infinite":true, "responsive": [{"breakpoint":1200,"settings":{"slidesToShow": 5}}, {"breakpoint":1024,"settings":{"slidesToShow": 4}}, {"breakpoint":777,"settings":{"slidesToShow": 3}}, {"breakpoint":575,"settings":{"slidesToShow": 2}}]}'>
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img width="178" height="70" class="img-fluid" src="images/client/client-1.png" alt="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img width="178" height="70" class="img-fluid" src="images/client/client-2.png" alt="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img width="178" height="70" class="img-fluid" src="images/client/client-3.png" alt="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img width="178" height="70" class="img-fluid" src="images/client/client-4.png" alt="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img width="178" height="70" class="img-fluid" src="images/client/client-5.png" alt="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="client-box">
+                                <div class="client-thumbnail">
+                                    <img width="178" height="70" class="img-fluid" src="images/client/client-1.png" alt="image">
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- ttm-client end --
+                </div>
+            </div><!-- row end --
+        </div>
+    </div>-->
+    <!--client-section_1-->
+
+</div><!--site-main end-->
+<!--footer start-->

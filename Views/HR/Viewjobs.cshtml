@@ -1,0 +1,104 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "Viewjobs";
+    Layout = "~/Views/Shared/_HRLayout.cshtml";
+    UsersContext db = new UsersContext();
+    var srno = 1;
+
+    var listcount = db.careertable1s.ToList();
+}
+
+<div class="page-content">
+                <div class="container">
+<div class="page-toolbar">
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">View Jobs</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                    </div> 
+                    <div class="row" >
+                        <div class="col-md-6" style="width:100%">  
+                            <div class="block" >
+                                <div class="block-content controls" >
+                                    <div class="row-form"  >
+                                  <div class="col-md-12" style="overflow-x:auto;width:100%;">
+                                       
+                                           @if (listcount.Count()!=0)
+                                           {
+                                          <table border="1" style="margin-left:1%; margin-right:1%; margin-bottom:30px; width:100%">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Sr.No.</th>
+                                                      <th>Job Ids</th>
+                                                      <th>Job Type</th>
+                                                      <th>job Discription</th>
+                                                      <th>Experience(s)</th>
+                                                      <th>Industry(s)</th>
+                                                      <th>Role</th>
+                                                      <th>Functionalarea</th>
+                                                      <th>Salary</th>
+                                                      <th>Title</th>
+                                                      <th>Keyword</th>
+                                                      <th>Job Locationstate</th>
+                                                      <th>City</th>
+                                                      <th>Companye E-mail</th>
+                                                      <th>Publish Date</th>
+                                                      <th>From date</th>
+                                                      <th>To Date</th>
+                                                      <th>Status</th>
+                                                      
+                                                  </tr>
+                                              </thead>
+                                              @foreach(var item in db.careertable1s.ToList())
+                                              {
+                                              <tbody>
+                                                  <tr>
+                                                      <td>@srno</td>
+                                                      <td>@item.jobid</td>
+                                                      <td>@item.jobtype</td>
+                                                      <td>@item.jobdiscription</td>
+                                                      <td>@item.experience</td>
+                                                      <td>@item.industry</td>
+                                                      <td>@item.role</td>
+                                                      <td>@item.functionalarea</td>
+                                                      <td>@item.salary</td>
+                                                      <td>@item.Title</td>
+                                                      <td>@item.Keyword</td>
+                                                      <td>@item.joblocationstate</td>
+                                                      <td>@item.city</td>
+                                                      <td>@item.companyemail</td>
+                                                      <td>@item.publisdate.ToString("dd/MM/yyyy")</td>
+                                                      <td>@item.Fromdate.ToString("dd/MM/yyyy")</td>
+                                                      <td>@item.Todate.ToString("dd/MM/yyyy")</td>
+                                                      @if(item.status==0)
+                                                      {
+                                                        <td style="color:red;">Inactive</td>
+                                                      }
+                                                      else
+                                                      {
+                                                         <td style="color:green;">Active</td>
+                                                      }
+                                                      
+                                                  </tr>
+                                              </tbody>
+                                                  srno++;
+                                              }
+                                          </table> 
+                                           }
+                                           else
+                                           {
+                                               <center><label style="color:red;">No record found</label></center>
+                                           }
+                                       
+                                      </div>
+                                            </div>
+
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                            </div>
+                          </div>  
+

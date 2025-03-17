@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.HeadTab>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "AddHead";
+}
+
+
+<div class="page-content">
+
+                <div class="container">
+
+<div class="page-toolbar">
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Expense Head</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                        
+                        <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+                                <div id="reportrange" class="dtrange">                                            
+                                    <span></span><b class="caret"></b>
+                                </div>                            
+                            </div>
+                        </div>           
+                        
+                    </div> 
+
+                    <div class="row" style="width:100%">
+                        <div class="col-md-6" style="width:100%">
+                            
+                            <div class="block" style="width:100%">
+                               <div class="block-content controls">  
+
+                    
+                      
+                        
+     @using (Html.BeginForm()) {
+            
+                   <div class="row-form">  
+                                         
+    <div class="col-md-9">
+        <div class="input-group">
+       <span class="input-group-addon"><label class="width">Enter Head</label> </span>  
+        <input type="text" class="form-control"  name="head" id="head" required/></div>
+                                   
+   </div>
+                        
+         </div>
+         
+                
+                 <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+         <button  type="submit" class="btn btn-primary pull-right"> Create Head</button>   
+                                </div>
+                                             </div>
+         
+     <p style="color:maroon;"><b> @ViewBag.msg</b></p>
+     }
+                                   
+                                </div>
+                                
+                            
+                                         
+                                    </div>
+
+                            <div class="block" style="width:100%">
+                                <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+         <h1><span class="input-group-addon"><label class="width"> Head Expense Name</label> </span> </h1>  
+                                </div>
+                                             </div>
+                                @foreach (var a in Model)
+                                {
+                                    <Div>
+         <span class="input-group-addon"><label class="width">@a.Id &nbsp; &nbsp;&nbsp;&nbsp;@a.head</label> </span>   
+                                </div>
+                                             
+                                }
+                                </div>
+                            </div>
+                                        
+                   </div> </div> </div>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.CustomerDeactiveList>
+    @using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "DeactiveList";
+        var a = 0;
+    }
+    <div class="container-fluid mt-4 FormContainer">
+        <div id="1">
+            <table class="bg-white">
+                @foreach (var item in Model)
+                {
+                    if (a == 0)
+                    {
+                        <thead>
+                            <tr style="">
+                                <th colspan="11" class="header-row" style="border-radius: 8px 8px 0 0; border-top: none; border-left: none;">@mr.custname Deactive List</th>
+                            </tr>
+                            <tr>
+                                <th><label id="sn"><b>S.N.</b></label></th>
+                                <th><label id="newid"><b>@mr.custname Id</b></label></th>
+                                <th><label id="introducerid"><b>@mr.custname Name</b></label></th>
+                                <th><label id="spilid"><b>Introducer Id</b></label></th>
+                                <th><label id="position"><b>@mr.planname Name</b></label></th>
+                                <th><label id="mode"><b>Mode</b></label></th>
+                                <th><label id="Payment"><b>Installment Amount </b></label></th>
+                                <th><label><b>Late Fine</b></label></th>
+                                <th><label><b>Total Amount </b></label></th>
+                                <th><label id="email"><b>Mobile No</b></label></th>
+                                <th><label id="doj"><b>Date of Joining</b></label></th>
+                            </tr>
+                        </thead>
+                    }
+                    a = a + 1;
+                    <tbody>
+                        <tr>
+                            <td>@a</td>
+                            <td>@Html.DisplayFor(modelItem => item.newbondid)</td>
+                            <td>@Html.DisplayFor(modelItem => item.name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.newintroducerid)</td>
+                            <td>@Html.DisplayFor(modelItem => item.planname)</td>
+                            <td>@Html.DisplayFor(modelItem => item.mode)</td>
+                            <td>@Html.DisplayFor(modelItem => item.payment)</td>
+                            <td>@Html.DisplayFor(modelItem => item.latefine)</td>
+                            <td>@Html.DisplayFor(modelItem => item.totalsum)</td>
+                            <td>@Html.DisplayFor(modelItem => item.mobileno)</td>
+                            <td>@Convert.ToDateTime(item.formdate).ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+            @if (a > 0)
+            {
+                <div class="text-center mt-3">
+                    <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintDeactiveList")" target="_blank">Get List In PDF</a>
+                </div>
+            }
+        </div>
+    </div>
+
+   

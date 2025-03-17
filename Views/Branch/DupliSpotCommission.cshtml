@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.SpotCommList>
+    @using ODHDEVELOPERS.Models;
+    @{
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "DupliSpotCommission";
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        var a = 0;
+        Double businesssum = 0, commsum = 0;
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#newagentid").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Admin/AutoCompleteAgentid",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.NewAgentId, value: item.NewAgentId };
+                            }))
+
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
+
+    <div class="container-fluid mt-5 FormContainer">
+        <h2 class="text-center mb-4"> Print Duplicate Receipt</h2>
+        <div id="branchForm" class="border p-4 rounded shadow formtag">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <input type="hidden" value="@System.DateTime.Now.Date" name="date" />
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">@mr.custname Id or Name:</label>
+                    <input type="text" id="newagentid" name="newagentid" class="form-control formInput" placeholder="Enter Customer Id or Name" required>
+                </div>
+
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                    <button class="btn btn-lg formButtom"><i class="fa fa-search"></i>Search</button>
+                </div>
+            }
+        </div>
+        <div class="mt-4 bg-light">
+            <table >
+                @foreach (var item in Model)
+                {
+                    if (a == 0)
+                    {
+                        <thead>
+                            <div class="header-row">Duplicate Receipt</div>
+                            <tr>
+                                <th><label id="sn" style="text-align: center;"><b>S.N.</b></label></th>
+                                <th><label id="NewAgentId"><b>@mr.agentname Id</b></label></th>
+                                <th><label><b>@mr.custname Id</b></label></th>
+                                <th> <label><b>@mr.custname Name</b></label></th>
+                                <th> <label id="Business"><b>Business</b></label></th>
+                                <th> <label id="Commission"><b>Commission</b></label></th>
+                                <th><label><b>Date</b></label> </th>
+                                <th><label id="Action"><b>Action</b></label></th>
+                            </tr>
+                        </thead>
+                        a++;
+                    }
+                    <tbody>
+                        <tr>
+                            <td>@a </td>
+                            <td> @Html.DisplayFor(modelItem => item.newagentid) </td>
+                            <td> @Html.DisplayFor(modelItem => item.newbondid)</td>
+                            <td> @Html.DisplayFor(modelItem => item.name) </td>
+                            <td>@Html.DisplayFor(modelItem => item.Business) </td>
+                            <td>@Html.DisplayFor(modelItem => item.Commission) </td>
+                            <td> @Convert.ToDateTime(item.date).ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <b class="btn btn-primary">
+                                    @Html.ActionLink("Print Report", "DupliSpotCommission", new { newagentid = item.newagentid, newbondid = item.newbondid }, new { onclick = "return confirm('Are you sure to Print this Report?'), target='_blank'" })
+                                </b>
+                            </td>
+                        </tr>
+                    </tbody>
+                    businesssum = businesssum + Convert.ToDouble(item.Business);
+                    commsum = commsum + Convert.ToDouble(item.Commission);
+                }
+                @if (a > 0)
+                {
+                    <tr style="text-align: center;">
+                        <td colspan="4">
+                            <b>GRAND TOTAL:</b>
+                        </td>
+                        <td>
+                            <b>@businesssum</b>
+                        </td>
+                        <td>
+                            <b>@commsum</b>
+                        </td>
+                        <td colspan="2"></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+

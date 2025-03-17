@@ -1,0 +1,197 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var mr = db.Members.Single(m => m.Id == 1);
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "AgentPrmote";
+}
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#intro").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Admin/AutoCompleteAgentid",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.NewAgentId };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#promoterank").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Operator/AutoCompleteRank",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.RankName, value: item.RankCode };
+
+
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+
+
+<script>
+    function check(check_id) {
+
+        $("#" + check_id).mouseover(function () {
+            var intro = $("#" + check_id).val();
+            var url = '@Url.Action("SelectRankName", "Admin")';
+            $.get(url, { intro: intro }, function data(name1) {
+                $('#rank').val(name1[0].RankName)
+            });
+        });
+
+    }
+</script>
+
+
+
+<script>
+    function checkintrankadmin(check_id) {
+
+        $("#" + check_id).mouseover(function () {
+            var rank = $("#" + check_id).val();
+            var intcode = $("#intro").val();
+            var url = '@Url.Action("checkintrankadmin", "Admin")';
+            $.get(url, { intcode: intcode, rank: rank }, function data(d) {
+                for (var i = 0; i < d.length; i++) {
+
+
+                    if (d[i].type == 0) {
+                        $("#msg").text(d[i].msg)
+                    }
+                    else if (d[i].type == 1) {
+                        $("#msg").text('')
+                    }
+                }
+
+
+
+            });
+        });
+
+    }
+</script>
+
+
+@using(Html.BeginForm())
+{
+
+    <div class="page-content">
+
+        <div class="container">
+
+            <div class="page-toolbar">
+
+                <div class="page-toolbar-block">
+                    <div class="page-toolbar-title">Promote @mr.agentname</div>
+                    <div class="page-toolbar-subtitle"></div>
+                </div>
+                <div class="page-toolbar-block pull-right">
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-6" style="width: 100%">
+
+                    <div class="block">
+
+                        <div class="block-content controls">
+
+                            <div class="row-form">
+                                <div class="row-form">
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <label class="width">Enter @mr.agentname Id</label></span>
+                                            <input type="text" class="form-control" onmouseover="check(this.id)" name="intro" id="intro" required />
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row-form">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <label class="width">Current @mr.rankname</label></span>
+                                                <input type="text" id="rank" name="rank" class="form-control" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row-form">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <label class="width">@mr.rankname To Promote</label></span>
+                                                <input type="text" id="promoterank" name="promoterank" onmouseover="checkintrankadmin(this.id)" class="form-control" required />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row-form">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+
+                                            <label id="msg"></label>
+                                            <br />
+                                            <button type="submit" class="btn btn-primary">@mr.agentname Promote</button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+}

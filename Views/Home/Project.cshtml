@@ -1,0 +1,210 @@
+﻿@*@using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        var d = db.CompanyInfos.Single(ci => ci.Id == 1);
+        var cty = db.Plans.ToList();
+        var blk = db.BlockTabs.ToList();
+        ViewBag.Title = "Project1";
+        Layout = "~/Views/Shared/_Layout1.cshtml";
+    }*@
+
+
+
+@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutNew1.cshtml";
+    UsersContext db = new UsersContext();
+    var comp = db.commission_tabs.Where(x => x.Id == 1).ToList();
+    var countachive = db.Acheviers.Where(x => x.status == 1).Count();
+    var ban_img = db.banner_tabs.Where(x => x.status == 1).ToList();
+}
+
+
+
+
+<!--header end-->
+
+<div class="ttm-page-title-row">
+    <div class="ttm-page-title-row-inner">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="page-title-heading">
+                        <h2 class="title">Our Projects</h2>
+                    </div>
+                    <div class="breadcrumb-wrapper">
+                        <div class="container">
+                            <div class="breadcrumb-wrapper-inner">
+                                <span>
+                                    <a title="" href="index-2.html" class="home"><i class="themifyicon ti-home"></i>&nbsp;&nbsp;Home</a>
+                                </span>
+                                <span class="ttm-bread-sep">&nbsp; / &nbsp;</span>
+                                <span>Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--site-main start-->
+<div class="site-main">
+
+    <!--grid-section-->
+    <section class="ttm-row grid-section clearfix">
+        <div class="container">
+            <div class="row">
+
+
+                <div class="ttm-box-col-wrapper col-lg-4 col-md-6 col-sm-6">
+                    <!-- featured-imagebox-portfolio -->
+                    <div class="featured-imagebox featured-imagebox-portfolio style5">
+                        <div class="ttm-box-view-overlay">
+                            <!-- featured-thumbnail -->
+                            <div class="featured-thumbnail">
+                                <img class="img-fluid" src="~/assets/axisarth/admin/images/parsauli%20-1_page-0001.jpg" alt="image" style="height: 450px;width: 100%;">
+                            </div>
+                            <div class="ttm-footer">
+                                <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-skincolor" href="#"><i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                            <!-- featured-thumbnail end-->
+                            <div class="featured-content">
+                                <!-- <div class="featured-desc">
+                                     <p>PARSAULI</p>
+                                 </div>-->
+                                <div class="featured-title">
+                                    <h3><a href="#">PARSAULI</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-imagebox-portfolio end-->
+                </div>
+
+                <div class="ttm-box-col-wrapper col-lg-4 col-md-6 col-sm-6">
+                    <!-- featured-imagebox-portfolio -->
+                    <div class="featured-imagebox featured-imagebox-portfolio style5">
+                        <div class="ttm-box-view-overlay">
+                            <!-- featured-thumbnail -->
+                            <div class="featured-thumbnail">
+                                <img class="img-fluid" src="~/assets/axisarth/admin/images/PFD_page-0001%20-%20Copy.jpg" alt="image" style="height: 450px;width: 100%;">
+                            </div>
+                            <div class="ttm-footer">
+                                <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-skincolor" href="#"><i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                            <!-- featured-thumbnail end-->
+                            <div class="featured-content">
+                                <!-- <div class="featured-desc">
+                                     <p>PIPARGAWAN</p>
+                                 </div>-->
+                                <div class="featured-title">
+                                    <h3><a href="#">PIPARGAWAN</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-imagebox-portfolio end-->
+                </div>
+
+                <div class="ttm-box-col-wrapper col-lg-4 col-md-6 col-sm-6">
+                    <!-- featured-imagebox-portfolio -->
+                    <div class="featured-imagebox featured-imagebox-portfolio style5">
+                        <div class="ttm-box-view-overlay">
+                            <!-- featured-thumbnail -->
+                            <div class="featured-thumbnail">
+                                <img class="img-fluid" src="~/assets/axisarth/admin/images/8ec16f9e-d4eb-40c2-829c-7ac3542c35af.jpg" alt="image" style="height: 450px;width: 100%;">
+                            </div>
+                            <div class="ttm-footer">
+                                <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-skincolor" href="#"><i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                            <!-- featured-thumbnail end-->
+                            <div class="featured-content">
+                                <!-- <div class="featured-desc">
+                                     <p>SAKARAPUR SECTOR-E</p>
+                                 </div>-->
+                                <div class="featured-title">
+                                    <h3><a href="#">SAKARAPUR SECTOR-E</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-imagebox-portfolio end-->
+                </div>
+
+                <div class="ttm-box-col-wrapper col-lg-4 col-md-6 col-sm-6">
+                    <!-- featured-imagebox-portfolio -->
+                    <div class="featured-imagebox featured-imagebox-portfolio style5">
+                        <div class="ttm-box-view-overlay">
+                            <!-- featured-thumbnail -->
+                            <div class="featured-thumbnail">
+                                <img class="img-fluid" src="~/assets/axisarth/admin/images/SALEMPUR%20BALAJI%20NAGAR.jpg" alt="image" style="height: 450px;width: 100%;">
+                            </div>
+                            <div class="ttm-footer">
+                                <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-skincolor" href="#"><i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                            <!-- featured-thumbnail end-->
+                            <div class="featured-content">
+                                <!-- <div class="featured-desc">
+                                     <p>MAHARAJPUR,SALEMPUR BALAJI NAGAR</p>
+                                 </div>-->
+                                <div class="featured-title">
+                                    <h3><a href="#">MAHARAJPUR,SALEMPUR BALAJI NAGAR</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-imagebox-portfolio end-->
+                </div>
+
+                <div class="ttm-box-col-wrapper col-lg-4 col-md-6 col-sm-6">
+                    <!-- featured-imagebox-portfolio -->
+                    <div class="featured-imagebox featured-imagebox-portfolio style5">
+                        <div class="ttm-box-view-overlay">
+                            <!-- featured-thumbnail -->
+                            <div class="featured-thumbnail">
+                                <img class="img-fluid" src="~/assets/axisarth/admin/images/Parsauli%20240923%20revise%20ni%20FEET%20PLOTTING-%20FINAL%20DR_230924_154953%20(6).html" alt="image" style="height: 450px;width: 100%;">
+                            </div>
+                            <div class="ttm-footer">
+                                <a class="ttm-btn btn-inline ttm-btn-size-md ttm-icon-btn-right ttm-btn-color-skincolor" href="#"><i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                            <!-- featured-thumbnail end-->
+                            <div class="featured-content">
+                                <!-- <div class="featured-desc">
+                                     <p>PSRSAULI , NAUBASTA , KANPUR</p>
+                                 </div>-->
+                                <div class="featured-title">
+                                    <h3><a href="#">PSRSAULI , NAUBASTA , KANPUR</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- featured-imagebox-portfolio end-->
+                </div>
+
+
+            </div>
+        </div>
+    </section><!--grid-section end-->
+    <!--connect-section_1-->
+    <!--<section class="ttm-row connect-section_1 ttm-bgcolor-grey clearfix">
+        <div class="container">
+            <!--row--
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="row-title style2">
+                        <!-- section title --
+                        <div class="section-title without-seperator text-center">
+                            <div class="title-header">
+                                <h2 class="title">We Offer Financial Strategies & Superior Services</h2>
+                            </div>
+                        </div><!-- section title end --
+                        <a class="ttm-btn ttm-btn-size-md ttm-btn-shape-round ttm-btn-style-fill ttm-icon-btn-right ttm-btn-color-skincolor mt-10" href="contact-us.html" tabindex="0">Get A Quote</a>
+                    </div>
+                </div>
+            </div><!--row end--
+        </div>
+    </section>-->
+    <!--connect-section_1 end-->
+
+
+</div><!--site-main end-->

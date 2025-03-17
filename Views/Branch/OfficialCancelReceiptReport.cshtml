@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.CancelRcptList>
+    @using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "OfficialCancelReceiptReport";
+        var a = 0;
+        Double amount = 0;
+    }
+    <div class="container-fluid mt-3 FormContainer">
+        <b class="pull-right">
+            <label> @Convert.ToDateTime(DateTime.Now.Date).ToString("dd/MM/yyyy")</label>
+        </b>
+        <table class="bg-white">
+            @foreach (var item in Model)
+            {
+                if (a == 0)
+                {
+                    <thead>
+                        <tr style="">
+                            <th colspan="10" class="header-row border-0" style="border-radius: 8px 8px 0 0;">Cancel Receipt List</th>
+                        </tr>
+                        <tr>
+                            <th><label id="sn"><b>Sr.No.</b></label></th>
+                            <th><label id="Bond"><b>@mr.custname Id</b></label></th>
+                            <th><label id="payamount"><b> Amount</b></label></th>
+                            <th><label id="Expiry"><b>Payment Date</b></label></th>
+                            <th><label id="Installment"><b>Installment</b></label></th>
+                            <th><label id="Plan"><b>@mr.planname Name</b></label></th>
+                            <th><label id="Term"><b>Term</b></label></th>
+                            <th><label id="Mode"><b>Mode</b></label></th>
+                            <th><label id="Cancel1"><b>Time</b></label></th>
+                            <th><label id="Cancel"><b>Cancel By</b></label></th>
+                        </tr>
+                    </thead>
+                }
+                a = a + 1;
+                <tbody>
+                    <tr>
+                        <td>@a</td>
+                        <td>@Html.DisplayFor(modelItem => item.newbondid)</td>
+                        <td>@Html.DisplayFor(modelItem => item.payamount)</td>
+                        <td>@Convert.ToDateTime(item.pdate).ToString("dd/MM/yyyy")</td>
+                        <td>@Html.DisplayFor(modelItem => item.installmentno)</td>
+                        <td>@Html.DisplayFor(modelItem => item.planname)</td>
+                        <td>@Html.DisplayFor(modelItem => item.term)</td>
+                        <td>@Html.DisplayFor(modelItem => item.mode)</td>
+                        <td>@Html.DisplayFor(modelItem => item.time)</td>
+                        <td>@Html.DisplayFor(modelItem => item.opid)</td>
+                    </tr>
+                </tbody>
+                amount = amount + Convert.ToDouble(item.payamount);
+            }
+            @if (a > 0)
+            {
+                <tr style="text-align:center;">
+                    <td colspan="2"><b>Grand total</b></td>
+                    <td><b>@amount</b></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+        @if (a > 0)
+        {
+            <div class="text-center mt-3">
+                <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintCancelReport")" target="_blank">Get Report In PDF</a>
+            </div>
+        }
+    </div>
+
+    

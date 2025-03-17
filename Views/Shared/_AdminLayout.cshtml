@@ -1,0 +1,271 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+
+    var logo = string.Empty;
+    var companyname = string.Empty;
+    var incometype = string.Empty;
+    UsersContext db = new UsersContext();
+    var mr = db.Members.Single(m => m.Id == 1);
+    var r = db.CompanyInfos.Single(ci => ci.AdminId == User.Identity.Name);
+
+    var f1 = db.VFormatTabs.Single(f => f.Id == 1);
+    var f2 = db.VFormatTabs.Single(f => f.Id == 2);
+    var f3 = db.VFormatTabs.Single(f => f.Id == 3);
+
+    logo = r.CompanyLogo;
+    companyname = r.CompanyName;
+    incometype = r.IncomeType;
+    var validitydays = r.RegDate.Subtract(DateTime.Now.Date).TotalDays;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@r.CompanyName-Admin Panel</title>
+    <link href="~/assets/css1/style.css" rel="stylesheet" />
+
+    <link href="~/assets/css1/baguetteBox.min.css" rel="stylesheet" />
+
+    <link href="~/assets/css1/baguetteBox.min.css" rel="stylesheet" />
+    <link href="~/assets/css1/bootstrap-grid.css" rel="stylesheet" />
+    <link href="~/assets/css1/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/assets/css1/bootstrap-reboot.css" rel="stylesheet" />
+    <link href="~/assets/css1/bootstrap.css" rel="stylesheet" />
+    <link href="~/assets/css1/calendar.css" rel="stylesheet" />
+    <link href="~/assets/css1/calendar.min.css" rel="stylesheet" />
+    <link href="~/assets/css1/custom.css" rel="stylesheet" />
+    <link href="~/assets/css1/flaticon.css" rel="stylesheet" />
+    <link href="~/assets/css1/font-awesome.css" rel="stylesheet" />
+    <link href="~/assets/css1/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/assets/css1/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/assets/css1/search_bar.css" rel="stylesheet" />
+    <link href="~/assets/css1/Create.css" rel="stylesheet" />
+
+
+
+
+    <!-- site icon -->
+    <link rel="icon" href="~/images/fevicon.png" type="image/png" />
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="~assets/css1/bootstrap.min.css" />
+    <!-- site css -->
+    <link rel="stylesheet" href="~/style.css" />
+    <!-- responsive css -->
+    <link rel="stylesheet" href="~assets/css1/responsive.css" />
+    <!-- color css -->
+    <link rel="stylesheet" href="~assets/css1/colors.css" />
+    <!-- select bootstrap -->
+    <link rel="stylesheet" href="~assets/css1/bootstrap-select.css" />
+    <!-- scrollbar css -->
+    <link rel="stylesheet" href="~assets/css1/perfect-scrollbar.css" />
+    <!-- custom css -->
+    <link rel="stylesheet" href="~assets/css1/custom.css" />
+    <!--[if lt IE 9]>
+    <script src="~https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="~https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- end topbar -->
+    <!-- jQuery -->
+    <script src="~/assets/js/admin_js/jquery.min.js"></script>
+    <script src="~/assets/js/admin_js/popper.min.js"></script>
+    <script src="~/assets/js/admin_js/bootstrap.min.js"></script>
+    <!-- wow anim/ation -->
+    <script src="~/assets/js/admin_js/animate.js"></script>
+    <!-- select c/ountry -->
+    <script src="~/assets/js/admin_js/bootstrap-select.js"></script>
+    <!-- owl caro/usel -->
+    <script src="~/assets/js/admin_js/owl.carousel.js"></script>
+    <!-- chart js -->
+    <script src="~/assets/js/admin_js/Chart.min.js"></script>
+    <script src="~/assets/js/admin_js/Chart.bundle.min.js"></script>
+    <script src="~/assets/js/admin_js/utils.js"></script>
+    <script src="~/assets/js/admin_js/analyser.js"></script>
+    <!-- nice scrollbar -->
+    <script src="~/assets/js/admin_js/perfect-scrollbar.min.js"></script>
+    <script>
+        var ps = new PerfectScrollbar('#sidebar');
+    </script>
+    <!-- custom js -->
+    <script src="~/assets/js/admin_js/custom.js"></script>
+    <script src="~/assets/js/admin_js/chart_custom_style1.js"></script>
+
+
+
+</head>
+
+<body>
+    <div class="page-container">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar_blog_1">
+                <div class="sidebar-header">
+                    <div class="logo_section d-flex justify-content-center align-items-center" style="padding: 20px;">
+                        <a href="~/index.html">
+                            @*<img src="@r.CompanyLogo" alt="Logo" style="width: 120px; height: auto;" />*@
+                            <img src="~/assets/axisarth/images/logo-footer.png" alt="Logo" style="width: 80px; height: auto;" />
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar_user_info" style="padding: 15px; text-align: center;">
+                    <div class="icon_setting" style="margin-bottom: 10px;">
+                        <!-- Optional icon or button can go here -->
+                    </div>
+                    <div class="user_profle_side">
+                        <!-- Uncomment if needed -->
+                        <!-- <div class="user_img" style="margin-bottom: 10px;">
+                <img class="img-responsive rounded-circle" src="~/images/layout_img/user_img.jpg" alt="User Image" style="width: 60px; height: 60px;" />
+            </div> -->
+                        <div class="user_info">
+                            <h6>Hello , @User.Identity.Name</h6>
+                            <p><span class="online_animation"></span> Online</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="sidebar_blog_2">
+                <h4>General</h4>
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="~/Admin/Index" aria-expanded="false">
+                            <i class="bi bi-house-door fa yellow_color"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li><a href="~/Admin/Create"><i class="bi bi-person-plus fa orange_color"></i> <span>Create</span></a></li>
+                    <li><a href="~/Admin/Extra"><i class="bi bi-person-plus fa orange_color"></i> <span>Extra</span></a></li>
+                    <li><a href="~/Admin/Payment"><i class="bi fa bi-credit-card purple_color"></i> <span>Payment</span></a></li>
+                    <li><a href="~/Admin/Printing"><i class="bi fa bi-printer purple_color2"></i> <span>Printing</span></a></li>
+                    <li><a href="~/Admin/Registry"><i class="fa-regular fa-address-card blue1_color"></i> <span>Registry</span></a></li>
+                    <li><a href="~/Admin/Update"><i class="fa-solid fa-pen-to-square green_color"></i> <span>Update</span></a></li>
+                    <li><a href="~/Admin/CompleteReport"><i class="fa-regular fa-file-lines yellow_color"></i> <span>Complete Reports</span></a></li>
+                    <li><a href="~/Admin/BranchReport"><i class="fa-regular fa-file-lines yellow_color"></i> <span>Branch Reports</span></a></li>
+                    <li><a href="~/Admin/CpReport"><i class="fa-regular fa-file-lines yellow_color"></i> <span>Collection Point Reports</span></a></li>
+                    <li><a href="~/Admin/AppSetting"><i class="fa-solid fa-mobile-screen-button purple_color2"></i> <span>App Setting</span></a></li>
+                    <li><a href="~/Admin/Setting"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>
+                    <li><a href="~/Admin/Delete"><i class="fa-regular fa-trash-can red_color"></i> <span>Delete</span></a></li>
+                    <li><a href="~/Admin/Search"><i class="fa-solid fa-magnifying-glass blue1_color"></i> <span>Search</span></a></li>
+                    <li><a href="~/Admin/Website"><i class="fa-solid fa-magnifying-glass blue1_color"></i> <span>Website</span></a></li>
+                    <li><a href="~/Admin/EnquiryList"><i class="fa-solid fa-magnifying-glass blue1_color"></i> <span>Enquiry List</span></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Right Content -->
+        <div id="content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #343a40;">
+                    <div class="full d-flex align-items-center justify-content-between w-100">
+                        <!-- Centered Text -->
+                        <div class="d-flex justify-content-center w-100" style="font-size: 36px; color: white; text-align: center;">
+                           Welcome, @companyname
+                        </div>
+                        <!-- Logo Section -->
+                        <div class="logo_section ml-5" style="position: absolute; left: 20px;">
+                            <!-- Uncomment if needed -->
+                            <!-- <a href="~/index.html"><img class="img-responsive" src="~/images/logo/logo.png" alt="#" /></a> -->
+                        </div>
+                        <!-- Right Topbar -->
+                        <div class="right_topbar d-flex align-items-center" style="position: absolute; right: 0px;">
+                            <div class="icon_info">
+                                <ul class="user_profile_dd">
+                                    <li class="d-flex align-items-center">
+                                        <a class="dropdown-toggle d-flex align-items-center" data-toggle="dropdown" style="color: white;">
+                                            <img class="img-responsive rounded-circle" src="~/assets/axisarth/images/logo-footer.png" alt="User Image" style="width: 40px; height: 40px; margin-right: 10px;" />
+                                            <span class="name_user">Admin</span>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="~/profile.html">My Profile</a>
+                                            @*<a class="dropdown-item" href="~/settings.html">Settings</a>*@
+                                        <a class="dropdown-item" href="~/Admin/ChangePassword">Change Password</a>
+                                            <a class="dropdown-item" href="~/Admin/Logout">
+                                                <span>Log Out</span>
+                                                <i class="fa fa-sign-out"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+
+            <!-- Body Content -->
+            <div id="body">
+                @RenderSection("featured", required: false)
+                <section class="content-wrapper main-content clear-fix">
+                    @RenderBody()
+                </section>
+
+                @if (validitydays <= 15)
+                {
+                    <div id="boxes">
+                        <div id="dialog" class="window">
+                            <h2 style="color: red; margin-top: 75px; font-size: 20px; font-family: 'Bodoni MT'">
+                                Your software will expire in @validitydays days. Please make a payment to continue services.
+                            </h2>
+                        </div>
+                        <div id="mask"></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var id = '#dialog';
+
+        //Get the screen height and width
+        var maskHeight = $(document).height();
+        var maskWidth = $(window).width();
+
+        //Set heigth and width to mask to fill up the whole screen
+        $('#mask').css({ 'width': maskWidth, 'height': maskHeight });
+
+        //transition effect
+        $('#mask').fadeIn(500);
+        $('#mask').fadeTo("slow", 0.9);
+
+        //Get the window height and width
+        var winH = $(window).height();
+        var winW = $(window).width();
+
+        //Set the popup window to center
+        $(id).css('top', winH / 2 - $(id).height() / 2);
+        $(id).css('left', winW / 2 - $(id).width() / 2);
+
+        //transition effect
+        $(id).fadeIn(2000);
+
+        //if close button is clicked
+        $('.window .close').click(function (e) {
+            //Cancel the link behavior
+            e.preventDefault();
+
+            $('#mask').hide();
+            $('.window').hide();
+        });
+
+        //if mask is clicked
+        $('#mask').click(function () {
+            $(this).hide();
+            $('.window').hide();
+        });
+
+    });
+</script>

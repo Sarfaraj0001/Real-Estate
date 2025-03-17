@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.DealSheet>
+    @using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+
+        var br = db.Branchtabs.Single(o => o.BranchCode == User.Identity.Name);
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "BrokerListReport";
+        var a = 1;
+
+    }
+    <div class="container-fluid mt-4 FormContainer">
+        <h2 class="text-center mb-4">Deal List</h2>
+        <div id="1">
+            <table class="bg-white">
+                <thead>
+                    <tr style="">
+                        <th colspan="3" class="header-row" style="border-radius: 8px 0 0 0; border-top: none; border-left:none;">@mr.branchname Name:@br.BranchName</th>
+                        <th colspan="3" class="header-row" style="border-radius: 0 0 0 0; border-top: none; border-right: none;">Deal List</th>
+                        <th colspan="3" class="header-row" style="border-radius: 0 8px 0 0; border-top: none; border-right: none;">@Convert.ToDateTime(DateTime.Now.Date).ToString("dd/MM/yyyy")</th>
+                    </tr>
+                    <tr>
+                        <th><label id="sn"><b>S.N.</b></label></th>
+                        <th><label id="newidd"><b>Deal Id</b></label></th>
+                        <th><label id="newid"><b>Customer Name</b></label></th>
+                        <th><label id="spilid"><b>Introducer Name</b></label></th>
+                        <th><label id="pass"><b>Customer Mobile No.</b></label></th>
+                        <th><label id="email"><b>Total Unit Cost </b></label></th>
+                        <th><label id="doj"><b>Date of Joining</b></label></th>
+                        <th><label id="position"><b>Valid Date</b></label></th>
+                        <th><label id="action"><b>Action</b></label></th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@a</td>
+                            <td>@Html.DisplayFor(modelItem => item.userid)</td>
+                            <td>@Html.DisplayFor(modelItem => item.customername)</td>
+                            <td>@Html.DisplayFor(modelItem => item.introname)</td>
+                            <td>@Html.DisplayFor(modelItem => item.mobile)</td>
+                            <td>@Html.DisplayFor(modelItem => item.totalunitcost)</td>
+                            <td>@Convert.ToDateTime(item.doj).ToString("dd/MM/yyyy")</td>
+                            <td>@Html.DisplayFor(modelItem => item.validdate)</td>
+                            <td><a href="/Branch/DealSheetShow?userid=@item.userid" class="btn btn-primary text-white btn-sms">Show</a></td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+            @*@if (a > 0)
+            {
+                <div class="text-center mt-3">
+                    <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintDealSheetreport")" target="_blank">Get Report In PDF</a>
+                </div>
+            }*@
+        </div>
+    </div>
+
+
+
+

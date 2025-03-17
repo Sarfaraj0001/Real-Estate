@@ -1,0 +1,264 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.DatewiseDueCollection>
+    @using ODHDEVELOPERS.Models
+    @{
+        ViewBag.Title = "RenewalList";
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        var a = 0;
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(c => c.Id == 1);
+        Double dueamount = 0.0, installamt = 0.0;
+        var plan1 = db.Plans.Single(m => m.Plancode == 1);
+        var plan2 = db.Plans.Single(m => m.Plancode == 2);
+        var plan3 = db.Plans.Single(m => m.Plancode == 3);
+        var plan4 = db.Plans.Single(m => m.Plancode == 4);
+    }
+
+
+    <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet">
+    <script src="~/Content/datepicker/jquery.plugin.js"></script>
+    <script src="~/Content/datepicker/jquery.datepick.js"></script>
+    <script>
+        $(function () {
+            $('#date').datepick();
+
+        });
+    </script>
+    <script type="text/javascript">
+    function check(check_id) {
+
+        $("#" + check_id).click(function () {
+            $('.plantype').prop('checked', false);
+        });
+
+    }
+    ///Selecting Plan Name Start here ////
+    function rply_click(clicked_id) {
+        $("#" + clicked_id).click(function () {
+            var fno = $("#" + clicked_id).val();
+
+
+            var url = '@Url.Action("SelectPlan", "Branch")';
+            $.get(url, { fno: fno }, function data(d) {
+                var select = $("#PlanName");
+
+                select.children().remove();
+                select.append('<option value="Select">Select</option>');
+                for (var i = 0; i < d.length; i++) {
+                    select.append('<option value="' + d[i].Plancode + '">' + d[i].Planname + '</option>');
+                }
+            });
+        });
+
+    }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#newagentid").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Admin/AutoCompleteAgentid",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.name, value: item.NewAgentId };
+                            }))
+
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type="radio"]').click(function () {
+
+                if ($(this).attr("value") == "1") {
+                    $("#broker").hide();
+                    $("#Plancat").hide();
+                    $("#Planname").hide();
+                }
+                if ($(this).attr("value") == "2") {
+                    $("#broker").show();
+                    $("#Plancat").hide();
+                    $("#Planname").hide();
+                }
+                if ($(this).attr("value") == "3") {
+                    $("#broker").hide();
+                    $("#Plancat").show();
+                    $("#Planname").show();
+                }
+
+
+            });
+        });
+    </script>
+    <div class="container-fluid mt-4 FormContainer">
+        <h2 class="text-center mb-4">Monthly Renewal Report</h2>
+        <div class="border p-4 rounded shadow formtag" style="margin-top:25px">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Select Month</label>
+                    <select class="form-control formInput" id="month" name="month" required>
+                        @if (@ViewData["Month"] == null || @ViewData["Month"] == "")
+                        {
+                            <option selected>Select</option>
+                        }
+                        else
+                        {
+                            <option selected value="@ViewData["Month"]">@ViewData["Monthnm"]</option>
+                        }
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Select Year</label>
+                    <select class="form-control formInput" id="year" name="year" required>
+                        @if (@ViewData["Year"] == null || @ViewData["Year"] == "")
+                        {
+                            <option selected>Select</option>
+                        }
+                        else
+                        {
+                            <option selected>@ViewData["Year"] </option>
+                        }
+                        <option>2013 </option>
+                        <option>2014 </option>
+                        <option>2015 </option>
+                        <option>2016 </option>
+                        <option>2017 </option>
+                        <option>2018 </option>
+                        <option>2019 </option>
+                        <option>2020 </option>
+                        <option>2021 </option>
+                        <option>2022 </option>
+                    </select>
+                </div>
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Filter By</label>
+                    <div>
+                        <input id="radio1" type="radio" name="filter" class="filter" value="1" checked="checked" />All
+                        <input id="radio2" type="radio" name="filter" class="filter" value="2" />@mr.agentname
+                        <input id="radio3" type="radio" name="filter" class="filter" value="3" />Plan Name
+                    </div>
+                </div>
+                <!-- Project Year -->
+                <div class="mb-3" id="broker" style="display: none;">
+                    <label for="year" class="form-label formLabel">Enter @mr.agentname Id</label>
+                    <input type="text" id="newagentid" name="newagentid" class="form-control formInput" placeholder="Enter @mr.agentname Id"/>
+                </div>
+                <!-- Project Year -->
+                <div class="mb-3" id="Plancat" style="display: none;">
+                    <label for="year" class="form-label formLabel">@mr.planname Category</label>
+                    <input type="radio" name="plantype" class="plantype" value="RD" id="RD" onclick="rply_click(this.id)" />@plan1.shortcutname
+                    @*<input type="radio" name="plantype" class="plantype" value="FD" id="FD" onclick="rply_click(this.id)"  />@plan2.shortcutname *@
+                    <input type="radio" name="plantype" class="plantype" value="NFP" id="NFP" onclick="rply_click(this.id)" />@plan3.shortcutname
+                    @*<input type="radio" name="plantype" class="plantype" value="PPS" id="PPS" onclick="rply_click(this.id)"  />@plan4.shortcutname *@
+                </div>
+                <!-- Project Year -->
+                <div class="mb-3" id="Planname" style="display: none;">
+                    <label for="year" class="form-label formLabel">@mr.planname Name</label>
+                    <select class="form-control formInput" onclick="selectplan(this.id)" id="PlanName" name="Plancode" required>
+                        <option>Select </option>
+
+                    </select>
+                </div>
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                    <button type="submit" class="btn btn-lg formButtom">Search</button>
+                </div>
+            }
+        </div>
+        <div class="mt-4">
+            <table class="bg-white">
+                @using (Html.BeginForm())
+                {
+                    foreach (var item in Model)
+                    {
+                        if (a == 0)
+                        {
+                            <thead>
+                                <tr>
+                                    <th colspan="4" class="header-row" style="border-radius: 8px 0 0 0; border: none;">Sales Office:@item.branchname</th>
+                                    <th colspan="4" class="header-row" style="border-radius: 0px;">Daily Collection Report</th>
+                                    <th colspan="4" class="header-row" style="border-radius: 0 8px 0 0; border: none;">For the month of: @ViewData["monthname"]</th>
+                                </tr>
+                                <tr>
+                                    <th><label id="sn"><b>S.N.</b></label></th>
+                                    <th><label id="newid"><b>@mr.custname Id</b></label></th>
+                                    <th><label id="name"><b>Name</b></label></th>
+                                    <th><label id="introducerid"><b>Introducer Id</b></label></th>
+                                    <th><label id="Intro"><b>Intro. Name</b></label></th>
+                                    <th><label id="doj"><b>Payment date </b></label></th>
+                                    <th><label id="Installments"><b>Due Installment</b></label></th>
+                                    <th><label><b>Install Amount</b></label></th>
+                                    <th><label id="Amount"><b>Due Amount</b></label></th>
+                                    <th><label id="position"><b>Branch </b></label></th>
+                                    <th><label><b>Plan </b></label></th>
+                                    <th><label><b>Mobile </b></label></th>
+                                </tr>
+                            </thead>
+                        }
+                        a = a + 1;
+                        <tbody>
+                            <tr>
+                                <td>@a</td>
+                                <td>@Html.DisplayFor(modelItem => item.newbondid)</td>
+                                <td>@Html.DisplayFor(modelItem => item.name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.newintroducerid)</td>
+                                <td>@Html.DisplayFor(modelItem => item.IntroName)</td>
+                                <td>@Convert.ToDateTime(item.formdate).ToString("dd/MM/yyyy")</td>
+                                <td>@Html.DisplayFor(modelItem => item.installment)</td>
+                                <td>@Html.DisplayFor(modelItem => item.installamount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.amount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.branchname)</td>
+                                <td>@Html.DisplayFor(modelItem => item.plan)</td>
+                                <td>@Html.DisplayFor(modelItem => item.mobileno)</td>
+                            </tr>
+                        </tbody>
+                        dueamount = dueamount + item.amount;
+                        installamt = installamt + item.installamount;
+                    }
+                }
+
+                @if (a > 0)
+                {
+                    <tr>
+                        <td colspan="8"><b>Grand Total</b></td>
+                        <td><b>@installamt</b></td>
+                        <td><b>@dueamount</b> </td>
+                        <td colspan="2"></td>
+                    </tr>
+                }
+            </table>
+            @if (a > 0)
+            {
+                <div class="d-flex justify-content-center mt-3">
+                    <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintRenewalList")" target="_blank">Get Report In PDF</a>
+                </div>
+            }
+        </div>
+    </div>
+
+
+

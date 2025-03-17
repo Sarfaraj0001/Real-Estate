@@ -1,0 +1,213 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    ViewBag.Title = "BWV";
+    Layout = "~/Views/Shared/_BranchLayout.cshtml";
+}
+
+<script type="text/javascript">
+    function detail(chkid) {
+        var chk = $("#" + chkid).val();
+        if (chk == "Cheque") {
+            $("#detail").show();
+            $("#dd1").hide();
+            $("#trdetail").hide();
+            $("#cashdetail").hide();
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+        else if (chk == "DD") {
+            $("#dd1").show();
+            $("#detail").hide();
+            $("#trdetail").hide();
+            $("#cashdetail").hide();
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+        else if (chk == "banktransaction") {
+            $("#cashdetail").hide();
+            $("#dd1").hide();
+            $("#detail").hide();
+            $("#trdetail").show();
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+        else {
+            $("#cashdetail").show();
+            $("#detail").hide();
+            $("#dd1").hide();
+            $("#trdetail").hide();
+            $(':input[type="submit"]').prop('disabled', true);
+        }
+
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        $(':input[type="submit"]').prop('disabled', true);
+        $('input[type="text"]').keyup(function () {
+            debugger;
+            var pmth = $("input[name='paymethod']:checked").val();
+
+            var ele = ""
+            if (pmth == "DD") {
+                ele = document.getElementsByClassName('ddenbl');
+            }
+            else if (pmth == "Cheque") {
+                ele = document.getElementsByClassName('chenbl');
+            }
+            //else if (pmth == "Cash") {
+            //    ele = document.getElementsByClassName('caenbl');
+            //}
+            else if (pmth == "banktransaction") {
+                ele = document.getElementsByClassName('bnenbl');
+            }
+            var count = ele.length;
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].type == 'text' && ele[i].value == '') {
+                    $(':input[type="submit"]').prop('disabled', true);        // DISABLE THE BUTTON.
+                    return false;
+                }
+                else {
+                    $(':input[type="submit"]').prop('disabled', false);      // ENABLE THE BUTTON.
+                }
+            }
+        });
+    });
+</script>
+
+<div class="container-fluid mt-4 FormContainer">
+    <h2 class="text-center mb-4">Create Collection Point</h2>
+    @using (Html.BeginForm("BWV", "Branch", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="p-4 rounded shadow formtag">
+            @*Branch Code*@
+            <div class="mb-3">
+                <label for="branchCode" class="form-label formLabel">Agent Id:</label>
+                <input type="text" value="@ViewData["agenid"]" id="newagentid" name="newagentid" class="form-control formInput" readonly="true" />
+                <input type="hidden" value="@ViewData["month"]" id="month" name="month" class="form-control" />
+                <input type="hidden" value="@ViewData["year"]" id="year" name="year" class="form-control" />
+            </div>
+            @*Collection Point Name*@
+            <div class="mb-3">
+                <label for="collectionPointName" class="form-label formLabel">Payment Mode:</label>
+                <div class="d-flex">
+                    <input type="radio" id="paymethod" name="paymethod" value="Cash" checked onclick="detail(this.id)">
+                    Cash&nbsp;&nbsp;
+                    <input type="radio" id="paymethod2" name="paymethod" value="DD" onclick="detail(this.id)">
+                    DD&nbsp;&nbsp;
+                    <input type="radio" id="paymethod3" name="paymethod" value="Cheque" onclick="detail(this.id)">
+                    Cheque&nbsp;&nbsp;
+                    <input type="radio" id="paymethod4" name="paymethod" value="banktransaction" onclick="detail(this.id)">
+                    Bank Transaction
+                </div>
+            </div>
+            @*Collection Point ID*@
+            <div id="cashdetail">
+                <div class="mb-3">
+                    <label for="collectionPointId" class="form-label formLabel">Cash Amount:</label>
+                    <input type="text" id="cashamount" value="@ViewData["amount"]" readonly="true" name="cashamount" class="form-control formInput caenbl" placeholder="Enter Cash Amount" />
+                </div>
+            </div>
+            @*Mobile No*@
+            <div id="dd1" style="display: none;">
+                <div class="mb-3">
+                    <label for="mobile" class="form-label formLabel">DD No:</label>
+                    <input type="text" id="ddno" name="ddno" class="form-control formInput ddenbl" placeholder="Enter DD Number" />
+                </div>
+                <div class="mb-3">
+                    <label for="mobile" class="form-label formLabel">Amount:</label>
+                    <input type="text" id="ddamount" value="@ViewData["amount"]" readonly="true" name="ddamount" class="form-control formInput ddenbl" />
+                </div>
+            </div>
+
+            @*Email ID*@
+            <div id="detail" style="display: none;">
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Bank Name:</label>
+                    <input type="text" id="bank" name="bank" class="form-control formInput chenbl" placeholder="Enter Bank Name" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">A/C No:</label>
+                    <input type="text" id="ACNO" name="Account" class="form-control formInput chenbl" placeholder="Enter Account Number" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Cheque No:</label>
+                    <input type="text" id="chequeno" name="chequeno" class="form-control formInput chenbl" placeholder="Enter Cheque No" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">A/C Holder Name:</label>
+                    <input type="text" id="ACname" name="ACholdername" class="form-control formInput chenbl" placeholder="Enter A/C Holder Name" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Branch Name:</label>
+                    <input type="text" id="barnch" name="Branch" class="form-control formInput chenbl" placeholder="Enter Branch Name" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">IFSC Code:</label>
+                    <input type="text" id="IFSCcode" name="IFSCCode" class="form-control formInput chenbl" placeholder="Enter IFSC Code" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Amount:</label>
+                    <input type="text" value="@ViewData["amount"]" readonly="true" id="Amount" name="ChequeAmount" class="form-control formInput chenbl" placeholder="Enter Ammount" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Cheque Date:</label>
+                    <input type="text" id="Date" name="Chequedate" value="" class="form-control formInput date chenbl" placeholder="Enter Cheque Date" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Cheque Image:</label>
+                    <input type="file" id="Chequeimage" name="Chequeimage" class="form-control formInput chenbl" />
+                </div>
+            </div>
+
+            @*Date*@
+            <div id="trdetail" style="display: none;">
+                <div class="mb-3">
+                    <label for="date" class="form-label formLabel">Bank Name:</label>
+                    <select id="trbank" name="trbank" class="form-control formInput">
+                        <option>select</option>
+                        @foreach (var blist in db.BankDetail_Tabs.ToList())
+                        {
+
+                            <option value="@blist.bankname">@blist.bankname</option>
+
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Transaction Id:</label>
+                    <input type="text" id="transactionid" name="transactionid" class="form-control formInput bnenbl" placeholder="Enter Transaction Id" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Transaction Date:</label>
+                    <input type="date" id="transactiondate" name="transactiondate" class="form-control formInput bnenbl" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Amount:</label>
+                    <input type="text" id="tramount" value="@ViewData["amount"]" readonly="true" name="tramount" class="form-control formInput bnenbl" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">Pay Method:</label>
+                    <input type="radio" id="trpmethod1" name="transactiontype" value="NEFT" class="bnenbl" checked>
+                    NEFT&nbsp;&nbsp;
+                    <input type="radio" id="trpmethod2" name="transactiontype" value="IMPS" class="bnenbl" />
+                    IMPS&nbsp;&nbsp;
+                    <input type="radio" id="trpmethod3" name="transactiontype" value="RTGS" class="bnenbl" />
+                    RTGS&nbsp;&nbsp;
+                    <input type="radio" id="trpmethod4" name="transactiontype" value="UPI" class="bnenbl" />
+                    UPI
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label formLabel">A/C Holder's A/C No:</label>
+                    <input type="text" id="holderacno" name="holderacno" class="form-control formInput bnenbl" placeholder="Enter A/C Holder's A/C No" />
+                </div>
+            </div>
+            @*Create Button*@
+            <div class="text-center d-grid gap-2">
+                <button id="submit" value="Submit" type="submit" name="command" class="btn btn-lg formButtom" onclick="return confirm('Are you sure to pay Commission ?')">Submit</button>
+            </div>
+        </div>
+    }
+</div>
+
+
+

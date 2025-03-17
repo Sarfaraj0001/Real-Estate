@@ -1,0 +1,314 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.careertable1>
+@using ODHDEVELOPERS.Models;
+@{
+    ViewBag.Title = "Updatejobs";
+    Layout = "~/Views/Shared/_HRLayout.cshtml";
+    UsersContext db = new UsersContext();
+    var id = TempData["jobid"];
+    var idd = Convert.ToString(id);
+}
+<script>
+    function checkdistrict(check_id) {
+
+        debugger;
+        var state = $("#state").val();
+        var url = '@Url.Action("selectdistrict", "Branch")';
+            var select = $("#District");
+            $.get(url, { state: state }, function data(d) {
+
+                select.children().remove();
+               
+                for (var i = 0; i < d.length; i++) {
+                    select.append('<option value="' + d[i].city + '">' + d[i].city + '</option>');
+                }
+
+            });
+
+
+        }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#main1").hide();
+    });
+    function getrecord() {
+        debugger;
+        var Jobid = $("#jobid").val();
+        var Url = "/HR/Pickdata"
+        $.get(Url, { jobid:Jobid  }, function (d) {
+            $("#main1").show();
+            $("#jobsid").val(Jobid);
+            var select = $("#District");
+            for(var i = 0;d.length>0;i++){
+                $("#jobtype").val(d[i].jobtype);
+                $("#jobdiscription").val(d[i].jobdiscription);
+                $("#experience").val(d[i].experience);
+                $("#industry").val(d[i].industry);
+                $("#role").val(d[i].role);
+                $("#functionalarea").val(d[i].functionalarea);
+                $("#salary").val(d[i].salary);
+                $("#Title").val(d[i].Title);
+                $("#Keyword").val(d[i].Keyword);
+                $("#state").val(d[i].joblocationstate);
+                $("#experience").val(d[i].experience);
+                select.append('<option selected value="' + d[i].city + '">' + d[i].city + '</option>');
+                $("#companyemail").val(d[i].companyemail);
+                $("#jobid").val(d[i].jobid);
+               
+                $("#contact").val(d[i].contact);
+            }
+        })
+        }
+    </script>
+
+<div class="page-content">
+                <div class="container">
+<div class="page-toolbar">
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Update Jobs</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                    </div> 
+                    <div class="row" >
+                        <div class="col-md-6" style="width:100%">  
+                            <div class="block" >
+                                <div class="block-content controls" >
+                                    <div class="row-form"  >
+                                  <div class="col-md-6">
+                                       <div class="input-group">
+                                            <span class="input-group-addon"><label class="width">Job Id</label></span>
+                                             <input type="text"  required name="jobid" id="jobid" value="" class="form-control">
+                                                </div>
+                                      </div>
+                                            </div>
+
+                                         <div class="row-form"  >
+                                  <div class="col-md-6">
+                                       <div class="input-group">
+                                            
+                                             <input type="Submit"   name="" value="Search" onclick="getrecord()" class="form-control">
+                                                </div>
+                                      </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    @using (Html.BeginForm("Updatejobs", "HR", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <input type="hidden"  required name="jobsid" id="jobsid" value="" class="form-control">
+                       <div class="row"  id="main1">
+                        <div class="col-md-6" style="width:100%">  
+                            <div class="block" >
+                                <div class="block-content controls" >
+                                    <div class="row-form"  >
+                                  <div class="col-md-9">
+                                       <div class="input-group">
+                                            <span class="input-group-addon"><label class="width">Job Type</label></span>
+                                             <input type="text"  required name="jobtype" id="jobtype" value="" class="form-control">
+                                                </div>
+                                      </div>
+                                            </div>
+                                    <div class="row-form"  >
+                                  <div class="col-md-9">
+                                       <div class="input-group">
+                                            <span class="input-group-addon"><label class="width">Job Discription</label></span>
+                                             <textarea  required name="jobdiscription" id="jobdiscription" value=""  class="form-control"></textarea>
+                                                </div>
+                                      </div>
+                                            </div>
+                                    <div class="row-form"  >
+                                  <div class="col-md-9">
+                                       <div class="input-group">
+                                            <span class="input-group-addon"><label class="width">Industry</label></span>
+                                             <input type="text" id="industry" required name="industry"  class="form-control">
+                                                </div>
+                                    
+                                
+                                      </div>
+                                            </div>
+                          
+                                     <div class="row-form">
+                                        
+                                        <div class="col-md-9">
+                                            
+                                               <div class="input-group">
+                                            <span class="input-group-addon"><label class="width">Role</label></span>
+                                                <input type="text"  class="form-control" name="role" id="role" />
+                                                </div>
+                                    
+                                        </div>
+                                    </div>
+
+
+                                     <div class="row-form">
+                                        
+                                        <div class="col-md-9">
+                                             <div class="input-group">
+                                            <span class="input-group-addon"><label class="width">Functional Area</label></span>
+                                                <input type="text" name="functionalarea" id="functionalarea" class="form-control" />
+                                                    
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                         <div class="row-form">
+                                        
+                                        <div class="col-md-9">
+                                             <div class="input-group">
+                                            <span class="input-group-addon"><label class="width">Salary</label></span>
+                                                <input type="text" name="salary" id="salary" class="form-control"
+                                                    />
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                      <div class="row-form">
+                                        
+                                        <div class="col-md-9">
+                                            
+
+                                             <div class="input-group">
+                                            <span class="input-group-addon"><label class="width" >Experience</label></span>
+                                    <input type="text" required name="experience" id="experience" class="form-control" />
+
+                                                </div>
+
+                                        </div>
+                                    </div>
+
+                                     
+                                    <div class="row-form">
+                                  
+                                        <div class="col-md-9">
+
+                                             
+            
+                                            
+                                         <div class="input-group">
+                                         <span class="input-group-addon"><label class="width">Title</label></span>
+                                             
+                                             <input type="text" required name="Title" id="Title" class="form-control" />
+
+                                    
+                                         </div>
+
+
+                                        </div>
+                                    
+                                     
+                                     
+                                     </div>
+
+                                   @* <div class="row-form">
+                                  
+                                        <div class="col-md-9">
+
+                                             
+            
+                                            
+                                         <div class="input-group">
+                                         <span class="input-group-addon"><label class="width">Keyword</label></span>
+                                             
+                                             <input type="text" required name="Keyword" id="Keyword" class="form-control" />
+
+                                    
+                                         </div>
+
+
+                                        </div>
+                                    
+                                     
+                                     
+                                     </div>*@
+
+
+
+
+
+
+
+                                    <div class="row-form">
+                                  
+                                        <div class="col-md-9">
+
+                                             
+            
+                                            
+                                         <div class="input-group">
+                                         <span class="input-group-addon"><label class="width">Joblocation State</label></span>
+                                             
+                                           <input type="text" id="state" name="joblocationstate" onclick="checkdistrict(this.id)" class="form-control" />
+
+                                    
+                                         </div>
+
+
+                                        </div>
+                                    
+                                     
+                                     
+                                     </div>
+                                     <div class="row-form">
+                                  
+                                        <div class="col-md-9">
+                                    <div class="input-group">
+                                            <span class="input-group-addon"><label class="width" >Joblocation City</label></span>
+
+                                           <select class="form-control" id="District" name="city">
+                                        
+
+                                        </select>
+
+
+                                               
+                                                  
+                                                </div>
+                                    </div>
+                                         </div>
+
+                                    <div class="row-form">
+                                        <div class="col-md-9">
+                                         <div class="input-group">
+                                         <span class="input-group-addon"><label class="width">Company Email</label></span>
+                                             
+                                             <input type="email" required name="companyemail" id="companyemail" class="form-control" />
+                                         </div>
+                                        </div>
+                                     </div>
+                                     <div class="row-form">
+                                        <div class="col-md-9">
+                                         <div class="input-group">
+                                         <span class="input-group-addon"><label class="width">Company Contact</label></span>
+                                             
+                                             <input type="text" required name="contact" id="contact" class="form-control" />
+                                         </div>
+                                        </div>
+                                     </div>     
+                                  
+
+                                        </div>
+                                    </div>
+                               
+                                  
+
+                                       <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+                                                          
+                                <input type="submit" value="update" name="command" class="btn btn-primary">                           
+                               
+                            </div>
+                        </div>
+                                             
+                                    
+                                      <p>@ViewBag.msg</p> 
+                                </div>
+                                
+                            </div>
+                        
+                        
+                    }
+                            </div>
+                          </div>  

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.Chequecollection>
+    @using ODHDEVELOPERS.Models
+    @{
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "DateWiseChequeCollection";
+    }
+
+
+
+    <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet" />
+    <script src="~/Content/datepicker/jquery.plugin.js"></script>
+    <script src="~/Content/datepicker/jquery.datepick.js"></script>
+
+    <script>
+        $(function () {
+            $('#sdate').datepick();
+            $('#edate').datepick();
+
+        });
+
+    </script>
+
+    <div class="container-fluid mt-4 FormContainer" id="divid">
+        <h2 class="text-center mb-4">Datewise Cheque Collection</h2>
+        <div class="border p-4 rounded shadow formtag" style="margin-top:25px">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Start Date:</label>
+                    <input type="date" id="" class="form-control formInput" required name="sdate" value="@ViewData["sdate"]" />
+                </div>
+
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">End Date:</label>
+                    <input type="date" id="" class="form-control formInput" required name="edate" value="@ViewData["edate"]" />
+                </div>
+
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                    <button id="submit" value="Search" onclick="target='_blank'" class="btn btn-lg formButtom" type="submit">View</button>
+                </div>
+            }
+        </div>
+    </div>
+
+   
+
+

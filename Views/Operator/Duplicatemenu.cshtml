@@ -1,0 +1,78 @@
+﻿@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var br = db.Operators.Single(b => b.OperatorId == User.Identity.Name);
+    var mr = db.Members.Single(m => m.Id == 1);
+ 
+    var plan1 = db.Plans.Single(p1 => p1.Plancode == 1);
+    var plan2 = db.Plans.Single(p2 => p2.Plancode == 2);
+    var plan3 = db.Plans.Single(p3 => p3.Plancode == 3);
+    var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
+    var f1 = db.VFormatTabs.Single(f => f.Id == 1);
+    var f2 = db.VFormatTabs.Single(f => f.Id == 2);
+    var f3 = db.VFormatTabs.Single(f => f.Id == 3);
+    Layout = "~/Views/Shared/_OperatorLayout.cshtml";
+    ViewBag.Title = "Duplicatemenu";
+}
+
+<div class="page-content">
+
+                <div class="container">
+
+<div class="page-toolbar">
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Welcome @br.OperatorId</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                        
+                      
+
+                    </div>
+
+                    <div class="widget stacked">
+					
+				<div class="widget-header">
+					<i class="icon-credit-card"></i>
+					<h3>Duplicate</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">
+					
+					<div class="shortcuts">
+                         <a href="~/Operator/DuplicateBond" class="shortcut">
+							<img alt="" src="~/Images/icon/2.png" />
+							<span class="shortcut-label">@mr.custname</span>
+                            <br />
+						</a>
+
+                         <a href="~/Operator/ChequeDuplicateReceipt" class="shortcut">
+							<img alt="" src="~/Images/icon/2.png" />
+							<span class="shortcut-label">Pending @mr.custname</span>
+                            <br />
+						</a>
+
+                        <a href="~/Operator/DuplicateReceipt" class="shortcut">
+							<img alt="" src="~/Images/icon/54.png" />
+							<span class="shortcut-label">Renewal</span>
+                            <br />
+						</a>
+
+                        @* <a href="~/Operator/PrintMoneyBack" class="shortcut">
+							<img alt="" src="~/Images/icon/cheque.jpg" />
+							<span class="shortcut-label">Cheque</span>
+                            <br />
+						</a>*@
+                        
+					
+						
+                        
+					</div> <!-- /shortcuts -->	
+				
+				</div> <!-- /widget-content -->
+				
+			</div>
+                     </div>
+
+     </div>
+

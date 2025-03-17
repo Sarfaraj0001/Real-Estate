@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.BrokerAccount>
+    @using ODHDEVELOPERS.Models;
+    @{
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "MemberAccountDetail";
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        var a = 0;
+        Double SumAmount = 0;
+
+    }
+
+
+    <div class="container-fluid mt-4 FormContainer">
+        <h2 class="text-center mb-4">Member Account Details</h2>
+        <div id="1">
+            <table class="bg-white">
+                @foreach (var item in Model)
+                {
+                    if (a == 0)
+                    {
+                        <thead>
+                            <tr style="">
+                                <th colspan="4" class="header-row" style="border-radius: 8px 0 0 0; border-top: none; border-left:none;">Member Id:@item.newintroducerid</th>
+                                <th colspan="5" class="header-row" style="border-radius: 0 8px 0 0; border-top: none; border-right: none;">Member Name:@item.name</th>
+                            </tr>
+                            <tr>
+                                <th><label id="sn"><b>S.N.</b></label></th>
+                                <th><label id="customerid"><b>@mr.custname Id</b></label></th>
+                                <th><label id="Name"><b>@mr.custname Name</b></label></th>
+                                <th><label id="netamount"><b>Total Collection</b></label></th>
+                                <th><label id="planname"><b>@mr.planname Name</b></label></th>
+                                <th><label id="Term"><b>Term</b></label></th>
+                                <th><label id="Mode"><b>Mode</b></label></th>
+                                <th><label id="formdate"><b>Form Date</b></label></th>
+                                <th><label id="expirydate"><b>Maturity Date</b></label></th>
+                            </tr>
+                        </thead>
+                    }
+                    a = a + 1;
+                    <tbody>
+                        <tr>
+                            <td>@a</td>
+                            <td> @Html.DisplayFor(modelItem => item.newbondid)</td>
+                            <td> @Html.DisplayFor(modelItem => item.cname) </td>
+                            <td>@Html.DisplayFor(modelItem => item.amount)</td>
+                            <td> @Html.DisplayFor(modelItem => item.planname)</td>
+                            <td> @Html.DisplayFor(modelItem => item.term)</td>
+                            <td>@Html.DisplayFor(modelItem => item.mode) </td>
+                            <td> @Convert.ToDateTime(item.formdate).ToString("dd/MM/yyyy") </td>
+                            <td>@Convert.ToDateTime(item.expirydate).ToString("dd/MM/yyyy") </td>
+                        </tr>
+
+                    </tbody>
+                    SumAmount = SumAmount + Convert.ToDouble(item.amount);
+                }
+                @if (a > 0)
+                {
+                    <tr style="text-align:left;">
+                        <td style="width:10%" colspan="3"><b>GRAND TOTAL:</b></td>
+                        <td style="width:8%;text-align:left;"><b>@SumAmount</b></td>
+                        <td colspan="5" style="width:8%;text-align:left;"></td>
+                    </tr>
+                }
+            </table>
+            @if (a > 0)
+            {
+                <div class="text-center mt-3">
+                    <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintAccountDetail")" target="_blank">Get Report In PDF</a>
+                </div>
+               
+            }
+        </div>
+    </div>

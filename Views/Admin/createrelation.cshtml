@@ -1,0 +1,112 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.relation>
+@using ODHDEVELOPERS.Models;
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "createrelation";
+    var a = 0;
+}
+
+
+<div class="page-content">
+
+                <div class="container">
+
+<div class="page-toolbar">
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">Create Relation</div>
+                            <div class="page-toolbar-subtitle"></div>
+                        </div>
+                        
+                        <div class="page-toolbar-block pull-right">
+                            
+                        </div>           
+                        
+                    </div> 
+
+                    <div class="row" style="width:100%">
+                        <div class="col-md-6" style="width:100%">
+                            
+                            <div class="block" style="width:100%">
+                               <div class="block-content controls">  
+
+                    
+                      
+                        
+     @using (Html.BeginForm()) {
+            
+                   <div class="row-form">  
+                                         
+    <div class="col-md-9">
+        <div class="input-group">
+       <span class="input-group-addon"><label class="width">Enter Relation</label> </span>  
+        <input type="text" class="form-control"  name="relations" id="relations" required/></div>
+                                   
+   </div>
+                        
+         </div>
+         
+                
+                 <div class="page-toolbar-block pull-right">
+                            <div class="widget-info widget-from">
+         <button  type="submit" class="btn btn-primary pull-right"> Create Relation</button>   
+                                </div>
+                                             </div>
+         
+     <p style="color:maroon;"><b> @ViewBag.msg</b></p>
+     }
+                                </div>
+                                
+                             @if (Convert.ToInt32(ViewData["count"])>0)
+                                {
+                            <table border="1" style="margin-left:1%; margin-right:1px; margin-bottom:60px; width:98%;">
+    @using (Html.BeginForm())
+                {
+                    foreach (var item in Model)
+                    {
+                        if (a == 0)
+                        {
+                            <tr style="text-align:center;">
+                                <th  style="text-align:center;"></th>
+                                <th style="text-align:center;"><b>All Relation List</b></th>
+                            </tr>
+    <tr>
+        <th style="width:10%;text-align:center;">
+           <label id="sn"><b>S.N.</b></label>
+            </th>
+        <th style="width:40%;text-align:center;">
+           <label id="newid"><b> Relations</b></label>
+            </th>
+      
+      
+    </tr>
+    }
+                        a = a + 1;
+
+
+    <tr style="text-align:left;">
+        <td>
+            @a
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.relations)
+        </td>
+
+         
+        
+             
+    </tr>
+                   
+    }
+
+    }
+    
+    
+   
+</table>
+                                }
+                                         
+                                    </div>
+                            </div>
+                                        
+                   </div> </div> </div>

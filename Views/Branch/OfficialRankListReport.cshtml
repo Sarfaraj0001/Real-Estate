@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.Ranktab>
+    @using ODHDEVELOPERS.Models
+    @{
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "OfficialRankListReport";
+        var a = 0;
+    }
+
+    <script src="~/Scripts/print.js" type="text/javascript"></script>
+
+
+
+    <div class="container-fluid mt-4 FormContainer">
+        <h2 class="text-center mb-4">@mr.rankname List</h2>
+        <div class="mt-4" id="divid1">
+            <div id="1">
+                <table class="bg-white">
+                    @foreach (var item in Model)
+                    {
+                        if (a == 0)
+                        {
+                            <thead>
+                                <tr style="">
+                                    <th class="header-row" style="border-radius: 8px 0 0 0; border:none"><label id="sn"><b>@mr.rankname No</b></label></th>
+                                    <th class="header-row" style="border-radius: 0px;"><label id="introducerid"><b>@mr.rankname Name</b></label></th>
+                                    <th class="header-row" style="border-radius: 0 8px 0 0; border: none"><label id="Quota"><b>@mr.rankname Shortcut</b></label></th>
+                                </tr>
+                            </thead>
+                        }
+                        a = a + 1;
+                        <tbody>
+                            <tr>
+                                <td>@a</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RankName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Rankshrtcut)
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    }
+                </table>
+                <div class="text-center mt-3">
+                    <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintRank")" target="_blank">Get Report In PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+

@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.operatorlogin_detail>
+    @using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        ViewBag.Title = "OperatorLoginDetails";
+        var a = 0;
+    }
+
+    <link rel="stylesheet" href="~/Content/jquery-ui.css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#iid").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Admin/AutoCompleteOpId",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.OperatorName, value: item.OperatorId };
+                            }))
+
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
+
+    <div class="container-fluid mt-4 FormContainer" id="divid">
+        <h2 class="text-center mb-4">Collection Point Login-Detail</h2>
+        <div class="border p-4 rounded shadow formtag" style="margin-top:25px">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Enter Collection Point ID or Name:</label>
+                    <input type="text" id="iid" class="form-control formInput" required name="iid" placeholder="Enter Collection Point ID or Name">
+                </div>
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                    <button id="submit" name="command" value="Search" class="btn btn-lg formButtom" type="submit">View</button>
+                </div>
+            }
+        </div>
+        <table class="bg-white mt-3">
+            @using (Html.BeginForm())
+            {
+                foreach (var item in Model)
+                {
+                    if (a == 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th colspan="4" class="header-row border-0" style="border-radius: 8px 8px 0 0;">Collection Point Login-Detail</th>
+                                @*<th style="text-align:center;"><b>  <input type="hidden" value="@item.iid" id="id" name="id"></b></th>*@
+                            </tr>
+                            <tr>
+                                <th><label id="sn"><b>S.N.</b></label></th>
+                                <th><label id="cc"><b>Collection Point Id</b></label></th>
+                                <th><label id="intime"><b>Login Time</b></label></th>
+                                <th><label id="dd"><b>Logout Time</b></label></th>
+                            </tr>
+                        </thead>
+                    }
+                    a = a + 1;
+                    <tbody>
+                        <tr>
+                            <td>@a</td>
+                            <td>@Html.DisplayFor(modelItem => item.iid)</td>
+                            <td>@Convert.ToDateTime(item.indatetime).ToString("dd/MM/yyy:HH:mm:ss")</td>
+                            <td>@Convert.ToDateTime(item.outdatetime).ToString("dd/MM/yyy:HH:mm:ss")</td>
+                        </tr>
+                    </tbody>
+                }
+            }
+        </table>
+        @if (a > 0)
+        {
+            <div class="text-center mt-3">
+                <a class="btn btn-lg formButtom text-white" href="@Url.Action("PrintLoginDetails")" target="_blank">Get Report In PDF</a>
+            </div>
+        }
+    </div>
+

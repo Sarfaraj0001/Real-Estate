@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.bithdaylist>
+    @using ODHDEVELOPERS.Models
+    @{
+        ViewBag.Title = "sendbirthday";
+        Layout = "~/Views/Shared/_BranchLayout.cshtml";
+        var a = 0;
+
+        UsersContext db = new UsersContext();
+    }
+
+    <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet" />
+    <script src="~/Content/datepicker/jquery.plugin.js"></script>
+    <script src="~/Content/datepicker/jquery.datepick.js"></script>
+    <script>
+    $(function () {
+        $('#sdate').datepick();
+        $('#edate').datepick();
+
+    });
+
+
+    function sendsms(memid) {
+
+        var memid = memid;
+        var url = '@Url.Action("senwishes", "Branch")';
+        $.get(url, { memberid: memid }, function data(name1) {
+            alert(name1[0].sms);
+            });
+
+
+        }
+
+
+    </script>
+
+    <div class="container-fluid mt-4 FormContainer" id="divid">
+        <h2 class="text-center mb-4">Datewise Details</h2>
+        <div class="border p-4 rounded shadow formtag" style="margin-top:25px">
+            @using (Html.BeginForm())
+            {
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Search By:</label>
+                    <div>
+                        <input type="radio" id="chkYes" name="command" value="Customer" />&nbsp;Customer&nbsp;&nbsp;
+                        <input type="radio" id="chkNo" name="command" value="Associate" />&nbsp;Associate
+                    </div>
+                </div>
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">Start Date:</label>
+                    <input type="date" class="form-control formInput" id="" name="sdate" required>
+                </div>
+
+                <!-- Project Year -->
+                <div class="mb-3">
+                    <label for="year" class="form-label formLabel">End Date:</label>
+                    <input type="date" class="form-control formInput" id="" name="edate" required>
+                </div>
+
+                <!-- Create Button -->
+                <div class="text-center d-grid gap-2">
+                    <button class="btn btn-lg formButtom"><i class="fa fa-cog"></i>Search</button>
+                </div>
+            }
+        </div>
+        @if (Model != null)
+        {
+            <table class="bg-white mt-3">
+                @foreach (var item in Model)
+                {
+
+                    if (a == 0)
+                    {
+                        <thead>
+                            <tr style="">
+                                <th colspan="6" class="header-row border-0" style="border-radius: 8px 8px 0 0;">Duration:@Convert.ToDateTime(item.sdate).ToString("dd/MM/yyyy")&nbsp;-To-&nbsp; @Convert.ToDateTime(item.edate).ToString("dd/MM/yyyy")</th>
+                            </tr>
+                            <tr>
+                                <th><label><b>S.N.</b></label></th>
+                                <th><label><b>@item.rankname Id</b></label></th>
+                                <th><label><b>Name</b></label></th>
+                                <th><label><b>Mobile No</b></label></th>
+                                <th><label id="email"><b>Date of Birth</b></label></th>
+                                <th><label><b>Send Wishes</b></label></th>
+                            </tr>
+                        </thead>
+                    }
+                    a = a + 1;
+                    <tbody>
+                        <tr>
+                            <td>@a</td>
+                            <td>@Html.DisplayFor(modelItem => item.memberid)</td>
+                            <td>@Html.DisplayFor(modelItem => item.membername)</td>
+                            <td>@Html.DisplayFor(modelItem => item.mobile)</td>
+                            <td>@Convert.ToDateTime(item.dob).ToString("dd/MM/yyyy")</td>
+                            <td><p class="btn btn-primary text-white" id="@item.memberid" onclick="sendsms(this.id)">SEND</p></td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        }
+        </div>
+
+
+

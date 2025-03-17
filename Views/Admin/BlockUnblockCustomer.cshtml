@@ -1,0 +1,159 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.Appltab>
+@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var mr = db.Members.Single(m => m.Id == 1);
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "BlockUnblockCustomer";
+    var a = 0;
+    DateTime dt = DateTime.Now.Date;
+
+}
+
+<div class="page-content">
+
+    <div class="container" id="divid">
+
+        <div class="page-toolbar">
+
+            <div class="page-toolbar-block">
+                <div class="page-toolbar-title">Block-Unblock @mr.custname</div>
+                <div class="page-toolbar-subtitle"></div>
+            </div>
+            <div class="page-toolbar-block pull-right">
+                <div class="widget-info widget-from">
+                    <div>
+                        <label>@Convert.ToDateTime(DateTime.Now.Date).ToString("dd/MM/yyyy")</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+        <div style="overflow-x: auto;margin-top:110px;">
+
+            <table border="1" style="margin-left: 1%; margin-right: 1%; width: 98%;">
+
+                @foreach (var item in Model)
+                {
+                    if (a == 0)
+                    {
+                    <tr>
+                        <th style="width: 5%; text-align: center;">
+                            <label id="sn"><b>S.N.</b></label>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                            <label id="newid"><b>@mr.custname Id</b></label>
+                        </th>
+
+                        <th style="width: 10%; text-align: center;">
+                            <label id="introducerid"><b>@mr.custname Name</b></label>
+                        </th>
+
+                        <th style="width: 10%; text-align: center;">
+                            <label id="spilid"><b>Introducer Id</b></label>
+                        </th>
+
+
+
+                        <th style="width: 10%; text-align: center;">
+                            <label id="position"><b>@mr.planname Name</b></label>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                            <label id="mode"><b>Mode</b></label>
+                        </th>
+
+                        <th style="width: 10%; text-align: center;">
+                            <label id="Payment"><b>Payment </b></label>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                            <label id="email"><b>Mobile No</b></label>
+                        </th>
+
+                        <th style="width: 10%; text-align: center;">
+                            <label id="doj"><b>Date of Joining</b></label>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                            <label id="damt"><b>Due Amount</b></label>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                            <label id="dinsta"><b>Due installment</b></label>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                            <label id="status"><b>Status</b></label>
+                        </th>
+                        <th style="width: 10%; text-align: center;">
+                            <label id="Action"><b>Action</b></label>
+                        </th>
+                    </tr>
+                }
+
+                a = a + 1;
+
+       
+                    <tr style="text-align: center;">
+                        <td>
+                            @a
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.newbondid)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.newintroducerid)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.planname)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.mode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.payment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.mobileno)
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.formdate).ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @item.dueamount
+                        </td>
+                        <td>
+                            @item.dueinstall
+                        </td>
+                        @if (item.status == 1)
+                        {
+                            <td class="text-success" style="font-weight:bold;">Active</td>
+                            <td>
+
+                                @Html.ActionLink("Block", "BlockUnblockCustomer", new { newbondid = item.newbondid, status = 1 }, new { onclick = "return confirm('Are you sure to Block this " + mr.custname + "?');" })
+                            </td>
+                    }
+                        @if (item.status == 0)
+                        {
+                            <td class="text-danger" style="font-weight:bold;">Blocked</td>
+                            
+                            <td>
+                                @Html.ActionLink("UnBlock", "BlockUnblockCustomer", new { newbondid = item.newbondid, status = 0 }, new { onclick = "return confirm('Are you sure to Unblock this " + mr.custname + "?');" })
+                            </td>
+                    }
+                    </tr>
+            }
+
+            </table>
+
+        </div>
+    </div>
+
+
+</div>
+

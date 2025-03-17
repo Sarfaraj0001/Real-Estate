@@ -1,0 +1,116 @@
+﻿@model IEnumerable<ODHDEVELOPERS.Models.hrlist>
+@using ODHDEVELOPERS.Models;
+@{
+    UsersContext db = new UsersContext();
+    var mr = db.Members.Single(m => m.Id == 1); 
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "HRList";
+    var a = 0;
+}
+<div class="page-content">
+    
+                <div class="container" >
+                  
+<div class="page-toolbar" >
+                        
+                        <div class="page-toolbar-block">
+                            <div class="page-toolbar-title">HR List</div>
+                            <div class="page-toolbar-subtitle"> </div>
+                        </div>
+                               <div class="page-toolbar-block pull-right">
+                          
+                        </div>    
+                              
+<table border="1" style="margin-left:1%; margin-right:1%; margin-bottom:30px; width:95%">
+   
+    @foreach (var item in Model)
+    {
+        if (a == 0)
+        {
+  <tr>
+        <th style="width:5%;text-align:center;">
+           <label id="sn"><b>S.N.</b></label>
+            </th>
+        <th style="width:10%;text-align:center;">
+           <label id="HRId"><b>HR Id</b></label>
+            </th>
+          <th style="width:10%;text-align:center;">
+           <label id="HRIid"><b>HR Password</b></label>
+            </th>
+        <th style="width:10%;text-align:center;">
+           <label id="HRName"><b>HR Name</b></label>
+        </th>
+            
+        <th style="width:10%;text-align:center;">
+           <label id="BranchCode"><b>@mr.branchname Code</b></label>
+        </th>
+            
+        <th style="width:10%;text-align:center;">
+            <label id="HRMobile" ><b>HR Mobile</b></label>
+        </th>
+            
+        <th style="width:10%;text-align:center;">
+           <label id="HRAddress"><b>HR Address</b></label>
+        </th>
+       <th style="width:10%;text-align:center;">
+           <label id="HR_Mail"><b>HR Mail</b></label>
+        </th>
+        <th style="width:10%;text-align:center;">
+           <label id="Cdate"><b>Creation Date</b></label>
+        </th>
+    </tr>
+        }
+
+        a = a + 1;
+    <tr style="text-align:center;">
+        <td>
+            @a
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HRId)
+        </td>
+       <td>
+            @Html.DisplayFor(modelItem => item.password)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.HRName)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchCode)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Mobile)
+        </td>
+         
+        <td>
+            @Html.DisplayFor(modelItem => item.hAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.emailid)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+    </tr>
+    } 
+
+</table>
+
+    @if (a > 0)
+    {
+        <a href="@Url.Action("PrintHRList")" target="_blank">Get Report In PDF</a>
+    }
+                    </div> 
+
+
+                   
+
+      
+                    </div>
+
+
+    </div>
+
