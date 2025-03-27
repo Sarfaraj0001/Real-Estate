@@ -3,7 +3,7 @@
     UsersContext db = new UsersContext();
     var obr = db.Operators.Single(b => b.OperatorId == User.Identity.Name);
     var mr = db.Members.Single(m => m.Id == 1);
- 
+
     var plan1 = db.Plans.Single(p1 => p1.Plancode == 1);
     var plan2 = db.Plans.Single(p2 => p2.Plancode == 2);
     var plan3 = db.Plans.Single(p3 => p3.Plancode == 3);
@@ -11,80 +11,52 @@
     var f1 = db.VFormatTabs.Single(f => f.Id == 1);
     var f2 = db.VFormatTabs.Single(f => f.Id == 2);
     var f3 = db.VFormatTabs.Single(f => f.Id == 3);
-    
-    Layout = "~/Views/Shared/_OperatorLayout.cshtml";   
+
+    Layout = "~/Views/Shared/_OperatorLayout.cshtml";
     ViewBag.Title = "PaymentMenu";
 }
 
-<div class="page-content">
 
-                <div class="container">
 
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Welcome @obr.OperatorId</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                      
 
+<link href="~/assets/css1/main css/Pages.css" rel="stylesheet" />
+
+@*<div class="page-toolbar-block">
+    <div class="page-toolbar-title">Welcome @obr.OperatorId</div>
+    <div class="page-toolbar-subtitle"></div>
+</div>*@
+<!-- Section 1: Final Report -->
+<div class="section">
+
+    <div class="w-100 card-heading">
+        <h3 class="text-center text-white pt-2 pb-2">PAYMENT</h3>
+    </div>
+    <!-- Main Container -->
+    <div class="container mt-5">
+        <!-- Payment Cards Row -->
+        <div class="row d-flex justify-content-center g-3">
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Operator/PaymentRenewal" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/Payment_logo/money.png" />
+                        <h6 class="card-title mt-3">Emi Payment</h6>
                     </div>
-
-                    <div class="widget stacked">
-					
-				<div class="widget-header">
-					<i class="icon-credit-card"></i>
-					<h3>Payment</h3>
-				</div> <!-- /widget-header -->
-				
-		   <div class="widget-content">
-
-                <div class="shortcuts">
-                   
-                    <a href="~/Operator/PaymentRenewal" class="shortcut">
-                        <img alt="" src="~/Images/icon/54.png" />
-                        <span class="shortcut-label">EMI Payment</span>
-                        <br />
-                    </a>
-                     <a href="~/Operator/PartPayment" class="shortcut">
-                        <img alt="" src="~/Images/icon/54.png" />
-                        <span class="shortcut-label">Part Payment</span>
-                        <br />
-                    </a>
-                   @*  <a href="~/Branch/BrokerAdvancePayment" class="shortcut">
-                        <img alt="" src="~/Images/icon/advancepay.jpg" />
-                        <span class="shortcut-label">@mr.agentname Advance</span>
-                    </a>*@
-                    @*	 <a href="~/Branch/ChequePayment" class="shortcut">
-							<img alt="" src="~/Images/icon/pension.jpg" />
-							<span class="shortcut-label">Pension</span>
-                            <br />
-						</a>*@
-                   @* <a href="~/Branch/SpotCommission" class="shortcut">
-                        <img alt="" src="~/Images/icon/spotcomm.jpg" />
-                        <span class="shortcut-label">Spot Commission</span>
-                        <br />
-                    </a>*@
-                    @*    <a href="~/Branch/CreditAccount" class="shortcut">
-							<img alt="" src="~/Images/icon/credit.jpg" />
-							<span class="shortcut-label">Deposit</span>
-                            <br />
-						</a>
-                         
-                        <a href="~/Branch/DebitAccount" class="shortcut">
-							<img alt="" src="~/Images/icon/debit.jpg" />
-							<span class="shortcut-label">Withdraw</span>
-                            <br />
-						</a>*@
-
-
-                </div>
-                <!-- /shortcuts -->
-
+                </a>
             </div>
-				
-			</div>
-                     </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Operator/PartPayment" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/Payment_logo/money (1).png" />
+                        <h6 class="card-title mt-3">Part Payment</h6>
+                    </div>
+                </a>
+            </div>
 
-     </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

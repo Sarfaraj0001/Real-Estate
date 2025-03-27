@@ -6,137 +6,76 @@
     var list = db.upload_video_tabs.OrderByDescending(x => x.Cdate).ToList();
     var a = 0;
 }
-<style>
-    #myTable th, td {
-        text-align: left;
-        padding: 8px;
-    }
 
-    #myTable {
-        border-collapse: collapse;
-        width: 100%;
-    }
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Upload Video</h2>
+    @using (Html.BeginForm("upload_video", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
 
-        #myTable th, td {
-            font-size: 9pt;
-        }
+        <div id="uploadVideoForm" class="form-container">
 
-    #myTable {
-        padding: 5pt;
-    }
-</style>
-<div class="page-content">
+            <div class="form-group">
+                <label for="videoUpload" class="form-label">Upload Video</label>
+                <input type="text" name="file" class="form-control" id="pic">
 
-                <div class="container">
-
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Upload Video</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                           
-                        </div>           
-                        
-                    </div> 
+            </div>
 
 
 
-                    <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                               <div class="block-content controls">  
 
-                    
-                      
-                        
-     
+            <div class="text-center">
+                <button type="submit" value="Upload" class="btn create-btn">Upload</button>
+            </div>
 
-                                    
-                   <div class="row-form">  
-      @using (Html.BeginForm("upload_video", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                          
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Upload_Video</label></span>  
-       <input type="text" name="file"  class="form-control" id="pic" >  
-                                   
-   </div>
-</div> 
-         
-          <div class="row-form">
-         <div class="col-md-9">
-      </div>
-               </div>
-         
-          
-         
-       
-          
-           <div class="row-form">
-             
-      <div class="col-md-9">
-          <div class="input-group">
 
-          <button type="submit"  value="Upload" class="btn btn-primary btn-width" style="margin-top:38%;margin-left:56%">Upload</button>
-      </div>
+            <p style="color:maroon;"><b> @ViewBag.msg</b></p>
         </div>
-               </div>
-                 
-         
-     <p style="color:maroon;"><b> @ViewBag.msg</b></p>
-     }
-                                </div>
-                                <br />
-                        
-                                         
-                                    </div>
-                            </div>
-                                        
-                   </div> </div> 
-                    <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                               <div class="block-content controls"></div>
-                                   <table  class="table-responsive table-bordered table" id="myTable" style="width:100%;">
-                                <thead>
-                                  
-                                    <tr >
-                                        <th>Sr No.</th>
-                                        <th>File Name</th>
-                                        <th>Entry Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                           @foreach(var ii in list)
-                           {
-                               a = a + 1;
-                               <tr>
-                                   <td >@a</td>
-                                    <td>@ii.file</td>
-                                    <td >@ii.Cdate.ToString("dd/MM/yyyy")</td>
-                                   @if (@ii.status == 0)
-                                   {
-                                   <td style="text-align: center;"><a href="@Url.Action("Block_unblock_video", "Admin", new { opid = @ii.Id, status = ii.status })" class="btn btn-primary">Active</a></td>
-                                   }
-                                   else
-                                   {
-                                   <td style="text-align: center;"><a href="@Url.Action("Block_unblock_video", "Admin", new { opid = @ii.Id, status = ii.status })" class="btn btn-danger">Block</a></td>
-                                   }
-                               </tr>
-                           }
-                                   
-                                </tbody>
-                            </table>   
-                                    </div>
-                            </div>
-                                        
-                   </div>
-                </div>
+    }
+
+    <br />
+
+
+
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Video Details</div>
+            <table id="myTable">
+
+                <thead>
+
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>File Name</th>
+                        <th>Entry Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ii in list)
+                    {
+                        a = a + 1;
+                        <tr>
+                            <td>@a</td>
+                            <td>@ii.file</td>
+                            <td>@ii.Cdate.ToString("dd/MM/yyyy")</td>
+                            @if (@ii.status == 0)
+                            {
+                                <td style="text-align: center;"><a href="@Url.Action("Block_unblock_video", "Admin", new { opid = @ii.Id, status = ii.status })" class="btn btn-primary">Active</a></td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center;"><a href="@Url.Action("Block_unblock_video", "Admin", new { opid = @ii.Id, status = ii.status })" class="btn btn-danger">Block</a></td>
+                            }
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
     </div>
+</div>
+

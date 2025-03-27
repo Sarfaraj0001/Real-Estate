@@ -1,82 +1,77 @@
 ﻿@model ODHDEVELOPERS.Models.ProTerm
 @using ODHDEVELOPERS.Models;
 @{
-    UsersContext db=new UsersContext();
+    UsersContext db = new UsersContext();
+    var protermDetails = db.ProTerms.ToList();
     var mr = db.Members.Single(m => m.Id == 1);
     var plist = db.Plans.Where(p => p.status == 1).ToList();
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "ProjectTerm";
 }
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Create New @mr.planname</h2>
 
+    @using (Html.BeginForm())
+    {
 
-<div class="page-content">
+        <!-- Form -->
+        <div id="branchForm" class="form-container">
+            <!-- Project Category -->
+            <div class="form-group">
+                <label for="projectcat" class="form-label">@mr.planname Category</label>
+                <select class="form-control" id="projectname" name="projectid" required>
+                    <option>Select @mr.planname</option>
+                    @foreach (var p in plist)
+                    {
 
-    <div class="container">
+                        <option value="@p.Plancode">@p.Planname </option>
 
-        <div class="page-toolbar">
+                    }
+                </select>
+            </div>
 
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Create New @mr.planname</div>
-                <div class="page-toolbar-subtitle"></div>
+            <!-- Project Year -->
+            <div class="form-group">
+                <label for="projectyear" class="form-label">Year</label>
+                <input type="text" class="form-control" name="term" id="term" placeholder="Year" required>
+            </div>
+
+            <!-- Create Button -->
+            <div class="text-center">
+                <button type="submit" class="btn create-btn">Create @mr.planname</button>
             </div>
         </div>
-        <div class="row" style="width: 100%">
-            <div class="col-md-6" style="width: 100%">
-
-                <div class="block" style="width: 100%">
-                    <div class="block-content controls">
-
-                        @using (Html.BeginForm())
-                        {
-    
-                                   
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-
-                                        <span class="input-group-addon">
-                                            <label class="width">@mr.planname Category</label></span>
-                                        <select class="form-control" id="projectname" name="projectid" required>
-                                            <option >Select @mr.planname</option>
-                                            @foreach (var p in plist)
-                                            {
-                                            
-                                                <option value="@p.Plancode">@p.Planname </option>
-                                            
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                            <div class="row-form">
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Year </label>
-                                        </span>
-                                        <input type="text" class="form-control" name="term" id="term" required>
-                                    </div>
-
-                                </div>
-
-                            </div> 
-                            <div class="page-toolbar-block pull-right">
-                                <div class="widget-info widget-from">
-                                    <button type="submit" class="btn btn-primary pull-right">Create @mr.planname</button>
-                                </div>
-                            </div>
-         
-                            <p style="color: maroon;"><b>@ViewBag.msg</b></p>
-                        }
-                    </div>
-
-
-
-                </div>
-            </div>
-
+    }
+</div>
+@if (protermDetails != null)
+{
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Project Details</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Id</th>
+                        <th>Project Name</th>
+                        <th>Term</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                @foreach (var item in protermDetails)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.projectid</td>
+                            <td>@item.projectname</td>
+                            <td>@item.term</td>
+                            <td>@item.status</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
         </div>
     </div>
-</div>
+} 

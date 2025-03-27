@@ -377,123 +377,130 @@ namespace ODHDEVELOPERS.Controllers
            
         }
         //Second time
-      
+
 
         [HttpGet]
         public ActionResult Login()
         {
-            if (User.Identity.IsAuthenticated)
+            //if (User.Identity.IsAuthenticated)
+            //{
+            int count = (from n in db.NewLogins where n.UserName == User.Identity.Name select n.UserName).Count();
+            if (count != 0)
             {
-                int count = (from n in db.NewLogins where n.UserName == User.Identity.Name select n.UserName).Count();
-                if (count != 0)
+                var log = db.NewLogins.Single(a => a.UserName == User.Identity.Name);
+                if (log.status == 1)
                 {
-                    var log = db.NewLogins.Single(a => a.UserName == User.Identity.Name);
-                    if (log.status == 1)
+                    if (log.type == "Company")
                     {
-                        if (log.type == "Company")
-                        {
-                            FormsAuthentication.SetAuthCookie(log.UserName, true);
-                            return RedirectToAction("Index", "Company");
-                        }
-                        else if (log.type == "Admin")
-                        {
-                            FormsAuthentication.SetAuthCookie(log.UserName, true);
-                            return RedirectToAction("Index", "Admin");
-                        }
-                        else if (log.type == "Branch")
-                        {
-                            FormsAuthentication.SetAuthCookie(log.UserName, true);
-                            return RedirectToAction("Index", "Branch");
-                        }
-                        else if (log.type == "Operator")
-                        {
-                            FormsAuthentication.SetAuthCookie(log.UserName, true);
-                            return RedirectToAction("Index", "Operator");
-                        }
-                        else if (log.type == "HR")
-                        {
-                            FormsAuthentication.SetAuthCookie(log.UserName, true);
-                            return RedirectToAction("Index", "HR");
-                        }
-                        else if (log.type == "Agent")
-                        {
-                            FormsAuthentication.SetAuthCookie(log.UserName, true);
-                            return RedirectToAction("Index", "Agent");
-                        }
-                        else if (log.type == "Customer")
-                        {
-                            FormsAuthentication.SetAuthCookie(log.UserName, true);
-                            return RedirectToAction("Index", "Customer");
-                        }
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "Company");
                     }
-                    else
+                    else if (log.type == "Admin")
                     {
-                        ViewBag.msg = "You Blocked By Admin Please Contact ";
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "Admin");
+                    }
+
+                    else if (log.type == "Subadmin")
+                    {
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "Admin");
+                    }
+
+                    else if (log.type == "Branch")
+                    {
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "Branch");
+                    }
+                    else if (log.type == "Operator")
+                    {
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "Operator");
+                    }
+                    else if (log.type == "HR")
+                    {
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "HR");
+                    }
+                    else if (log.type == "Agent")
+                    {
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "Agent");
+                    }
+                    else if (log.type == "Customer")
+                    {
+                        FormsAuthentication.SetAuthCookie(log.UserName, true);
+                        return RedirectToAction("Index", "Customer");
                     }
                 }
                 else
                 {
-                    ViewBag.msg = "Wrong User Id and Password";
+                    ViewBag.msg = "You Blocked By Admin Please Contact ";
                 }
-
             }
             else
             {
-                //con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                //SqlCommand cmd = new SqlCommand();
-                //cmd.CommandText = "CancelPlot";
-                //cmd.CommandType = CommandType.StoredProcedure;
-                //cmd.Connection = con;
-                //try
-                //{
-                //    con.Open();
-                //    cmd.ExecuteNonQuery();
-                //}
-
-                //catch (Exception e)
-                //{
-                //    ViewBag.msg = e.Message;
-                //}
-                //finally
-                //{
-                //    con.Close();
-                //}
-                //var count1 = db.HoldingPlots.Where(ww => ww.holdstatus == 1).Count();
-
-                //if (count1 != 0)
-                //{
-                //    var clear = db.HoldingPlots.FirstOrDefault(ww => ww.holdstatus == 1);
-
-                //    DateTime checkdate = Convert.ToDateTime(clear.holddate);
-                //    DateTime currentdate = DateTime.Now;
-
-                //    if (checkdate.Date < currentdate.Date)
-                //    {
-
-                //        var holdlist = db.HoldingPlots.Where(a => a.holddate < DateTime.Now && a.holdby != "KDIPL").ToList();
-
-                //        foreach (var hh in holdlist)
-                //        {
-
-
-                //            var endtime = Convert.ToDateTime(hh.holddate);
-                //            TimeSpan span = DateTime.Now - endtime;
-                //            var hours = span.Days * 24 + span.Hours;
-
-                //            if (hours > 24)
-                //            {
-                //                var removehod = db.HoldingPlots.Single(a => a.Id == hh.Id);
-                //                db.HoldingPlots.Remove(removehod);
-                //                db.SaveChanges();
-                //            }
-
-                //        }
-
-
-                //    }
-                //}
-
+                ViewBag.msg = "Wrong User Id and Password";
             }
+
+            //}
+            //else
+            //{
+            //con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            //SqlCommand cmd = new SqlCommand();
+            //cmd.CommandText = "CancelPlot";
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.Connection = con;
+            //try
+            //{
+            //    con.Open();
+            //    cmd.ExecuteNonQuery();
+            //}
+
+            //catch (Exception e)
+            //{
+            //    ViewBag.msg = e.Message;
+            //}
+            //finally
+            //{
+            //    con.Close();
+            //}
+            //var count1 = db.HoldingPlots.Where(ww => ww.holdstatus == 1).Count();
+
+            //if (count1 != 0)
+            //{
+            //    var clear = db.HoldingPlots.FirstOrDefault(ww => ww.holdstatus == 1);
+
+            //    DateTime checkdate = Convert.ToDateTime(clear.holddate);
+            //    DateTime currentdate = DateTime.Now;
+
+            //    if (checkdate.Date < currentdate.Date)
+            //    {
+
+            //        var holdlist = db.HoldingPlots.Where(a => a.holddate < DateTime.Now && a.holdby != "KDIPL").ToList();
+
+            //        foreach (var hh in holdlist)
+            //        {
+
+
+            //            var endtime = Convert.ToDateTime(hh.holddate);
+            //            TimeSpan span = DateTime.Now - endtime;
+            //            var hours = span.Days * 24 + span.Hours;
+
+            //            if (hours > 24)
+            //            {
+            //                var removehod = db.HoldingPlots.Single(a => a.Id == hh.Id);
+            //                db.HoldingPlots.Remove(removehod);
+            //                db.SaveChanges();
+            //            }
+
+            //        }
+
+
+            //    }
+            //}
+
+            //}
 
             return View();
         }
@@ -502,7 +509,7 @@ namespace ODHDEVELOPERS.Controllers
         public ActionResult Login(NewLogin model)
         {
             var nlr = db.NewLogins.Single(n => n.UserName == model.UserName);
-            if (ck(model.UserName) == 1 || nlr.type == "Customer" || nlr.type == "Agent" || nlr.type == "Company" || nlr.type == "Operator" || nlr.type == "HR")
+            if (ck(model.UserName) == 1 || nlr.type == "Customer" || nlr.type == "Agent" || nlr.type == "Company" || nlr.type == "Operator" || nlr.type == "HR" || nlr.type == "Subadmin")
             {
                 if (ModelState.IsValid)
                 {
@@ -541,8 +548,16 @@ namespace ODHDEVELOPERS.Controllers
 
                         string response1 = Cmd.Parameters["@Response"].Value.ToString();
                         string mobile = Cmd.Parameters["@mobile"].Value.ToString();
-                        int response = Convert.ToInt32(response1);
+                        int response = (Cmd.Parameters["@Response"].Value != DBNull.Value) ? Convert.ToInt32(Cmd.Parameters["@Response"].Value) : 0;
+
                         var dpcount = (from d in db.DailyDepositTabs where d.status == 0 && d.opid == model.UserName select d).Count();
+
+                        if (nlr.type == "Subadmin") // Sub-Admin
+                        {
+                            FormsAuthentication.SetAuthCookie(model.UserName, true);
+                            return RedirectToAction("Index", "Admin"); // Admin Panel Hi Open Hoga
+                        }
+
                         if (dpcount == 0)
                         {
                             if (response == 1)
@@ -679,6 +694,7 @@ namespace ODHDEVELOPERS.Controllers
                                 }
                             }
 
+
                             else if (response == 10)
                             {
                                 var ed = db.SetMacTabs.Single(e => e.Id == 1);
@@ -797,7 +813,9 @@ namespace ODHDEVELOPERS.Controllers
                     {
                         ViewBag.msg = e.Message;
                         TempData["Error"] = e;
+                        Response.Write("<script>alert('Error: " + e.Message + "')</script>");
                     }
+
 
                 }
             }
@@ -805,7 +823,7 @@ namespace ODHDEVELOPERS.Controllers
             return View();
         }
         //second time
-    
+
         public JsonResult Jsonresult(string Project, string Recogniser)
         {
             if (Recogniser == "getPhase")

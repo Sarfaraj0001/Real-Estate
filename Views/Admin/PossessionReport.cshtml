@@ -1,10 +1,11 @@
-﻿@using ODHDEVELOPERS.Models;
+﻿
+@using ODHDEVELOPERS.Models;
 @{
     ViewBag.Title = "PossessionReport";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    UsersContext db=new UsersContext();
+    UsersContext db = new UsersContext();
     var mr = db.Members.Single(m => m.Id == 1);
-    
+
 }
 
 <link rel="stylesheet" href="~/Content/jquery-ui.css" />
@@ -34,68 +35,57 @@
     })
 </script>
 
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<div class="page-content">
-     
-                <div class="container" id="divid">
-                  
-<div class="page-toolbar" >
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Print Possession Letter</div>
-                            <div class="page-toolbar-subtitle"> </div>
-                        </div>
-                               <div class="page-toolbar-block pull-right">
-                          
-                        </div>    
-                        
-                    </div> 
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 
-                     <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                                <div class="block-content controls">
-                                    @using (Html.BeginForm("PossessionReport","Admin",FormMethod.Post))
-                                    {
-                               
-                                <div class="row-form">
-                                        
-                <div class="col-md-9">
+<div class="container mt-5">
+    <h2 class="text-center mb-4 create-title">
 
-                <div class="input-group input-group-lg">
-                                <span class="input-group-addon">@mr.custname Id :</span>
-              <input type="text" class="form-control" id="newbond"  name="newbondid"  />
-                            </div>     
+        Print Possession Letter
+    </h2>
+
+    @using (Html.BeginForm("PossessionReport", "Admin", FormMethod.Post))
+    {
+
+        <div id="paymentForm" class="form-container">
+
+            <!-- Associate ID -->
+            <div class="form-group">
+                <label for="associateId" class="form-label">@mr.custname Id :</label>
+                <input type="text" class="form-control" id="newbond"  name="newbondid" placeholder="Enter ID" required>
+            </div>
 
 
-                </div>
-                                    </div>
-                                   
-                                   
 
-                                       <div class="page-toolbar-block pull-right">
-                            <div class="widget-info widget-from">
-                                                          
-                                <button type="submit" class="btn btn-primary" onclick="target='_blank'" ><i class="fa fa-cog"></i>Print Possession Letter</button>                            
-                               
-                            </div>
-                        </div>
-                                   
-                                                                      
-                                    }                         
-                                    
-                                    
-                                </div>
-                                
-                            </div>
-                            </div>
-                          </div>    
-                   
-  
-                    </div>
-
-
+            <!-- Submit Button -->
+            <div class="text-center d-grid gap-2">
+                <button type="submit" class="btn create-btn" onclick="target='_blank'">Print Possession Letter</button>
+            </div>
+        </div>
+    }
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

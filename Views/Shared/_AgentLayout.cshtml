@@ -1,168 +1,282 @@
 ﻿@using ODHDEVELOPERS.Models;
 @{
-    var logo=string.Empty;
+    var logo = string.Empty;
     var companyname = string.Empty;
-  
-    UsersContext db=new UsersContext();
+
+    UsersContext db = new UsersContext();
     var r = db.AgentDetails.Single(a => a.NewAgentId == User.Identity.Name);
     var row = db.Branchtabs.Single(b => b.BranchCode == r.BranchCode);
     var com = db.CompanyInfos.Single(c => c.AdminId == row.companyid);
     var mr = db.Members.Single(m => m.Id == 1);
     logo = com.CompanyLogo;
-    companyname = com.CompanyName;   
+    companyname = com.CompanyName;
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>@r.CompanyName-Agent Panel</title>
 
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="~/Content/css/operatorstyle.css" type="text/css" rel="stylesheet" />
-    <link href="~/Content/css/styles.css" rel="stylesheet" type="text/css" id="theme" />
-    <link rel="stylesheet" href="~/Content/jquery-ui.css" />
-    <!--[if lt IE 10]><link rel="stylesheet" type="text/css" href="~/Content/css/ie.css"/><![endif]-->
+    <title>R.G Groups</title>
 
-    <!--Menu Content Start-->
-    <link href="~/Content/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="~/Content/css/ui-lightness/jquery-ui-1.10.0.custom.min.css" rel="stylesheet">
 
-    <link href="~/Content/css/base-admin-3.css" rel="stylesheet">
-    <link href="~/Content/css/base-admin-3-responsive.css" rel="stylesheet">
-    <link href="~/Content/css/pages/dashboard.css" rel="stylesheet">
+    <link href="~/assets/hr_assets/css/style.css" rel="stylesheet" />
 
-    <link href="~/Content/css/custom.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <link href="~/assets/hr_assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/assets/hr_assets/css/font-awesome.min.css" rel="stylesheet" />
 
-    <!--Menu Content End-->
+    <!-- printing style -->
+    <link href="~/assets/hr_assets/css/main css/formStyle.css" rel="stylesheet" />
+    <!-- printing style -->
+    <link href="~/assets/hr_assets/css/main css/card.css" rel="stylesheet" />
+    @*<link href="~/assets/hr_assets/css/search_bar.css" rel="stylesheet" />*@
+    <!-- printing style -->
+    @*<link href="~/assets/hr_assets/css/main css/printing.css" rel="stylesheet" />*@
+    <!-- index(form) style -->
+    <link href="~/assets/hr_assets/css/main css/index.css" rel="stylesheet" />
+    <!-- site icon -->
+    <link rel="icon" href="~/assets/hr_assets/~/assets/hr_assets/images/fevicon.png" type="image/png" />
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="~/assets/hr_assets/css/bootstrap.min.css" />
+    <!-- site css -->
+    <link rel="stylesheet" href="~/style.css" />
+    <!-- responsive css -->
+    <link rel="stylesheet" href="~/assets/hr_assets/css/responsive.css" />
+    <!-- color css -->
+    <link rel="stylesheet" href="~/assets/hr_assets/css/colors.css" />
+    <!-- select bootstrap -->
+    <link rel="stylesheet" href="~/assets/hr_assets/css/bootstrap-select.css" />
+    <!-- scrollbar css -->
+    <link rel="stylesheet" href="~/assets/hr_assets/css/perfect-scrollbar.css" />
+    <!-- custom css -->
+    @*<link rel="stylesheet" href="~/assets/hr_assets/css/custom.css" />*@
+    <!--[if lt IE 9]>
+    <script src="~https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="~https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <script type="text/javascript" src="~/Scripts/js/plugins/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/plugins/jquery/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/plugins/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 
-    <script type="text/javascript" src="~/Scripts/js/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places"></script>
-    <script type="text/javascript" src="~/Scripts/js/plugins/fancybox/jquery.fancybox.pack.js"></script>
 
-    <script type="text/javascript" src="~/Scripts/js/plugins/rickshaw/d3.v3.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/plugins/rickshaw/rickshaw.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/plugins/flot/jquery.flot.js"></script>
-    <script type='text/javascript' src='~/Scripts/js/plugins/flot/excanvas.min.js'></script>
-    <script type='text/javascript' src='~/Scripts/js/plugins/flot/jquery.flot.js'></script>
-    <script type='text/javascript' src='~/Scripts/js/plugins/flot/jquery.flot.stack.js'></script>
-    <script type='text/javascript' src='~/Scripts/js/plugins/flot/jquery.flot.pie.js'></script>
-    <script type='text/javascript' src='~/Scripts/js/plugins/flot/jquery.flot.resize.js'></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>*@
+    @*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>*@
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>*@
 
-    <script type='text/javascript' src='~/Scripts/js/plugins/knob/jquery.knob.js'></script>
 
-    <script type="text/javascript" src="~/Scripts/js/plugins/daterangepicker/moment.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/plugins/daterangepicker/daterangepicker.js"></script>
 
-    <script type='text/javascript' src='~/Scripts/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-    <script type='text/javascript' src='~/Scripts/js/plugins/jvectormap/jquery-jvectormap-europe-mill-en.js'></script>
+    @*style for heading / company name*@
+    <style>
+        /* Default style for larger screens */
+        .welcome-heading {
+            color: white;
+            text-align: left; /* Default alignment for laptops */
+            font-size: 2.5rem; /* Adjust font size as needed */
+            line-height: 1.2; /* Adjust line spacing */
+            /margin-left: 160px;
+            / /* Default margin-left for larger screens */
+        }
 
-    <script type="text/javascript" src="~/Scripts/js/plugins.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/demo.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/maps.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/charts.js"></script>
-    <script type="text/javascript" src="~/Scripts/js/actions.js"></script>
-    <link rel="stylesheet" href="~/Content/width.css" />
-    <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet" />
-    <script src="~/Content/datepicker/jquery.plugin.js"></script>
-    <script src="~/Content/datepicker/jquery.datepick.js"></script>
+        /* Adjustments for screens smaller than 768px (phones and tablets) */
+        @@media (max-width: 768px) {
+            .welcome-heading {
+                margin-left: 0 !important; /* Force override margin-left for smaller screens */
+                text-align: center; /* Center-align for smaller devices */
+                font-size: 1rem; /* Adjust font size for smaller devices */
+                line-height: 1.1; /* Compact line spacing */
+                margin-top: 0.9rem; /* Optional margin-top adjustment */
+            }
+        }
+    </style>
+
 
 </head>
-<body>
-    <div class="page-container">
+<body class="dashboard dashboard_1">
+    <div class="full_container">
+        <div class="inner_container">
+            <!-- Sidebar  -->
 
-        <header>
-            <div class="page-head">
 
-                <ul class="page-head-elements">
-                    <li><a href="#" class="page-navigation-toggle"><span class="fa fa-bars"></span></a></li>
-                    @*<li class="search">
-                        <input type="text" class="form-control" placeholder="Search..." />
-                    </li>
-                     <li>
-                        <a href="#" class="dropdown" style="font-size: 30px; margin-left: 100px;">@companyname<span></span></a>
-                    </li>*@
-                </ul>
-                <ul class="page-head-elements pull-right">
 
-                    <li><a href="#" class="page-sidebar-toggle"><span class="fa fa-tasks"></span></a></li>
-                </ul>
 
-            </div>
 
-            <div class="page-navigation">
-
-                <div class="page-navigation-info">
-                    <div style="float: left; margin-top: 0px;">
-               @*         <img id="imgid" src="@Url.Content(logo) "  style="height:70px; width:100px;" /></div>*@
-                    <div style="float: left;"><a href="~/Agent/Index">
-                        <h5 style="color: white;"><b> @r.name</b></h5>
-                    </a></div>
-
-                </div>
-
-                                  <div class="profile">
-                    <div class="profile-info">
-                        <div class="profile-title" style="text-transform: uppercase; margin-left: 5px; float: left; font-size: small;">
-                            <h6>Hello , @User.Identity.Name</h6>
+            <nav id="sidebar" class="ps ps--active-y">
+                <div class="sidebar_blog_1">
+                    <div class="sidebar-header">
+                        <div class="logo_section">
+                            <a href="index.html"><img class="logo_icon img-responsive" src="~/assets/axisarth/images/logo-footer.png" alt="#"></a>
                         </div>
-
-                        <div class="profile-buttons">
-                            <div class="btn-group">
-                                <a class="but dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="~/Agent/AgentProfile">Profile</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="~/Agent/ChangePassword">Change Password</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="~/Agent/Logout">Logout</a></li>
-                                </ul>
+                    </div>
+                    <div class="sidebar_user_info">
+                        <div class="icon_setting"></div>
+                        <div class="user_profle_side">
+                            <div class="user_img"><img class="img-responsive" src="~/assetshome/img/logo/rggroups_logo1.png" alt="#"></div>
+                            <div class="user_info">
+                                <h6>Hello , @User.Identity.Name</h6>
+                                <p><span class="online_animation"></span> Online</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <ul class="navigation">
-                    <li><a href="~/Agent/Index"><i class="fa fa-home"></i>Home</a></li>
-                    <li><a href="~/Agent/BrokerChain"><i class="glyphicon glyphicon-print"></i>Self Chain</a></li>
-                    <li><a href="~/Agent/BrokerAccount"><i class="glyphicon glyphicon-cog"></i>Self Account</a></li>
-                    <li><a href="~/Agent/Selfbusiness"><i class="glyphicon glyphicon-cog"></i>Self Business</a></li>
-                     <li><a href="~/Agent/BrokerChainCollection"><i class="fa fa-caret-right"></i>Team Business</a></li>
-                    <li><a href="~/Agent/RenewalReceipt"><i class="glyphicon glyphicon-list-alt"></i>Self Due Collection</a></li>
-                    <li><a href="~/Agent/BrokerChainDueCollection"><i class="fa fa-caret-right"></i> Team Due Collection</a></li>
-                      @*<li><a href="~/Agent/QuotaCollection"><i class="fa fa-caret-right"></i>Quota Collection</a></li>*@
-                    <li><a href="~/Agent/VoucherList"><i class="fa fa-caret-right"></i>Self Payment List</a></li>
-                    <li><a href="~/Agent/VehicleRequest"><i class="fa fa-caret-right"></i>Vehicle Request</a></li>
-                    <li><a href="~/Agent/Logout"><i class="fa fa-caret-right"></i>Logout</a></li>
-                   
-                    
-                </ul>
-                    </div>
+                <div class="sidebar_blog_2">
+                    <h4> @r.name</h4>
+                    <ul class="list-unstyled components">
+
+                        <!-- Home -->
+                        <li><a href="~/Agent/Index"><i class="bi bi-house-door orange_color"></i> <span>Home</span></a></li>
+
+                        <!-- Self Chain -->
+                        <li><a href="~/Agent/BrokerChain"><i class="bi bi-people" style="color:#17a2b8;"></i> <span>Self Chain</span></a></li>
+
+                        <!-- Self Account -->
+                        <li><a href="~/Agent/BrokerAccount"><i class="bi bi-person" style="color:#6f42c1;"></i> <span>Self Account</span></a></li>
+
+                        <!-- Self Business -->
+                        <li><a href="~/Agent/Selfbusiness"><i class="bi bi-briefcase orange_color"></i> <span>Self Business</span></a></li>
+
+                        <!-- Team Business -->
+                        <li><a href="~/Agent/BrokerChainCollection"><i class="bi bi-diagram-3" style="color:#6610f2;"></i> <span>Team Business</span></a></li>
+
+                        <!-- Self Due Collection -->
+                        <li><a href="~/Agent/RenewalReceipt"><i class="bi bi-cash" style="color:#28a745;"></i> <span>Self Due Collection</span></a></li>
+
+                        <!-- Team Due Collection -->
+                        <li><a href="~/Agent/BrokerChainDueCollection"><i class="bi bi-wallet" style="color:#3d9970;"></i> <span>Team Due Collection</span></a></li>
+
+                        <!-- Self Payment List -->
+                        <li><a href="~/Agent/VoucherList"><i class="bi bi-receipt" style="color:#fd7e14;"></i> <span>Self Payment List</span></a></li>
+
+                        <!-- Vehicle Request -->
+                        <li><a href="~/Agent/VehicleRequest"><i class="bi bi-truck" style="color:#dc3545;"></i> <span>Vehicle Request</span></a></li>
+
+                        <!-- Logout -->
+                        <li><a href="~/Agent/Logout"><i class="bi bi-box-arrow-right" style="color:#6c757d;"></i> <span>Logout</span></a></li>
+
+
+
+
+                    </ul>
+                </div>
+                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 435px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 250px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 435px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 250px;"></div></div>
+            </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- end sidebar -->
+            <!-- right content -->
+            <div id="content">
+                <!-- topbar -->
+                <div class="topbar">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <div class="d-flex flex-wrap full align-items-center justify-content-between">
+                            <!-- Sidebar Toggle -->
+                            <button type="button" id="sidebarCollapse" class="sidebar_toggle MarginInTogol">
+                                <i class="fa fa-bars text-white"></i>
+                            </button>
+
+                            <!-- Search Box -->
+                            <div class="logo_section d-flex align-items-center flex-grow-1 justify-content-center">
+                                <h1 class="text-white welcome-heading">
+                                    Welcome, @companyname
+                                </h1>
+
+                                @*<form class="d-flex flex-grow-1" role="search">
+                                        <input class="form-control me-2 inp-search" type="search" placeholder="Search..." autocomplete="off">
+                                        <button class="btn btn-search btn-primary ml-1" type="submit">
+                                            <i class="fa-solid fa-magnifying-glass"></i> Search
+                                        </button>
+                                    </form>*@
+                            </div>
+
+                            <!-- Profile Section -->
+                            <div class="right_topbar">
+                                <div class="icon_info">
+                                    <ul class="user_profile_dd">
+                                        <li class="d-flex align-items-center">
+                                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                                <img class="rounded-circle" src="~/assetshome/img/logo/rggroups_logo1.png" alt="#" />
+                                                <span class="name_user">@User.Identity.Name</span>
+                                                @*<i class="fa fa-chevron-down ml-2"></i>*@
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="~/Agent/AgentProfile">My Profile</a>
+                                                @*<li class="divider"></li>*@
+                                                <a class="dropdown-item" href="~/Agent/ChangePassword">Change Password</a>
+                                                @*<li class="divider"></li>*@
+
+                                                <a class="dropdown-item" href="~/Agent/Logout">
+                                                    <span>Log Out</span> <i class="fa fa-sign-out"></i>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- end topbar -->
+                <!-- jQuery -->
+                <script src="~/assets/hr_assets/js/jquery.min.js"></script>
+                <script src="~/assets/hr_assets/js/popper.min.js"></script>
+                <script src="~/assets/hr_assets/js/bootstrap.min.js"></script>
+                <!-- wow anim/ation -->
+                <script src="~/assets/hr_assets/js/animate.js"></script>
+                <!-- select c/ountry -->
+                <script src="~/assets/hr_assets/js/bootstrap-select.js"></script>
+                <!-- owl caro/usel -->
+                <script src="~/assets/hr_assets/js/owl.carousel.js"></script>
+                <!-- chart js -->
+                <script src="~/assets/hr_assets/js/Chart.min.js"></script>
+                <script src="~/assets/hr_assets/js/Chart.bundle.min.js"></script>
+                <script src="~/assets/hr_assets/js/utils.js"></script>
+                <script src="~/assets/hr_assets/js/analyser.js"></script>
+                <!-- nice scrollbar -->
+                <script src="~/assets/hr_assets/js/perfect-scrollbar.min.js"></script>
+                <script>
+                    var ps = new PerfectScrollbar('#sidebar');
+                </script>
+                <!-- custom js -->
+                <script src="~/assets/hr_assets/js/custom.js"></script>
+                <script src="~/assets/hr_assets/js/chart_custom_style1.js"></script>
+                <div>
+                    @RenderBody()
+                </div>
+                <!-- footer -->
+                @*<div class="container-fluid">
+                        <div class="footer">
+                            <p>
+                                Copyright © 2018 Designed by html.design. All rights reserved.<br><br>
+                                Distributed By: <a href="https://themewag   on.com/">ThemeWagon</a>
+                            </p>
+                        </div>
+                    </div>*@
             </div>
-        </header>
-
-
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
         </div>
-
-
-
     </div>
-
-
 </body>
 </html>

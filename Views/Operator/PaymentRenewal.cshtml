@@ -1,10 +1,10 @@
-﻿@using  ODHDEVELOPERS.Models;
+﻿@using ODHDEVELOPERS.Models;
 @{
     Layout = "~/Views/Shared/_OperatorLayout.cshtml";
     ViewBag.Title = "PaymentRenewal";
     UsersContext db = new UsersContext();
     var mr = db.Members.Single(m => m.Id == 1);
-    
+
     DateTime dt = DateTime.Now.Date;
     Formdate fd = new Formdate();
     var row = db.Operators.Single(ci => ci.OperatorId == User.Identity.Name);
@@ -18,9 +18,9 @@
         }
 
     }
-   
-}
 
+}
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -237,320 +237,309 @@
 
 
 
-<div class="page-content">
 
-                <div class="container">
 
-                    <div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Payment Renewal</div>
-                            <div class="page-toolbar-subtitle"> </div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 create-title">Payment Renewal</h2>
+    @using (Html.BeginForm())
+    {
+
+
+        <div id="branchForm" class="form-container">
+
+            <input type="hidden" value="@System.DateTime.Now.Date" name="date" />
+            <input type="hidden" value="@User.Identity.Name" id="opid" />
+
+            <!-- Collection Point Name -->
+            <div class="form-group">
+                <label for="collectionPointName" class="form-label">@mr.custname Id or Name</label>
+                <input type="text" class="form-control " name="newbondid" id="BondId" placeholder="Enter Id" required>
+            </div>
+
+
+            <!-- Create Button -->
+            <div class="text-center d-grid gap-2">
+                <button type="submit" onclick="check(this.id)" id="search" class="btn create-btn"><i class="fa fa-search"></i> Search</button>
+            </div>
+
+
+          
+                        @*<div style="float:left;">
+                          <p style="color:maroon;"><b> @ViewBag.msg</b></p>
+                          @if (ViewBag.msg == "Renewel Done Successfully....")
+                          {
+
+                    @Html.ActionLink("Print Receipt", "PrintRenewalReport", new { paymentno = ViewData["paymentno"] }, new { onclick = "return confirm('Are you sure to Print?'), target='_blank'" })
+                          }
+                                  </div>*@
+
+                        <div style="float: left;">
+                            @if (Convert.ToString(ViewData["paymethod"]) == "Cheque" || Convert.ToString(ViewData["method"]) == "banktransaction")
+                            {
+                                @Html.ActionLink("Print Receipt", "PrintRenewalReportCheque", new { paymentno = ViewData["paymentno"], newbondid = ViewData["newbondid"] }, new { onclick = "return confirm('Are you sure to Print?'), target='_blank'" })
+                            }
+                            else if (Convert.ToString(ViewData["paymethod"]) == "Cash" || Convert.ToString(ViewData["paymethod"]) == "DD")
+                            {
+                                @Html.ActionLink("Print Receipt", "PrintRenewalReport", new { paymentno = ViewData["paymentno"] }, new { onclick = "return confirm('Are you sure to Print?'), target='_blank'" })
+                            }
                         </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                            
-                        </div>           
-                        
-                    </div>  
+                    </div>
 
-                           <div class="row" >
-                                @using (Html.BeginForm())
-               {   
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" >
-                               
-                                <div class="block-content controls">
-                                     
-                                          <input type="hidden" value="@System.DateTime.Now.Date" name="date" />
-                                   <input type="hidden" value="@User.Identity.Name" id="opid" />
-                                   <div class="row-form">  
-                                         
-                                    <div class="col-md-9">
-                                      <div class="input-group">
-                                    <span class="input-group-addon"><label class="width">@mr.custname Id or Name</label></span>  
-                                    <input type="text"  class="form-control"  name="newbondid" id="BondId" ></div>
-                                   
-                                        </div>
-                                   </div>
-                                   <div class="page-toolbar-block pull-right">
-                            <div class="widget-info widget-from">
-                                                          
-                                <button type="button"  class="btn btn-primary" onclick="check(this.id)" id="search"><i class="fa fa-search"></i> Search</button>                            
-                               
-                            </div>
-                        </div>  
-                                     
-                                 @*<div style="float:left;">
-                                    <p style="color:maroon;"><b> @ViewBag.msg</b></p>
-                                    @if (ViewBag.msg == "Renewel Done Successfully....")
-                                    {
-                                    
-                              @Html.ActionLink("Print Receipt", "PrintRenewalReport", new { paymentno = ViewData["paymentno"] }, new { onclick = "return confirm('Are you sure to Print?'), target='_blank'" })
-                                    }
-                                            </div>*@
-
-                                    <div style="float: left;">                            
-                                   @if (Convert.ToString(ViewData["paymethod"]) == "Cheque" || Convert.ToString(ViewData["method"]) == "banktransaction")
-                                   {
-                                          @Html.ActionLink("Print Receipt", "PrintRenewalReportCheque", new { paymentno = ViewData["paymentno"],newbondid=ViewData["newbondid"]}, new { onclick = "return confirm('Are you sure to Print?'), target='_blank'" })                                    
-                                   }
-                                   else if (Convert.ToString(ViewData["paymethod"]) == "Cash" || Convert.ToString(ViewData["paymethod"]) == "DD")
-                                   {
-                                          @Html.ActionLink("Print Receipt", "PrintRenewalReport", new { paymentno = ViewData["paymentno"]}, new { onclick = "return confirm('Are you sure to Print?'), target='_blank'" })
-                                   }
-                               </div>
-                                </div>
-                                
-                            </div>
-                            </div>
-                                }
-                               <div class="col-md-6" style="width:100%">
-                                   <table id="rdmsg" border="1" style="margin-left:1%; margin-right:1px; width:98%;display:none;">
-   
-                            <tr >
-                                <th  colspan="2" style="font-size:large;text-align:center;height:50px;">Renewal Status
-
-                                </th>
-                            
-                            </tr>
-         
-                            <tr style="font-size:medium;height:40px;">
-        
-                          <th style="width:20%;text-align:center;">
-           <label id="bid"><b>@mr.custname Id</b></label>
-            </th>
-        
-                           <th style="width:80%;text-align:center;">
-           <label id="msg"><b>Message</b></label>
-            </th>
-        
- 
-      
-    </tr>
-
-                            <tr style="text-align:center;">
-        <td>
-           <label id="lblbondid"></label>
-        </td>
-        <td>
-           <label id="lblmsg"></label>
-        </td>
-       
-    </tr>
-               </table>
-                                  
-               <table id="rd" border="1" style="margin-left:1%; margin-right:1px; width:98%;display:none;">
-   
-         <tr >
-                                <th  colspan="6" style="text-align:center;font-size:large;height:50px;"><b>Renewal-Detail </b>
-
-                                </th>
-                            
-                            </tr>
-         
-         <tr style="font-size:medium;height:40px;">
-        <th style="width:25%;text-align:center;">
-           <label id="sn"><b>Name</b></label>
-            </th>
-        <th style="width:20%;text-align:center;">
-           <label id="cc"><b>@mr.custname Id</b></label>
-            </th>
-        <th style="width:15%;text-align:center;">
-           <label id="pp "><b>Introducer Id</b></label>
-            </th>
-             <th style="width:5%;text-align:center;">
-           <label id="iii"><b>Last Installment</b></label>
-            </th>
-        <th style="width:10%;text-align:center;">
-           <label id="mon"><b>Mobile No</b></label>
-            </th>
                 
-        <th style="width:25%;text-align:center;">
-           <label id="action"><b>Action</b></label>
-            </th>
-        
- 
-      
-    </tr>
-         <tr style="text-align:center;">
-        <td>
-            <label id="lblname"></label>
-        </td>
-        <td>
-          <label id="lblnewbondid"></label>
-        </td>
-        <td>
-             <label id="lblintid"></label>
-        </td>
-        <td>
-             <label id="lbllins"></label>
-        </td>
-        <td>
-            <label id="lblmob"></label>
-        </td>
-         <td style="width:10%;text-align:center;">
-           <button type="button" id="mp"  class="btn btn-primary" onclick="selectdetail(this.id)"><b><i class="fa fa-credit-card"></i> Proceed To Pay</b></button>
-            </td>
-     
-       
-             
-    </tr>
-                   
-  
-   
-</table> 
-  <table id="pd" style="margin-left:1%; margin-right:1px; width:98%;display:none;">
-      <tr>
-          <td>
-                  @using (Html.BeginForm("PaymentRenewal", "Operator", FormMethod.Post, new { enctype = "multipart/form-data" }))
-               {   
-                    
-              <div class="row">
-                      <div class="col-md-6">
-                            
-                            <div class="block">
-                                <div class="block-content">
-                                    <h2><strong>@mr.planname Details</strong> </h2>
-                                   
-                                </div>
-                                <div class="block-content controls">
-                                    
-                                    <div class="row-form">
-                                        
-                                        <div class="col-md-9"> 
-                                            <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">@mr.custname Id </label></span>  
-                                        
-                                             <input type="text" class="form-control" name="newbondid2" id="newbondid" readonly="true" required/></div>
-                                    </div>
-                                         </div>
-                                     <div class="row-form">
-                                        
-                                        <div class="col-md-9"> 
-                                            <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">@mr.custname Name </label></span>  
-                                        
-                                             <input type="text" class="form-control" name="bondname" id="bondname" readonly="true" required/></div>
-                                    </div>
-                                         </div>
+            }
+            <div class="col-md-6" style="width:100%">
+                <table id="rdmsg" border="1" style="margin-left:1%; margin-right:1px; width:98%;display:none;">
 
-                                    <div class="row-form">
-                                        
-                                        <div class="col-md-9"> 
-                                            <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">@mr.agentname Name </label></span>  
-                                        
-                                             <input type="text" class="form-control" name="introname" id="introname" readonly="true" required/></div>
-                                    </div>
-                                         </div>
-                                    <div class="row-form">
-                                        
-                                        <div class="col-md-9"> 
-                                            <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">@mr.planname Name </label></span>  
-                                        
-                                             <input type="text" class="form-control" name="planname" id="planname" readonly="true" required/></div>
-                                    </div>
-                                         </div>
-                                    <div class="row-form">
-                                      
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                          <span class="input-group-addon"><label class="width">Term(Yr.) </label></span>  
-                                            <input type="text" class="form-control" name="Term" id="term" readonly="true" required/></div>
+                    <tr>
+                        <th colspan="2" style="font-size:large;text-align:center;height:50px;">
+                            Renewal Status
+
+                        </th>
+
+                    </tr>
+
+                    <tr style="font-size:medium;height:40px;">
+
+                        <th style="width:20%;text-align:center;">
+                            <label id="bid"><b>@mr.custname Id</b></label>
+                        </th>
+
+                        <th style="width:80%;text-align:center;">
+                            <label id="msg"><b>Message</b></label>
+                        </th>
+
+
+
+                    </tr>
+
+                    <tr style="text-align:center;">
+                        <td>
+                            <label id="lblbondid"></label>
+                        </td>
+                        <td>
+                            <label id="lblmsg"></label>
+                        </td>
+
+                    </tr>
+                </table>
+
+                <table id="rd" border="1" style="margin-left:1%; margin-right:1px; width:98%;display:none;">
+
+                    <tr>
+                        <th colspan="6" style="text-align:center;font-size:large;height:50px;">
+                            <b>Renewal-Detail </b>
+
+                        </th>
+
+                    </tr>
+
+                    <tr style="font-size:medium;height:40px;">
+                        <th style="width:25%;text-align:center;">
+                            <label id="sn"><b>Name</b></label>
+                        </th>
+                        <th style="width:20%;text-align:center;">
+                            <label id="cc"><b>@mr.custname Id</b></label>
+                        </th>
+                        <th style="width:15%;text-align:center;">
+                            <label id="pp "><b>Introducer Id</b></label>
+                        </th>
+                        <th style="width:5%;text-align:center;">
+                            <label id="iii"><b>Last Installment</b></label>
+                        </th>
+                        <th style="width:10%;text-align:center;">
+                            <label id="mon"><b>Mobile No</b></label>
+                        </th>
+
+                        <th style="width:25%;text-align:center;">
+                            <label id="action"><b>Action</b></label>
+                        </th>
+
+
+
+                    </tr>
+                    <tr style="text-align:center;">
+                        <td>
+                            <label id="lblname"></label>
+                        </td>
+                        <td>
+                            <label id="lblnewbondid"></label>
+                        </td>
+                        <td>
+                            <label id="lblintid"></label>
+                        </td>
+                        <td>
+                            <label id="lbllins"></label>
+                        </td>
+                        <td>
+                            <label id="lblmob"></label>
+                        </td>
+                        <td style="width:10%;text-align:center;">
+                            <button type="button" id="mp" class="btn btn-primary" onclick="selectdetail(this.id)"><b><i class="fa fa-credit-card"></i> Proceed To Pay</b></button>
+                        </td>
+
+
+
+                    </tr>
+
+
+
+                </table>
+                <table id="pd" style="margin-left:1%; margin-right:1px; width:98%;display:none;">
+                    <tr>
+                        <td>
+                            @using (Html.BeginForm("PaymentRenewal", "Operator", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="block">
+                                            <div class="block-content">
+                                                <h2><strong>@mr.planname Details</strong> </h2>
+
                                             </div>
-                                    </div>
-                                    <div class="row-form">
-                                       
-                                        <div class="col-md-9"> 
-                                            <div class="input-group">
-                                          <span class="input-group-addon"><label class="width">@mr.planname Mode </label></span>  
-                                                 <input type="text" class="form-control" name="mode" id="mode" readonly="true" required/>
+                                            <div class="block-content controls">
+
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">@mr.custname Id </label></span>
+
+                                                            <input type="text" class="form-control" name="newbondid2" id="newbondid" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">@mr.custname Name </label></span>
+
+                                                            <input type="text" class="form-control" name="bondname" id="bondname" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">@mr.agentname Name </label></span>
+
+                                                            <input type="text" class="form-control" name="introname" id="introname" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">@mr.planname Name </label></span>
+
+                                                            <input type="text" class="form-control" name="planname" id="planname" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">Term(Yr.) </label></span>
+                                                            <input type="text" class="form-control" name="Term" id="term" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">@mr.planname Mode </label></span>
+                                                            <input type="text" class="form-control" name="mode" id="mode" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">Receipt's Expiry Date </label></span>
+                                                            <input type="text" id="prevexpirydate" name="prevexpirydate" class="form-control" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">Next Due Date</label></span>
+                                                            <input type="text" id="nextduedate" name="expirydate" class="form-control" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">Late Fine(Rs.) </label></span>
+                                                            <input type="text" class="form-control" id="latefine" name="latefine" readonly="true" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*   <div class="row-form">
+
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                    <span class="input-group-addon"><label class="width">Penality Charge(Rs.) </label></span>
+                                                    <input type="text" class="form-control" id="penality" name="penality" value="0" readonly="true" required /></div>
                                             </div>
-                                    </div>
+                                                 </div>*@
+                                                <div class="row-form">
+
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">From Installment </label></span>
+                                                            <input type="text" class="form-control" id="from" name="from" readonly="true" required />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><label class="width">To Installment</label></span>
+
+
+                                                            <select class="form-control" onclick="selectto(this.id)" id="to" name="to" required>
+                                                            </select>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+                                                    <div class="col-md-9">
+                                                        <div style="margin-left:46%;">
+                                                            <div class="widget-info widget-from">
+                                                                <button id="submit" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure to Submit Renewel?')">Submit</button>   &nbsp;&nbsp;
+                                                                <p>@ViewBag.msg</p>
+
+                                                            </div>
+
+
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
                                         </div>
-                                    <div class="row-form">
-                                    <div class="col-md-9">
-                                    <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">Receipt's Expiry Date </label></span>  
-                                            <input type="text" id="prevexpirydate" name="prevexpirydate" class="form-control" readonly="true" required />
-                                    </div>
-                                    </div>
-                                    </div>
-                                    <div class="row-form">
-                                    <div class="col-md-9">
-                                    <div class="input-group">
-                                             <span class="input-group-addon"><label class="width">Next Due Date</label></span>  
-                                             <input type="text" id="nextduedate" name="expirydate" class="form-control" readonly="true" required />
-                                    </div>
-                                    </div>
-                                    </div>
-                                   <div class="row-form">
-                                       
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">Late Fine(Rs.) </label></span>  
-                                            <input type="text" class="form-control" id="latefine" name="latefine" readonly="true" required /></div>
-                                    </div>
-                                         </div>
-                                   @*   <div class="row-form">
-                                       
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">Penality Charge(Rs.) </label></span>  
-                                            <input type="text" class="form-control" id="penality" name="penality" value="0" readonly="true" required /></div>
-                                    </div>
-                                         </div>*@
-                                     <div class="row-form">
-                                       
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                            <span class="input-group-addon"><label class="width">From Installment </label></span>  
-                                           <input type="text" class="form-control" id="from" name="from" readonly="true" required />
-                                                 
-                                            </div>
-                                    </div>
-                                         </div>
-                                    <div class="row-form">
-           <div class="col-md-9">
-             <div class="input-group">
-             <span class="input-group-addon"><label class="width">To Installment</label></span>  
-             
-                 
-                                                 <select class="form-control" onclick="selectto(this.id)" id="to" name="to" required>
-                                           
-                                        </select>
-                
-                  </div>
-                 
-           </div>
-                                    </div>
-                                     <div class="row-form">
-                                     <div class="col-md-9">
-                                     <div style="margin-left:46%;">
-                                     <div class="widget-info widget-from" >
-                                     <button id="submit" type="submit" class="btn btn-primary" onclick="return confirm('Are you sure to Submit Renewel?')">Submit</button>   &nbsp;&nbsp;
-                                     <p>@ViewBag.msg</p>
-                                 
-                            </div>
-                                     
-                                         
-                                         
-                                               
-                        </div>
-                 
-           </div>
-                                    </div>
 
-                                  
-
-                                </div>
-                            </div>
-
-                        </div>           
-                  <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
 
 
                                         <div class="block">
@@ -567,13 +556,13 @@
                                                                 <label class="width">Payment Mode </label>
                                                             </span>
                                                             <input type="radio" id="paymethod" name="paymethod" value="Cash" checked onclick="detail(this.id)">
-                                                            Cash   
-                                             <input type="radio" id="paymethod2" name="paymethod" value="DD" onclick="detail(this.id)">
-                                                            DD  
-                                          <input type="radio" id="paymethod3" name="paymethod" value="Cheque" onclick="detail(this.id)">
-                                                            Cheque 
-                                                             <input type="radio" id="paymethod4" name="paymethod" value="banktransaction" onclick="detail(this.id)">
-                                           Bank Transaction 
+                                                            Cash
+                                                            <input type="radio" id="paymethod2" name="paymethod" value="DD" onclick="detail(this.id)">
+                                                            DD
+                                                            <input type="radio" id="paymethod3" name="paymethod" value="Cheque" onclick="detail(this.id)">
+                                                            Cheque
+                                                            <input type="radio" id="paymethod4" name="paymethod" value="banktransaction" onclick="detail(this.id)">
+                                                            Bank Transaction
                                                         </div>
                                                     </div>
                                                 </div>
@@ -584,7 +573,8 @@
 
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <label class="width">Payment Date</label></span>
+                                                                <label class="width">Payment Date</label>
+                                                            </span>
                                                             <input type="text" id="pdate" name="pdate" class="form-control" value="@dt" readonly="true" required />
                                                         </div>
 
@@ -708,91 +698,92 @@
                                                     </div>
                                                 </div>
                                                 <div class="row-form" id="trdetail" style="display:none;margin-bottom:10%;">
-                                <div class="row-form">
-                                   <div class="col-md-9">
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <label class="width">Bank Name </label>
-                                           </span>
-                                                 <select id="trbank" name="trbank" class="form-control" >
-                                               <option>select</option>
-                                           @foreach(var blist in db.BankDetail_Tabs.ToList())
-                                           {
-                                         
-                                               <option value="@blist.bankname">@blist.bankname</option>
-                                         
-                                           }
-                                                       </select>
-                                       </div>
-                                   </div>
-                               </div>
-                                <div class="row-form">
-                                   <div class="col-md-9">
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <label class="width">Transaction Id </label>
-                                           </span>
-                                           <input type="text" id="transactionid" name="transactionid" class="form-control" />
-                                       </div>
-                                   </div>
-                               </div>
-                                <div class="row-form">
-                                   <div class="col-md-9">
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <label class="width">Transaction Date </label>
-                                           </span>
-                                           <input type="date" id="transactiondate" name="transactiondate" class="form-control" />
-                                       </div>
-                                   </div>
-                               </div>
-                                <div class="row-form">
-                                   <div class="col-md-9">
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <label class="width">Amount </label>
-                                           </span>
-                                           <input type="text" id="tramount" name="tramount" class="form-control" />
-                                       </div>
-                                   </div>
-                               </div>
-                                <div class="row-form">
-                                   <div class="col-md-9">
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <label class="width">Pay Method </label>
-                                           </span>
-                                         
-                                           <input type="radio" id="trpmethod1" name="transactiontype" value="NEFT" checked >
-                                           NEFT
-                                            <input type="radio" id="trpmethod2" name="transactiontype" value="IMPS" />
-                                           IMPS
-                                            <input type="radio" id="trpmethod3" name="transactiontype" value="RTGS"  />
-                                           RTGS
-                                            <input type="radio" id="trpmethod4" name="transactiontype" value="UPI"  />
-                                           UPI
-                                           <input type="radio" id="trpmethod5" name="transactiontype" value="NACH" />
-                                               NACH
-                                       </div>
-                                   </div>
-                               </div>
-                                    <div class="row-form">
+                                                    <div class="row-form">
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <label class="width">Bank Name </label>
+                                                                </span>
+                                                                <select id="trbank" name="trbank" class="form-control">
+                                                                    <option>select</option>
+                                                                    @foreach (var blist in db.BankDetail_Tabs.ToList())
+                                                                    {
 
-                                   <div class="col-md-9">
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <label class="width">A/C Holder's A/C No. </label>
-                                           </span>
-                                           <input type="text" id="holderacno" name="holderacno" class="form-control" />
-                                       </div>
-                                   </div>
-                               </div>
-                                   </div>
+                                                                        <option value="@blist.bankname">@blist.bankname</option>
+
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-form">
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <label class="width">Transaction Id </label>
+                                                                </span>
+                                                                <input type="text" id="transactionid" name="transactionid" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-form">
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <label class="width">Transaction Date </label>
+                                                                </span>
+                                                                <input type="date" id="transactiondate" name="transactiondate" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-form">
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <label class="width">Amount </label>
+                                                                </span>
+                                                                <input type="text" id="tramount" name="tramount" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-form">
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <label class="width">Pay Method </label>
+                                                                </span>
+
+                                                                <input type="radio" id="trpmethod1" name="transactiontype" value="NEFT" checked>
+                                                                NEFT
+                                                                <input type="radio" id="trpmethod2" name="transactiontype" value="IMPS" />
+                                                                IMPS
+                                                                <input type="radio" id="trpmethod3" name="transactiontype" value="RTGS" />
+                                                                RTGS
+                                                                <input type="radio" id="trpmethod4" name="transactiontype" value="UPI" />
+                                                                UPI
+                                                                <input type="radio" id="trpmethod5" name="transactiontype" value="NACH" />
+                                                                NACH
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-form">
+
+                                                        <div class="col-md-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <label class="width">A/C Holder's A/C No. </label>
+                                                                </span>
+                                                                <input type="text" id="holderacno" name="holderacno" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="row-form">
                                                     <div class="col-md-9">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <label class="width">Relief(Rs.)</label></span>
+                                                                <label class="width">Relief(Rs.)</label>
+                                                            </span>
                                                             <input type="text" class="form-control" id="Relief" name="relief" onmouseover="chekrelief(this.id)" required />
 
                                                         </div>
@@ -805,7 +796,8 @@
 
                                                         <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <label class="width">Pay Amount(Rs.)</label></span>
+                                                                <label class="width">Pay Amount(Rs.)</label>
+                                                            </span>
                                                             <input type="text" class="form-control" id="payamount" name="payamount" readonly="true" required />
                                                             <input type="hidden" id="payamout1" />
                                                         </div>
@@ -828,20 +820,20 @@
 
                                     </div>
 
-                      
-              </div>
-                 }
-              </td>
-          </tr>
-      
-      
-      
-                              </table>
 
-<h4>@ViewBag.msg</h4>
-                        </div>          
-                        
-                    </div>
-  
+                                </div>
+                            }
+                        </td>
+                    </tr>
+
+
+
+                </table>
+
+                <h4>@ViewBag.msg</h4>
+            </div>
+
+        </div>
+
     </div>
-    </div>
+</div>

@@ -1,14 +1,17 @@
 ﻿@using ODHDEVELOPERS.Models;
 @model IEnumerable<ODHDEVELOPERS.Models.DailyVisitor>
-@{
-    ViewBag.Title = "ReceptionList";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    UsersContext db = new UsersContext();
-    var Id = 1;
-    var list = db.DailyVisitors.ToList();
-}
+    @{
+        ViewBag.Title = "ReceptionList";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        UsersContext db = new UsersContext();
+        var Id = 1;
+        var list = db.DailyVisitors.ToList();
+    }
 
-<script>
+    <link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+
+    
+            <script>
     function hlleave(dd) {
         debugger;
         var Id = dd;
@@ -26,136 +29,122 @@
             location.reload();
         });
     }
-</script>
-<div class="page-content">
-    <div class="container">
-        <div class="page-toolbar">
-<div class="page-toolbar-block">
-                <div class="page-toolbar-title">Reception List</div>
-                <div class="page-toolbar-subtitle">
-                </div>
-            </div>
+            </script>
+          
 
-<form method="post" action="~/Admin/ReceptionList" enctype="multipart/form-data">
-    <div class="row" style="width: 100%">
+                        <form method="post" action="~/Admin/ReceptionList" enctype="multipart/form-data">
+                           
+                                                    <div class="index_body">
+                                                        <div class="table-container">
+                                                            <div class="header-row">Reception List</div>
+                                                            <table>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            Id
+                                                                        </th>
+                                                                        <th>
+                                                                            Name
+                                                                        </th>
+                                                                        <th>
+                                                                            Mobile
+                                                                        </th>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.EmailId)
+                                                                        </th>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.Address)
+                                                                        </th>
+                                                                        <th>
+                                                                            Register Date
+                                                                        </th>
+                                                                        @*<th>
+                @Html.DisplayNameFor(model => model.CreaderBy)
+            </th>*@
+                                                                        <th>
+                                                                            Branch Code
+                                                                        </th>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.Password)
+                                                                        </th>
+                                                                        <th>
+                                                                            Action
+                                                                        </th>
+                                                                        @*<th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>*@
 
-            <div class="col-md-6" style="width: 100%">
+                                                                        @*<th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>*@
 
-                <div class="block" style="width: 100%">
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
 
-                    <div class="block-content controls">
-                        <div class="row">
-<div class="row-form table-responsive" style="overflow: auto">
-<table class="table">
-    <tr>
-        <th>
-            Id
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-          Mobile
-          </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            Register Date
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.CreaderBy)
-        </th>*@
-        <th>
-            Branch Code
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            Action
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>*@
-        
-        @*<th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>*@
-        
-        <th></th>
-    </tr>
+                                                                    @foreach (var item in Model)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.ReceptionistId)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.ReceptionistName)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.MobileNo)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.EmailId)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Address)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                                            </td>
+                                                                            @*<td>
+                    @Html.DisplayFor(modelItem => item.CreaderBy)
+                </td>*@
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.OfficeCode)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Password)
+                                                                            </td>
+                                                                            @if (item.Status == 0)
+                                                                            {
+                                                                                <td style="color:red;">Active</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td style="color:green">Inactive</td>
+                                                                            }
+                                                                            @if (item.Status == 0)
+                                                                            {
+                                                                                <td><input type="button" value="Unblock" class="btn btn-danger" onclick="hlleave(this.id)" id="@item.Id" /></td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td><input type="button" value="Block" class="btn btn-danger" onclick="hlleave(this.id)" id="@item.Id" /></td>
+                                                                            }
+                                                                            @*<td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReceptionistId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReceptionistName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MobileNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.CreaderBy)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.OfficeCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        @if (item.Status == 0)
-                {
-                    <td style="color:red;">Active</td>
-                }
-                else
-                {
-                    <td style="color:green">Inactive</td>
-                }
-                @if (item.Status == 0)
-                {
-                    <td><input type="button" value="Unblock" class="btn btn-danger" onclick="hlleave(this.id)" id="@item.Id" /></td>
-                }
-                else
-                {
-                    <td><input type="button" value="Block" class="btn btn-danger" onclick="hlleave(this.id)"  id="@item.Id" /></td>
-                }
-        @*<td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>*@
-        
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>*@
-    </tr>
-}
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</form>
-</div>
-</div>
-</div>
+                                                                            @*<td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                </td>*@
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                </form>       

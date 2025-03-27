@@ -1,86 +1,76 @@
 ﻿@model ODHDEVELOPERS.Models.PhaseTab
 @using ODHDEVELOPERS.Models;
 @{
-    UsersContext db=new UsersContext();
-    var mr = db.Members.Single(m => m.Id == 1);   
+    UsersContext db = new UsersContext();
+    var PhaseTabDetails = db.PhaseTabs.ToList();
+    var mr = db.Members.Single(m => m.Id == 1);
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "CreatePhase";
-    
+
     //for accessing all cityname
     var allplan = db.Plans.Where(d => d.status == 1).ToList();
-   
+
 }
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Create New Phase</h2>
 
-<div class="page-content">
+    @using (Html.BeginForm())
+    {
 
-    <div class="container">
-
-        <div class="page-toolbar">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Create Phase</div>
-                <div class="page-toolbar-subtitle"></div>
+        <!-- Form -->
+        <div id="branchForm" class="form-container">
+            <!-- Project Name -->
+            <div class="form-group">
+                <label for="projectcat" class="form-label">Enter @mr.planname Name</label>
+                <select class="form-control" name="projectid" id="projectid" required>
+                    @foreach (var i in allplan)
+                    {
+                        <option value="@i.Plancode">@i.Planname</option>
+                    }
+                </select>
             </div>
 
-            <div class="page-toolbar-block pull-right">
+            <!-- Phase Name -->
+            <div class="form-group">
+                <label for="projectphasename" class="form-label">Phase Name</label>
+                <input type="text" class="form-control" name="Phase" id="Phase" placeholder="Enter Phase Name" required>
             </div>
 
+            <!-- Create Button -->
+            <div class="text-center">
+                <button type="submit" class="btn create-btn">Create</button>
+            </div>
         </div>
-
-        <div class="row" style="width: 100%">
-            <div class="col-md-6" style="width: 100%">
-
-                <div class="block" style="width: 100%">
-                    <div class="block-content controls">
-
-
-                        @using (Html.BeginForm())
-                        {
-            
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Enter @mr.planname Name</label>
-                                        </span>
-
-                                        <select class="form-control" name="projectid" id="projectid" required>
-                                            @foreach (var i in allplan)
-                                            {
-                                                <option value="@i.Plancode">@i.Planname</option>
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Enter Phase Name</label>
-                                        </span>
-                                        <input type="text" class="form-control" name="Phase" id="Phase" required />
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="page-toolbar-block pull-right">
-                                <div class="widget-info widget-from">
-                                    <button type="submit" class="btn btn-primary pull-right">Create Phase</button>
-                                </div>
-                            </div>
-         
-                            <p style="color: maroon;"><b>@ViewBag.msg</b></p>
-                        }
-                    </div>
-
-                </div>
-            </div>
-
+        <p style="color: maroon;"><b>@ViewBag.msg</b></p>
+    }
+</div>
+@if (PhaseTabDetails != null)
+{
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Phase Details</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Id</th>
+                        <th>Phase</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                @foreach (var item in PhaseTabDetails)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.projectid</td>
+                            <td>@item.Phase</td>
+                            <td>@item.status</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
         </div>
     </div>
-</div>
+} 

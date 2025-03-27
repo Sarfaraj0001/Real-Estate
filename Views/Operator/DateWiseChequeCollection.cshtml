@@ -1,74 +1,67 @@
 ﻿@model IEnumerable<ODHDEVELOPERS.Models.Chequecollection>
-@using ODHDEVELOPERS.Models
-@{
-    Layout = "~/Views/Shared/_OperatorLayout.cshtml";
-    ViewBag.Title = "DateWiseChequeCollection";
+    @using ODHDEVELOPERS.Models
+    @{
+        Layout = "~/Views/Shared/_OperatorLayout.cshtml";
+        ViewBag.Title = "DateWiseChequeCollection";
     }
-    
-    
-
-<link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet" />
-<script src="~/Content/datepicker/jquery.plugin.js"></script>
-<script src="~/Content/datepicker/jquery.datepick.js"></script>
-
-<script>
-    $(function () {
-        $('#sdate').datepick();
-        $('#edate').datepick();
-        
-    });
-
-</script>
 
 
+    <link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+    <link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+    <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet" />
+    <script src="~/Content/datepicker/jquery.plugin.js"></script>
+    <script src="~/Content/datepicker/jquery.datepick.js"></script>
 
-<div class="page-content">
+    <script>
+        $(function () {
+            $('#sdate').datepick();
+            $('#edate').datepick();
 
-    <div class="container" id="divid1">
-        <div class="page-toolbar" id="2">
+        });
 
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Datewise Cheque Collection</div>
-                <div class="page-toolbar-subtitle"></div>
-            </div>
+    </script>
 
-        </div>
 
-        @using (Html.BeginForm())
-        {
-            <div class="row" id="hide">
-                <div class="col-md-6" style="width: 98%">
 
-                    <div class="block">
+   
 
-                        <div class="block-content controls">
-                            <div class="row-form">
-                                <div class="input-group" style="margin-left: 1%; margin-right: 1%;">
-                                    <span class="input-group-addon">
-                                        <label class="width">Start Date</label></span>
-                                    <input type="text" id="sdate" class="form-control " required name="sdate" value="@ViewData["sdate"]" />
+        <div  id="divid1">
+            <div  id="2">
 
-                                </div>
+             
+
+
+            <div class="container mt-5">
+                <h2 class="text-center mb-4 create-title">Datewise Cheque Collection</h2>
+
+                @using (Html.BeginForm())
+                {
+                    <div id="hide">
+
+                        <div id="branchForm" class="form-container">
+
+                            <!-- Date -->
+                            <div class="form-group">
+                                <label for="date" class="form-label">Select Start Date</label>
+                                <input type="text" id="sdate" class="form-control datepicker" required name="sdate">
                             </div>
-                            <div class="row-form">
-                                <div class="input-group" style="margin-left: 1%; margin-right: 1%;">
-                                    <span class="input-group-addon">
-                                        <label class="width">End Date</label></span>
-                                    <input type="text" id="edate" class="form-control" required name="edate" value="@ViewData["edate"]" />
+                            <!-- Date -->
+                            <div class="form-group">
+                                <label for="date" class="form-label">Select End Date</label>
+                                <input type="text" id="edate" class="form-control datepicker" required name="edate">
+                            </div>
 
-                                </div>
+
+                            <!-- Create Button -->
+                            <div class="text-center d-grid gap-2">
+                                <button type="submit" class="btn create-btn" onclick="target='_blank'" id="submit" name="command" value="Search">View</button>
                             </div>
-                            <div class="row-form" style="width: 98%">
-                                <div class="col-md-9">
-                                    <button id="submit" value="Search" onclick="target='_blank'" class="btn btn-primary pull-right" type="submit">View</button>
-                                </div>
-                            </div>
+
                         </div>
-                    </div>
-                </div>
+                        </div>
+                      
+                }
             </div>
-        }
-    </div>
-</div>
+        </div>
 
 

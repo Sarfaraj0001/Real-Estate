@@ -15,155 +15,189 @@
     ViewBag.Title = "BranchReport";
 }
 
-<div class="page-content">
-      
-                <div class="container" style="width:775px; padding-left:0px;padding-right:0px;">
-                  
-<div class="page-toolbar" style="width:770px;">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title"></div>
-                         
-                            
-                            <h4><b>Welcome, @br.CompanyName</b></h4>
-                        </div>
-                               <div style="margin-top:0px;float:right;margin-right:10px;">
-                            
-                        </div>    
-                      
-                    </div> 
+<link href="~/assets/css1/main css/Pages.css" rel="stylesheet" />
 
-                    
+<style>
+    .row {
+        padding-top: 30px;
+    }
+</style>
 
-                     <div class="widget stacked">
-					
-				<div class="widget-header">
-					<i class="icon-list-alt"></i>
-					<h3>Field Reports</h3>
-				</div> <!-- /widget-header -->
-				
-				<div class="widget-content">
-					
-					<div class="shortcuts">
-                        <a href="~/Admin/BrokerlistBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/7.png" />
-							<span class="shortcut-label">@mr.agentname List</span><br/>
-						</a>
+<!-- Main Container -->
+<!-- Section 1: Final Report -->
+<div class="container mt-5">
+    <div class="section">
+        <div class="w-100 card-heading">
+            <h3 class="text-center text-white pt-2 pb-2">Field Report</h3>
+        </div>
 
-                         <a href="~/Admin/DatewiseBrokerBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/63.png" />
-							<span class="shortcut-label">Datewise @mr.agentname List</span>
-						</a>
+        <div class="row g-3">
+            <!-- Repeat 15 cards here (similar to the previous setup) -->
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/BrokerlistBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/person.png" />
+                        <h6 class="card-title mt-3">@mr.agentname List</h6>
+                    </div>
+                </a>
+            </div>
+            <!-- Repeat the above code for other cards as needed -->
+            <!-- Repeat the above code for other cards as needed -->
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/DatewiseBrokerBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/calendar (1).png" />
+                        <h6 class="card-title mt-3">Datewise @mr.agentname List</h6>
+                    </div>
+                </a>
+            </div>
 
-						
-                    </div> <!-- /shortcuts -->	
-				
-				</div> <!-- /widget-content -->
-				
-			</div>
 
-                                 <div class="widget stacked">
-					
-				<div class="widget-header">
-					<i class="icon-list-alt"></i>
-					<h3>Official Reports</h3>
-				</div> <!-- /widget-header -->
-				
-				<div class="widget-content">
-					
-					<div class="shortcuts">
-                     	
-						
-						<a href="~/Admin/OperatorListBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/21.png" />
-							<span class="shortcut-label">Collection Point List</span>
-						</a>
-						
-						<a href="~/Admin/CustomerReportBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/26.png" />
-							<span class="shortcut-label">Customer List</span>	<br/>
-						</a>
-					      
+        </div>
+    </div>
+</div>
 
-                      @*  <a href="~/Admin/BranchAllSavingaccount" class="shortcut">
-							<img alt="" src="~/Images/icon/icon_taxfree.png" />
-							<span class="shortcut-label">Saving A/c List</span><br/>
-						</a>
+<!-- Main Container -->
+<div class="container mt-5">
+    <!-- Section 1: Final Report -->
+    <div class="section">
+        <div class="w-100 card-heading">
+            <h3 class="text-center text-white pt-2 pb-2">Official Report</h3>
+        </div>
+        <div class="row g-3">
+            <!-- Repeat 15 cards here (similar to the previous setup) -->
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/OperatorListBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
 
-                         <a href="~/Admin/BrnachDatewisesavingCollection" class="shortcut">
-							<img alt="" src="~/Images/icon/icon_taxfree.png" />
-							<span class="shortcut-label"> Datewise Saving A/c Collection</span>
-						</a>*@
+                        <img class="imageSize" src="~/Create_logos/map.png" />
 
-						<a href="~/Admin/DailyExpenseBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/76.png" />
-							<span class="shortcut-label">Daily Expense Details</span>
-						</a>
-                        <a href="~/Admin/ClosingBalanceBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/11.png" />
-							<span class="shortcut-label">RP Statement Report</span>	
-						</a>
-                        @* <a href="~/Admin/BranchCashReport" class="shortcut">
-							<img alt="" src="~/Images/icon/11.png" />
-							<span class="shortcut-label">Remaining Cash Report</span>
-						</a>*@
-						<a href="~/Admin/DailyCollectionBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/11.png" />
-							<span class="shortcut-label">Daily Collection</span><br/>
-						</a>
+                        <h6 class="card-title mt-3">Collection Point List</h6>
+                    </div>
+                </a>
+            </div>
+            <!-- Repeat the above code for other cards as needed -->
+            <!-- Repeat the above code for other cards as needed -->
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/CustomerReportBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/clipboard (1).png" />
 
-                          <a href="~/Admin/DuplicatePrintReportBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/74.png" />
-							<span class="shortcut-label">Duplicate Print</span><br/>	
-						</a>
-                              
-                             <a href="~/Admin/CancelReceiptBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/75.png" />
-							<span class="shortcut-label">Cancel Receipt List</span>
-						</a>
-						
-						<a href="~/Admin/DateWiseCollectionBranch" class="shortcut">
-								<img alt="" src="~/Images/icon/74.png" />
-							<span class="shortcut-label">Datewise Business</span>
-					</a>
-                        <a href="~/Admin/CompleteDailyCollectionBranch" class="shortcut">
-								<img alt="" src="~/Images/icon/74.png" />
-							<span class="shortcut-label">Datewise Collection Detail</span>
-					</a>
-                        
-                        <a href="~/Admin/CsswiseCollectionBranch" class="shortcut">
-								<img alt="" src="~/Images/icon/21.png" />
-							<span class="shortcut-label">Csswise Business</span>
-						</a>
+                        <h6 class="card-title mt-3">Customer List</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/DailyExpenseBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/budget (1).png" />
 
-						<a href="~/Admin/FundMobilisationBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/5.png" />
-							<span class="shortcut-label">Fund Mobilisation</span>
-						</a>
-						
-						<a href="MaturityPaidDetailsBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/27.png" />
-							<span class="shortcut-label">Maturity Paid Details</span>
-						</a>
+                        <h6 class="card-title mt-3">Daily Expense Detail</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/ClosingBalanceBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/address.png" />
 
-                        	 <a href="~/Admin/PaidVoucherBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/36.png" />
-							<span class="shortcut-label">Paid Voucher</span><br/>
-						</a>
+                        <h6 class="card-title mt-3">RP Statement Report</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/DailyCollectionBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
 
-                        <a href="~/Admin/UnpaidvoucherBranch" class="shortcut">
-							<img alt="" src="~/Images/icon/65.png" />
-							<span class="shortcut-label">UnPaid Voucher</span><br/>
-						</a>
-						
-						
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/money (2).png" />
 
-					</div> <!-- /shortcuts -->	
-				
-				</div> <!-- /widget-content -->
-				
-			</div>
+                        <h6 class="card-title mt-3">Daily Collection</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/DuplicatePrintReportBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/printer.png" />
 
-                      </div>    
-                      
-                    </div> 
+                        <h6 class="card-title mt-3">Dublicate Print</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/CancelReceiptBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/receipt.png" />
+
+                        <h6 class="card-title mt-3">Cancel Recipt List</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/DateWiseCollectionBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/online-analytical.png" />
+                        <h6 class="card-title mt-3">Datewise Bussiness</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/CompleteDailyCollectionBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/money (2).png" />
+
+                        <h6 class="card-title mt-3">Datewise Collection Detail</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/CsswiseCollectionBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/meeting.png" />
+
+                        <h6 class="card-title mt-3">Csswise Business</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/FundMobilisationBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/emergency.png" />
+
+                        <h6 class="card-title mt-3">Fund Mobilization</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="MaturityPaidDetailsBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/paid.png" />
+                        <h6 class="card-title mt-3">Maturity Paid details</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/PaidVoucherBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/voucher.png" />
+
+                        <h6 class="card-title mt-3">Paid Voucher</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/UnpaidvoucherBranch" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/images/logo/cpreport_logo/paper-money.png" />
+
+                        <h6 class="card-title mt-3">Unpaid Voucher</h6>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+</div>

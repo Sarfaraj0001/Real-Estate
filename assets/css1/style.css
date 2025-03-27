@@ -125,6 +125,30 @@ a {
     transition: all .3s ease-in-out;
 }
 
+
+
+/* Default style for larger screens */
+.welcome-heading {
+    color: white;
+    text-align: left; /* Default alignment for laptops */
+    font-size: 2.5rem; /* Adjust font size as needed */
+    line-height: 1.2; /* Adjust line spacing */
+    margin-left: 160px; /* Default margin-left for larger screens */
+}
+
+/* Adjustments for screens smaller than 768px (phones and tablets) */
+@@media (max-width: 768px) {
+    .welcome-heading {
+        margin-left: 0 !important; /* Force override margin-left for smaller screens */
+        text-align: center; /* Center-align for smaller devices */
+        font-size: 1rem; /* Adjust font size for smaller devices */
+        line-height: 1.1; /* Compact line spacing */
+        margin-top: 0.9rem; /* Optional margin-top adjustment */
+    }
+}
+
+
+
 h1,
 h2,
 h3,
@@ -717,14 +741,14 @@ a:focus {
     cursor: pointer;
 }
 
-.icon_info ul.user_profile_dd>li {
-    width: auto;
-    border-radius: 0;
-    background: #ff5722;
-    margin: 0;
-    padding: 12px 0 12px 20px;
-    height: auto;
-}
+    .icon_info ul.user_profile_dd > li {
+        width: auto;
+        border-radius: 0;
+        background: #ff5722;
+        margin: 0;
+        padding: 12px 0 12px 20px;
+        height: 63px;
+    }
 
 .sidebar_toggle {
     border: none;
@@ -734,6 +758,7 @@ a:focus {
     margin-right: 0;
     cursor: pointer;
     float: left;
+    height: 63px;
 }
 
 .icon_info span.badge {

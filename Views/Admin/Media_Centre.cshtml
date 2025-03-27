@@ -58,8 +58,7 @@
             $.ajax({
                 url: "/admin/medieagalleries/", type: "get", data: { newid: _newid },
                 success: function (d) {
-                    for(var i=0; i<d.length; i++)
-                    {
+                    for (var i = 0; i < d.length; i++) {
                         $("#imgachiver").attr("src", d[i].Image.replace('~', ''));
                         $("#Slide2").val(d[i].Heading);
                         $("#Slide3").val(d[i].Slide3);
@@ -69,10 +68,10 @@
                 }
             });
         }
-    setTimeout(function () {
-        debugger;
-        $('[data-toggle="mypopover"]').attr("data-placement", "left").popover({ "trigger": "hover" });
-    }, 2000);
+        setTimeout(function () {
+            debugger;
+            $('[data-toggle="mypopover"]').attr("data-placement", "left").popover({ "trigger": "hover" });
+        }, 2000);
     }
 
     function readURL(input) {
@@ -94,185 +93,162 @@
 {
     <script>
         alert('@TempData["msg"]');
-    </script> 
+    </script>
+
 }
 
-<div class="page-content">
 
-                <div class="container">
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
 
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Add Gallery</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                           
-                        </div>           
-                        
-                    </div> 
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title"> Add Gallery</h2>
+
+    @using (Html.BeginForm("Media_Centre", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <!-- Form -->
+        <div id="galleryUploadForm" class="form-container" onsubmit="return handleGalleryUpload(event)">
+
+            <!-- Gallery Image Upload -->
+            <div class="form-group">
+                <label for="galleryImage" class="form-label">Gallery Image</label>
+                <input type="file" class="form-control" name="Image" class="form-control" onchange="readURL3(this)" id="pic" accept="image/*">
+                <small>File size should be between 500kb–5000kb,Please Upload  1080 pixels wide x 1920 pixels height.</small>
+                <p id="imageError" style="color: red; display: none;">Please upload a valid image within the specified size.</p>
+            </div>
+
+            <!-- Description Input -->
+            <div class="form-group">
+                <label for="imageDescription" class="form-label">Description</label>
+                <input type="text" class="form-control" id="imageDescription" name="Heading" placeholder="Enter Image Description" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" name="command" value="Upload" class="btn create-btn">Upload</button>
+            </div>
+            <p style="color:maroon;"><b> @ViewBag.msg</b></p>
+        </div>
+    }
 
 
-
-                    <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                               <div class="block-content controls">  
-
-                    
-                      
-                        
-     
-
-                                    
-                   <div class="row-form">  
-      @using (Html.BeginForm("Media_Centre", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Uploaded Gallery Images</div>
+            @if (countachivers != 0)
             {
-                          
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Gallery Image </label></span>  
-       <img style="height: 150px; width: 150px;" id="sasa" src="~/Content/Admin/img/demo.png" />
-       <input type="file" name="Image"  class="form-control"  onchange="readURL3(this)" id="pic" accept="image/*"/>  
-                                   
-   </div>
-</div> 
-         
-          <div class="row-form">
-         <div class="col-md-9">
-      <div class="input-group">
-       <h6 style="color: red; font-weight: 800;">Size of file should be between 500kb–2084 kb </h6>
-       <h6 style="color: red; font-weight: 800">Please Upload  1080 pixels wide x 1920 pixels height</h6>
-                               
-        </div>
-      </div>
-               </div>
-         
-          <div class="row-form">
-                    <div class="col-md-9">
-      <div class="input-group">
-       <span class="input-group-addon"><label class="width">Description :</label></span>
-           <input type="text" class="form-control" name="Heading" placeholder="Achievers Name" />
-        </div>
-      </div>
-               </div>
-         
-       
-          
-           <div class="row-form">
-             
-      <div class="col-md-9">
-          <div class="input-group">
+                <table id="myTable">
+                    <thead>
 
-          <button type="submit" name="command"  value="Upload" class="btn btn-primary btn-width" style="margin-top:38%;margin-left:56%">Upload</button>
-      </div>
-        </div>
-               </div>
-                 
-         
-     <p style="color:maroon;"><b> @ViewBag.msg</b></p>
-     }
-                                </div>
-                                <br />
-                        @if (countachivers != 0)
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Image</th>
+                            <th>Description</th>
+                            <th>Upload Date</th>
+                            <th>Action</th>
+                            <th>Status</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in db.Mediagallerys.Where(x => x.Id >= 1 && x.status != 3).ToList())
                         {
-                                   <table  class="table-responsive table-bordered table" id="myTable" style="width:98%;">
-                                <thead class="bordered-blueberry">
-                                  
-                                    <tr>
-                                        <th>Sr No.</th>
-                                        <th>Image</th>
-                                        <th>Description</th>
-                                        <th>Upload Date</th>
-                                        <th>Action</th>
-                                         <th>Status</th>
-                                        <th>Edit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                          
-                                    @foreach (var item in db.Mediagallerys.Where(x => x.Id>=1 && x.status!=3).ToList())
-                                    {
-                                        a = a + 1;
-                                    <tr>
-                                            <td>@a</td>
-                                            <td><img src="@Url.Content(item.Image)" style="height:100px;width:100px" class="img-responsive"/></td>
-                                            <td>@item.Heading</td>
-                                            <td>@item.Cdate.ToString("dd/MM/yyyy")</td>
-                                            @if (@item.status == 0)
-                                                {
-                                                    <td style="text-align: center;"><a href="@Url.Action("mediastatus", "Admin", new { opid = @item.Id, status = item.status })" class="btn btn-primary">Active</a></td>
-                                                }
-                                             else
-                                             {
-                                                 <td style="text-align: center;"><a href="@Url.Action("mediastatus", "Admin", new { opid = @item.Id, status = item.status })" class="btn btn-danger">Block</a></td>
-                                             }
-                                        @if (item.status != 0)
-                                        {
-                                            <td style="color:green;">Active</td>
-                                        }
-                                        else
-                                        {
-                                            <td style="color:red;">Inactive</td>
-                                        }
-                                        <td>
-                                           
-                                            <a href="#myModal" role="button" class="btn" data-toggle="modal" id="@item.Id" onclick="showmodel(this.id)">Update</a>|<a href="@Url.Action("mediadelete", "Admin", new { opid = item.Id , status=item.status })" role="button" class="btn">Delete</a></td>
+                            a = a + 1;
+                            <tr>
+                                <td>@a</td>
+                                <td><img src="@Url.Content(item.Image)" style="height:100px;width:100px" class="img-responsive" /></td>
+                                <td>@item.Heading</td>
+                                <td>@item.Cdate.ToString("dd/MM/yyyy")</td>
+                                @if (@item.status == 0)
+                                {
+                                    <td style="text-align: center;"><a href="@Url.Action("mediastatus", "Admin", new { opid = @item.Id, status = item.status })" class="btn btn-primary">Active</a></td>
+                                }
+                                else
+                                {
+                                    <td style="text-align: center;"><a href="@Url.Action("mediastatus", "Admin", new { opid = @item.Id, status = item.status })" class="btn btn-danger">Block</a></td>
+                                }
+                                @if (item.status != 0)
+                                {
+                                    <td style="color:green;">Active</td>
+                                }
+                                else
+                                {
+                                    <td style="color:red;">Inactive</td>
+                                }
+                                <td>
 
-                                        </tr> 
-                                 
-                                    }
-                                 
-                                </tbody>
-                            </table>
+                                    <a href="#myModal" role="button" class="btn" data-toggle="modal" id="@item.Id" onclick="showmodel(this.id)">Update</a>|<a href="@Url.Action("mediadelete", "Admin", new { opid = item.Id , status=item.status })" role="button" class="btn">Delete</a>
+                                </td>
+
+                            </tr>
+
+
+
                         }
 
-                            
-                                         
-                                    </div>
-                            </div>
-                                        
-                   </div> </div> </div>
+                    </tbody>
+                </table>
+            }
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center" style="background-color:#b2b0b0;width:111%;">
-                <h4 class="modal-title w-100 font-weight-bold" style="color:#123897;">Update Gallery</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!-- Modal Header -->
+            <div class="modal-header text-center" style="background-color: #1e293b; color: white; width: 100%; padding: 15px; border-bottom: 3px solid #0d6efd;">
+                <h4 class="modal-title w-100 font-weight-bold">Update Gallery</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white; font-size: 24px;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body mx-3" style="width:111%;">
-                <div class="row"style="margin-left:-8px;">
-                   @using (Html.BeginForm("Media_Centre", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-             <input type="hidden" id="newid" name="newid"/>
-                        <div style="overflow-x: scroll">
-                            <table  class="table-responsive table-bordered table">
+
+            <!-- Modal Body -->
+            <div class="modal-body" style="padding: 20px;">
+                <div class="row">
+                    @using (Html.BeginForm("Media_Centre", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <input type="hidden" id="newid" name="newid" />
+
+                        <div style="overflow-x: auto;">
+                            <table class="table table-striped" style="width:100%; max-width:488px; min-width:488px">
                                 <tr>
-                                    <td>Galllery Image</td>
-                                    <td><img src="" style="height:80px;width:102px;" id="imgachiver"/>
-                                        <input type="file" onchange="readURL(this)" name="Image" class="form-control">
+                                    <td style="font-weight: 600; width: 30%;">Gallery Image</td>
+                                    <td>
+                                        <img src="" style="height: 80px; width: 102px; border-radius: 5px; object-fit: cover; border: 1px solid #ddd; padding: 5px;" id="imgachiver" />
+                                        <input type="file" onchange="readURL(this)" name="Image" class="form-control mt-2" style="border-radius: 5px; padding: 8px;">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Description</td>
-                                    <td><input name="Heading" id="Slide2" type="text" class="form-control"></td>
+                                    <td style="font-weight: 600;">Description</td>
+                                    <td><input name="Heading" id="Slide2" type="text" class="form-control" style="border-radius: 5px; padding: 8px;"></td>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <td></td>
-                                    <td><button type="submit" class="btn btn-space btn-primary" name="command" value="Update">Update</button></td>
+                                    <td class="text-right">
+                                        <button type="submit" class="btn btn-primary" name="command" value="Update" style="padding: 10px 20px; border-radius: 5px; font-weight: 600;">Update</button>
+                                    </td>
                                 </tr>
-                                </table>
-                            </div>
-         }
+                            </table>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
 

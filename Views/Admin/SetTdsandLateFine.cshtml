@@ -4,157 +4,128 @@
     UsersContext db = new UsersContext();
     var mr = db.Members.Single(m => m.Id == 1);
     var tr = db.TDSLF_tabs.Single(f => f.Id == 1);
+    var TDSLFTabDetails = db.TDSLF_tabs.ToList();
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "SetTdsandLateFine";
 }
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Set TDS and Late Fine</h2>
 
+    @using (Html.BeginForm())
+    {
+        <!-- Form -->
+        <div id="settingsForm" class="form-container">
+            <!-- TDS(%) With PAN -->
+            <div class="form-group">
+                <label for="tdsWithPan" class="form-label">TDS(%) With PAN</label>
+                <input type="number" class="form-control" name="TDS" id="tds" value="@tr.TDS" required>
+            </div>
 
-<div class="page-content">
+            <!-- TDS(%) Without PAN -->
+            <div class="form-group">
+                <label for="tdsWithoutPan" class="form-label">TDS(%) Without PAN</label>
+                <input type="number" class="form-control" name="NPCTDS" id="NPCTDS" value="@tr.NPCTDS" required>
+            </div>
 
-                <div class="container">
+            <!-- Late Fine(%) -->
+            <div class="form-group">
+                <label for="lateFine" class="form-label">Late Fine(%)</label>
+                <input type="number" class="form-control" name="latefine" id="latefine" value="@tr.latefine" required>
+            </div>
 
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Set TDS and Late Fine</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                           
-                        </div>           
-                        
-                    </div> 
+            <!-- Processing Fee(%) -->
+            <div class="form-group">
+                <label for="processingFee" class="form-label">Processing Fee(%)</label>
+                <input type="number" class="form-control" name="processingfee" id="processingfee" value="@tr.processingfee" required>
+            </div>
 
-                    <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                               <div class="block-content controls">  
+            <!-- Member Fee -->
+            <div class="form-group">
+                <label for="memberFee" class="form-label">Member Fee</label>
+                <input type="number" class="form-control" name="memberfee" id="memberfee" value="@tr.memberfee" required>
+            </div>
 
-                    
-                      
-                        
-     @using (Html.BeginForm()) {
-            
-                   <div class="row-form">  
-                                   
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">TDS(%) With PAN</label> </span>  
-        <input type="text" class="form-control"  name="TDS" id="tds" value="@tr.TDS" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-         <div class="row-form">  
-                                   
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">TDS(%) Without PAN</label> </span>  
-        <input type="text" class="form-control"  name="NPCTDS" id="NPCTDS" value="@tr.NPCTDS" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-                <div class="row-form">  
-                                         
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width"> Late Fine(%)</label> </span>  
-        <input type="text" class="form-control"  name="latefine" id="latefine" value="@tr.latefine" required/></div>
-                                   
-   </div>
-                    </div>
-         
-         
-         
-           <div class="row-form">  
-                                         
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Processing Fee(%)</label> </span>  
-        <input type="text" class="form-control"  name="processingfee" id="processingfee" value="@tr.processingfee" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-          <div class="row-form">  
-                                         
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Member Fee</label> </span>  
-        <input type="text" class="form-control"  name="memberfee" id="memberfee" value="@tr.memberfee" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-         <div class="row-form">  
-                                         
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Set @mr.agentname Form Fee</label> </span>  
-        <input type="text" class="form-control"  name="agencyformfee" id="agencyformfee" value="@tr.agencyformfee" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-         <div class="row-form">          
-         <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Set @mr.custname Form Fee</label> </span>  
-        <input type="text" class="form-control"  name="applicationfee" id="applicationfee" value="@tr.applicationfee" required/>
+            <!-- Set Associate Form Fee -->
+            <div class="form-group">
+                <label for="associateFormFee" class="form-label">Set @mr.agentname Form Fee</label>
+                <input type="number" class="form-control" name="agencyformfee" id="agencyformfee" value="@tr.agencyformfee" required>
+            </div>
 
-        </div>                   
-   </div>            
-         </div>
-         
-          <div class="row-form">          
-         <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Set A/C Form Fee</label> </span>  
-        <input type="text" class="form-control"  name="accountformfee" id="accountformfee" value="@tr.accountformfee" required/>
+            <!-- Set Customer Form Fee -->
+            <div class="form-group">
+                <label for="customerFormFee" class="form-label">Set @mr.custname Form Fee</label>
+                <input type="number" class="form-control" name="applicationfee" id="applicationfee" value="@tr.applicationfee" required>
+            </div>
 
-        </div>                   
-   </div>            
-         </div>
-         
-           <div class="row-form">          
-         <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Set A/C Opening Amount</label> </span>  
-        <input type="text" class="form-control"  name="accountopeningfee" id="accountopeningfee" value="@tr.accountopeningfee" required/>
+            <!-- Set A/C Form Fee -->
+            <div class="form-group">
+                <label for="accountFormFee" class="form-label">Set A/C Form Fee</label>
+                <input type="number" class="form-control" name="accountformfee" id="accountformfee" value="@tr.accountformfee" required>
+            </div>
 
-        </div>                   
-   </div>            
-         </div>
-            <div class="row-form">          
-         <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Set Revival Fee(Rs.)</label> </span>  
-        <input type="text" class="form-control"  name="revivalfee" id="revivalfee" value="@tr.revivalfee" required/>
+            <!-- Set A/C Opening Amount -->
+            <div class="form-group">
+                <label for="accountOpeningAmount" class="form-label">Set A/C Opening Amount</label>
+                <input type="number" class="form-control" name="accountopeningfee" id="accountopeningfee" value="@tr.accountopeningfee" required>
+            </div>
 
-        </div>                   
-   </div>            
-         </div>
-                 <div class="page-toolbar-block pull-right">
-                            <div class="widget-info widget-from">
-         <button  type="submit" class="btn btn-primary pull-right"> Set</button>   
-                                </div>
-                                             </div>
-         
-     <p style="color:maroon;"><b> @ViewBag.msg</b></p>
-     }
-                                </div>
-                                
-     
-                                         
-                                    </div>
-                            </div>
-                                        
-                   </div> </div> </div>
+            <!-- Set Revival Fee -->
+            <div class="form-group">
+                <label for="revivalFee" class="form-label">Set Revival Fee(Rs.)</label>
+                <input type="number" class="form-control" name="revivalfee" id="revivalfee" value="@tr.revivalfee" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn create-btn">Set</button>
+            </div>
+        </div>
+
+        <p style="color:maroon;"><b> @ViewBag.msg</b></p>
+    }
+</div>
+
+@if (TDSLFTabDetails != null)
+{
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">TDS and late fine</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>TDS</th>
+                        <th>NPCTDS</th>
+                        <th>Late Fine</th>
+                        <th>Processing Fee</th>
+                        <th>Application Fee</th>
+                        <th>Agency Form Fee</th>
+                        <th>Account Form Fee</th>
+                        <th>account Opening Fee</th>
+                        <th>Member Fee</th>
+                        <th>Revival Fee</th>
+                    </tr>
+                </thead>
+                @foreach (var item in TDSLFTabDetails)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.TDS</td>
+                            <td>@item.NPCTDS</td>
+                            <td>@item.latefine</td>
+                            <td>@item.processingfee</td>
+                            <td>@item.applicationfee</td>
+                            <td>@item.agencyformfee</td>
+                            <td>@item.accountformfee</td>
+                            <td>@item.accountopeningfee</td>
+                            <td>@item.memberfee</td>
+                            <td>@item.revivalfee</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+}

@@ -7,12 +7,14 @@
     padding: 5px;
 }*/
 
-.index_body{
-    margin-top:50px;
-}
 
-/*Table Container*/
-.table-container {
+
+
+.index_body {
+    margin-top: 50px;
+    /*Table Container*/
+}
+    .table-container {
     max-width: 1100px;
     margin: auto;
     overflow-x: auto;
@@ -28,13 +30,21 @@
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px;
-    background-color: #0078d4;
+    background-color: #FF5722;
     color: white;
     border-radius: 8px 8px 0 0;
 }
 
 /*Table Styling*/
 table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; /*Ensures columns take up equal width */
+    min-width: 800px;
+    /*    Ensures table doesn't collapse on small screens*/
+}
+
+.tablermv {
     width: 100%;
     border-collapse: collapse;
     table-layout: auto; /*Ensures columns take up equal width */
@@ -61,7 +71,7 @@ tbody td {
 
 /*Zebra Striping*/
 tbody tr:nth-child(even) {
-    background-color: #f9fafb;
+    background-color: #fff3f5;
 }
 
 tbody tr:hover {

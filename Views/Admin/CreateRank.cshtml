@@ -2,97 +2,79 @@
 @using ODHDEVELOPERS.Models;
 @{
     UsersContext db = new UsersContext();
-    var mr = db.Members.Single(m => m.Id == 1);   
+    var RanktabDetails = db.Ranktabs.ToList();
+    var mr = db.Members.Single(m => m.Id == 1);
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "CreateRank";
 }
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Create New Level</h2>
 
+    @using (Html.BeginForm())
+    {
+        <!-- Form -->
+        <div id="levelForm" class="form-container">
+            <!-- Level Name -->
+            <div class="form-group">
+                <label for="levelName" class="form-label">@mr.rankname Name</label>
+                <input type="text" class="form-control" name="RankName" id="rankname" placeholder="Enter Level Name" required>
+            </div>
 
+            <!-- Level Shortcut -->
+            <div class="form-group">
+                <label for="levelShortcut" class="form-label">@mr.rankname Shortcut</label>
+                <input type="text" class="form-control" name="Rankshrtcut" id="rankshortcut" placeholder="Enter Level Shortcut" required>
+            </div>
 
-<div class="page-content">
+            <!-- Self Joining -->
+            <div class="form-group">
+                <label for="selfJoining" class="form-label">Self Joining</label>
+                <input type="text" class="form-control" name="Selfquota" id="selfquota" placeholder="Enter Self Joining" required>
+            </div>
 
-                <div class="container">
+            <!-- Team Quota -->
+            <div class="form-group">
+                <label for="teamQuota" class="form-label">Team Quota</label>
+                <input type="text" class="form-control" name="TeamQuota" id="teamquota" placeholder="Enter Team Quota" required>
+            </div>
 
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Create @mr.rankname</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                            
-                        </div>           
-                        
-                    </div> 
-
-                    <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                               <div class="block-content controls">  
-
-                    
-                      
-                        
-     @using (Html.BeginForm()) {
-    
-
-                                    
-                   <div class="row-form">  
-                                         
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">@mr.rankname Name</label> </span>  
-        <input type="text" class="form-control"  name="RankName" id="rankname" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-         <div class="row-form">  
-                       <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">@mr.rankname Shortcut</label> </span>  
-        <input type="text" class="form-control"  name="Rankshrtcut" id="rankshortcut" required/></div>
-                                   
-   </div>
-</div>
-          <div class="row-form">
-                    <div class="col-md-9">
-      <div class="input-group">
-       <span class="input-group-addon"><label class="width">Self Joining</label></span>
-        <input type="number" step="any" class="form-control"  name="Selfquota" id="selfquota" required />
-         
+            <!-- Create Button -->
+            <div class="text-center">
+                <button type="submit" class="btn create-btn">Create @mr.rankname</button>
+            </div>
         </div>
-      </div>
-               </div>
-         
-         
-         <div class="row-form">
-             
-      <div class="col-md-9">
-          <div class="input-group">
-       <span class="input-group-addon"><label class="width">Team Quota</label></span>
-          <input type="number" step="any" class="form-control" name="TeamQuota" id="teamquota" required/></div>
-      </div>
-                           </div>
-         
-            
-                
-                 <div class="page-toolbar-block pull-right">
-                            <div class="widget-info widget-from">
-         <button  type="submit" class="btn btn-primary pull-right"> Create @mr.rankname</button>   
-                                </div>
-                                             </div>
-         
-     <p style="color:maroon;"><b> @ViewBag.msg</b></p>
-     }
-                                </div>
-                                
-                            
-                                         
-                                    </div>
-                            </div>
-                                        
-                   </div> </div> </div>
+        <p style="color:maroon;"><b> @ViewBag.msg</b></p>
+    }
+</div>
+@if (RanktabDetails != null)
+{
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Level Details</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank Name</th>
+                        <th>Rank Shortcut</th>
+                        <th>Team Quota</th>
+                        <th>Self Quita</th>
+                    </tr>
+                </thead>
+                @foreach (var item in RanktabDetails)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.RankName</td>
+                            <td>@item.Rankshrtcut</td>
+                            <td>@item.TeamQuota</td>
+                            <td>@item.Selfquota</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+}

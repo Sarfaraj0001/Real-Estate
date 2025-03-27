@@ -15,124 +15,92 @@
         dvPassport.style.display = chkYes.checked ? "block" : "none";
     }
 </script>
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 
-<div class="page-content">
 
-    <div class="container">
-        <div class="page-toolbar">
 
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Set EMI Date</div>
-                <div class="page-toolbar-subtitle"></div>
+
+
+
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Set EMI Date</h2>
+
+    <!-- Form -->
+    @using (Html.BeginForm())
+    {
+        <div id="setEmiDateForm" class="form-container">
+
+
+            <!-- Action Radio Buttons -->
+            <div class="form-group">
+                <label class="form-label">Action</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="chkYes" name="command" value="Activate" onclick="ShowHideDiv()">
+                    <label class="form-check-label" for="active">Active</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="chkNo" name="command" value="Deactivate" onclick="ShowHideDiv()">
+                    <label class="form-check-label" for="deactive">Deactive</label>
+                </div>
             </div>
 
-            <div class="page-toolbar-block pull-right">
+
+
+
+            <!-- Branch Code Dropdown -->
+            <div class="form-group">
+                <label for="branchCode" class="form-label">Branch Code</label>
+                <select class="form-control validate[required]" id="Select1" name="opid" required>
+                    <option value="">Select</option>
+                    @foreach (var item in dd)
+                    {
+                        <option value="@item.BranchCode">@item.BranchName  ( @item.BranchCode (@item.type))</option>
+                    }
+                    @foreach (var a in op)
+                    {
+                        <option value="@a.OperatorId">@a.OperatorName (@a.Type)</option>
+                    }
+                    <option value="All">All</option>
+                </select>
             </div>
 
-        </div>
-
-        @using (Html.BeginForm())
-        {
-            <div class="row" style="width: 100%">
-                <div class="col-md-6" style="width: 100%">
-
-                    <div class="block" style="width: 100%">
-                        <div class="block-content controls">
 
 
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Action</label>
-                                        </span>
-
-                                        <input type="radio" id="chkYes" name="command" value="Activate" onclick="ShowHideDiv()" />
-                                        Active
-
-                                     <input type="radio" id="chkNo" name="command" value="Deactivate" onclick="ShowHideDiv()" />Deactive
-                                    </div>
-
-                                </div>
-
-                            </div>
 
 
-                            <div class="row-form">
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Branch Code</label></span>
-                                        <select id="Select1" class="form-control validate[required]" name="opid">
-                                            <option value="">Select</option>
-                                            @foreach (var item in dd)
-                                            {
-                                                <option value="@item.BranchCode">@item.BranchName  ( @item.BranchCode (@item.type))</option>
-                                            }
-                                           @foreach (var a in op)
-                                           { 
-                                          <option value="@a.OperatorId">@a.OperatorName (@a.Type)</option>
-                                           }
-                                            <option value="All">All</option>
-                                        </select>
+            <div id="dvPassport" style="display: none">
 
-                                    </div>
+                <div class="form-group">
+                    <label for="collectionPointName" class="form-label">Set Date</label>
 
-                                </div>
-                            </div>
-                             <div id="dvPassport" style="display: none">
-                           @* <div class="row-form">
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Date Type</label></span>
-                                        <select class="form-control validate[required]" name="type">
-                                            <option value="">Select</option>
-                                            <option value="1">Back Date</option>
-                                            <option value="2">Fix Date</option>
-
-
-                                        </select>
-
-                                    </div>
-
-                                </div>
-                            </div>*@
-
-                            <div class="row-form">
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Set Date</label></span>
-                                        <input type="date" name="date"  class="form-control validate[required]"  value="@DateTime.Now.ToString("dd/MM/yyyy")" >
-                                    </div>
-
-                                </div>
-                            </div>
-                                 </div>
-                            <div class="page-toolbar-block pull-right">
-                                <div class="widget-info widget-from">
-
-                                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure to change option? ');">Submit</button>
-
-                                </div>
-                            </div>
-                            <div> <p style="color:maroon;"><b>@ViewBag.msg
-                                </b></p></div>
-                        </div>
-
+                    <input type="date" name="date" class="form-control validate[required]" value="@DateTime.Now.ToString("dd/MM/yyyy")">
                     </div>
                 </div>
-            </div>  
-                      
-                    }
 
-    </div>
-</div>
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn create-btn" onclick="return confirm('Are you sure to change option? ');">Submit</button>
+                </div>
+            </div>
 
-@if (ViewBag.msg != null) { 
-    <script type="text/javascript">
+            <div>
+                <p style="color:maroon;">
+                    <b>
+                        @ViewBag.msg
+                    </b>
+                </p>
+            </div>
+            }
+        </div>
+
+        @if (ViewBag.msg != null)
+        {
+            <script type="text/javascript">
         alert("@ViewBag.msg");
-    </script>
-}
+            </script>
+        }
+
+
+
+

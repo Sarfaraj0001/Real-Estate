@@ -8,7 +8,7 @@
 <link href="~/Content/datepicker/jquery.datepick.css" rel="stylesheet" />
 <script src="~/Content/datepicker/jquery.plugin.js"></script>
 <script src="~/Content/datepicker/jquery.datepick.js"></script>
-
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -53,220 +53,189 @@
 
 
 
-<div class="page-content">
-
-    <div class="container">
 
 
+<div class="container mt-5">
+    <h2 class="text-center mb-4 create-title">Edit Agent/Associate KYC</h2>
+    <form method="post">
 
-        <div class="page-toolbar" style="width:97%;">
+        <div id="branchForm" class="form-container">
 
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Edit Agent/Associate KYC </div>
-                <div class="page-toolbar-subtitle"></div>
+            <!-- Collection Point Name -->
+            <div class="form-group">
+                <label for="collectionPointName" class="form-label">Enter Agent Id or Name</label>
+                <input type="text" class="form-control " name="NewAgentId" id="NewAgentId" placeholder="Enter Agent Id or Name" required>
             </div>
 
-            <div class="page-toolbar-block pull-right">
+            <!-- Create Button -->
+            <div class="text-center d-grid gap-2">
+                <button type="submit" class="btn create-btn" value="Search" name="command"><i class="fa fa-search"></i>Search</button>
             </div>
 
         </div>
-        <div class="row" style="width:97%;">
-            <div class="span12">
 
-                <div class="block">
+    </form>
 
-                    <div class="block-content controls">
-                        <form method="post">
-                            <div class="row-form">
 
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Enter Agent Id or Name</label></span>
-                                        <input type="text" class="form-control" name="NewAgentId" id="NewAgentId" required>
-                                    </div>
 
-                                </div>
-                            </div>
+    @if (Model != null)
+    {
+        if (Model.NewAgentId != null)
+        {
+            @*<div class="row" style="width:97%;">
+                <div class="span12">*@
 
-                            <div class="page-toolbar-block pull-right">
-                                <div class="widget-info widget-from">
+            <form method="post">
 
-                                    <button type="submit" value="Search" name="command" class="btn btn-primary"><i class="fa fa-search"></i>Search</button>
+                @*<div class="block-content controls">
+                    <div style="overflow-y: auto">*@
 
-                                </div>
-                            </div>
-                        </form>
+
+                <div class="container mt-5">
+                    <h2 class="text-center mb-4 create-title">Bank KYC Details</h2>
+                    <h2 class="pull-right text-success" id="message" style="color:#0a7609;">@ViewBag.message</h2>
+
+
+                    @*<div class="block">
+                        <div class="block-content">
+                            <h2 class="pull-left"><strong>Bank KYC Details</strong></h2>
+                            <h2 class="pull-right text-success" id="message" style="color:#0a7609;">@ViewBag.message</h2>
+                        </div>*@
+
+                <div id="branchForm" class="form-container">
+
+
+                 
+
+                  
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label">Agent Id</label>
+                        <input type="text" class="form-control" value="@Model.NewAgentId" name="NewAgentId" readonly="disabled">
+
+
                     </div>
+
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label">Agent Name</label>
+
+                        <input type="text" class="form-control" value="@Model.name" name="name" id="name" readonly="disabled">
+                    </div>
+
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label">Mobile</label>
+                        <input type="text" class="form-control" value="@Model.Mobile" name="Mobile" id="Mobile" readonly="disabled">
+                    </div>
+
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label"> Other Mobile</label>
+                        <input type="text" class="form-control" value="@Model.OtherMobile" name="OtherMobile" id="OtherMobile" maxlength="10">
+                    </div>
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label">Pan No</label>
+                        <input type="text" class="form-control" value="@Model.Panno" name="Panno" id="Panno" maxlength="10">
+                    </div>
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label">Adhar No</label>
+                        <input type="text" class="form-control" value="@Model.Aadhaar_No" name="Aadhaar_No" id="Aadhaar_No">
+                    </div>
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label">Driving Licence No</label>
+
+
+                        <input type="text" class="form-control" value="@Model.Drivinglno" name="Drivinglno" id="Drivinglno">
+                    </div>
+
+
+
+                    <div class="form-group">
+
+
+                        <label for="collectionPointName" class="form-label">Bank Name</label>
+                        <input type="text" class="form-control" value="@Model.BankName" name="BankName" id="BankName">
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="collectionPointName" class="form-label">Branch Name</label>
+                        <input type="text" class="form-control" value="@Model.BankBranchName" name="BankBranchName" id="BankBranchName">
+                    </div>
+
+
+
+
+                    <div class="form-group">
+
+                        <label for="collectionPointName" class="form-label">Bank A/C No</label>
+                        <input type="text" class="form-control" value="@Model.BankAccountno" name="BankAccountno" id="BankAccountno">
+                    </div>
+
+
+
+
+                    <div class="form-group">
+
+                        <label for="collectionPointName" class="form-label">IFSC Code</label>
+
+                        <input type="text" class="form-control" value="@Model.IFCCode" name="IFCCode" id="IFCCode">
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="collectionPointName" class="form-label">Bank Address</label>
+                        <input type="text" class="form-control" value="@Model.BankAddress" name="BankAddress" id="BankAddress">
+                    </div>
+
+
+
+                    <!-- Create Button -->
+                    <div class="text-center d-grid gap-2">
+                        <button type="submit" value="Update" name="command" class="btn create-btn"><i class="fa fa-edit"></i>&nbsp;Update</button>
+                    </div>
+
+
+
+
 
                 </div>
-            </div>
-        </div>
-        @if(Model!=null){
-            if(Model.NewAgentId!=null){
-        <div class="row" style="width:97%;">
-            <div class="span12">
 
-                <form method="post">
+                </div>
 
-                    <div class="block-content controls">
-                        <div style="overflow-y: auto">
+            </form>
 
-                            <div class="block">
-                                <div class="block-content">
-                                    <h2 class="pull-left"><strong>Bank KYC Details</strong></h2>
-                                    <h2 class="pull-right text-success" id="message" style="color:#0a7609;">@ViewBag.message</h2>
-                                </div>
-                                <div class="block-content controls">
+        }
+    }
 
-                                    <div class="row-form">
-
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width" style="width: 100px;">Agent Id</label></span>
-                                                <input type="text" class="form-control" value="@Model.NewAgentId" name="NewAgentId" readonly="disabled">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width" style="width: 100px;">Agent Name</label></span>
-                                                <input type="text" class="form-control" value="@Model.name" name="name" id="name" readonly="disabled">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width" style="width: 100px;">Mobile</label></span>
-                                                <input type="text" class="form-control" value="@Model.Mobile" name="Mobile" id="Mobile" readonly="disabled">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width" style="width: 100px;">Other Mobile</label></span>
-                                                <input type="text" class="form-control" value="@Model.OtherMobile" name="OtherMobile" id="OtherMobile" maxlength="10" >
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">PAN No</label></span>
-                                                <input type="text" class="form-control" value="@Model.Panno" name="Panno" id="Panno" maxlength="10">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">Adhar No</label></span>
-                                                <input type="text" class="form-control" value="@Model.Aadhaar_No" name="Aadhaar_No" id="Aadhaar_No">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">Driving Licence No</label></span>
-                                                <input type="text" class="form-control" value="@Model.Drivinglno" name="Drivinglno" id="Drivinglno">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">Bank Name</label></span>
-                                                <input type="text" class="form-control" value="@Model.BankName" name="BankName" id="BankName">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">Branch Name</label></span>
-                                                <input type="text" class="form-control" value="@Model.BankBranchName" name="BankBranchName" id="BankBranchName">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">Bank A/C No</label></span>
-                                                <input type="text" class="form-control" value="@Model.BankAccountno" name="BankAccountno" id="BankAccountno">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">IFSC Code</label></span>
-                                                <input type="text" class="form-control" value="@Model.IFCCode" name="IFCCode" id="IFCCode">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">Bank Address</label></span>
-                                                <input type="text" class="form-control" value="@Model.BankAddress" name="BankAddress" id="BankAddress">
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row-form">
-
-                                        <div class="col-md-9">
-
-                                            <button type="submit" value="Update" name="command" class="btn btn-success pull-right" ><i class="fa fa-edit"></i>&nbsp;Update</button>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        } }</div>
 </div>
-
 
 

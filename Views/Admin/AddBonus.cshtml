@@ -2,99 +2,114 @@
 @using ODHDEVELOPERS.Models;
 @{
     UsersContext db = new UsersContext();
+    var bonasDetails = db.bonus_tabs.ToList();
     var mr = db.Members.Single(m => m.Id == 1);
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "AddBonus";
 }
 <link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Associate Bonus Form</h2>
 
-<script type="text/javascript" src="~/Scripts/autosearch.js"></script> 
-<div class="page-content">
+    <!-- Form -->
 
-                <div class="container">
 
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Add Bonus</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                            
-                        </div>           
-                        
-                    </div> 
+    @using (Html.BeginForm())
+    {
 
-                    <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                               <div class="block-content controls">  
+        <div id="associateBonusForm" class="form-container">
 
-                    
-                      
-                        
-     @using (Html.BeginForm()) {
-            
-                   <div class="row-form">  
-                                   
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Enter @mr.agentname Id or Name</label> </span>  
-        <input type="text" class="form-control"  name="agentcode" id="newagentid" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-                
-         
-          <div class="row-form">  
-                                       
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Select Month</label> </span>  
-        <input type="month" class="form-control"  name="formonth" id="formonth" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-                <div class="row-form">  
-                                         
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Enter Type</label> </span>  
-        <input type="text" class="form-control"  name="type" id="type" required/></div>
-                                   
-   </div>
-                        
-         </div>
-         
-         <div class="row-form">  
-                                         
-    <div class="col-md-9">
-        <div class="input-group">
-       <span class="input-group-addon"><label class="width">Enter Bonus Amount</label> </span>  
-        <input type="number" step="any" class="form-control"  name="bonusamount" id="bonusamount" required/></div>
-                                   
-   </div>
-                        
-         </div>
-                 <div class="page-toolbar-block pull-right">
-                            <div class="widget-info widget-from">
-         <button  type="submit" class="btn btn-primary pull-right"> Add</button>   
-                                </div>
-                                             </div>
-         
-     <p style="color:maroon;"><b> @ViewBag.msg</b></p>
-     }
-                                </div>
-                                
-                            
-                                         
-                                    </div>
-                            </div>
-                                        
-                   </div> </div> </div>
+            <!-- Enter Associate Id or Name -->
+            <div class="form-group">
+                <label for="associateIdName" class="form-label">Enter @mr.agentname Id or Name</label>
+                <input type="text" class="form-control" name="agentcode" id="newagentid" placeholder="Enter Associate Id or Name" required>
+            </div>
+
+            <!-- Select Month -->
+            <div class="form-group">
+                <label for="selectMonth" class="form-label">Select Month</label>
+                <input type="month" class="form-control" name="formonth" id="formonth" required>
+            </div>
+
+            <!-- Enter Type -->
+            <div class="form-group">
+                <label for="enterType" class="form-label">Enter Type</label>
+                <input type="text" class="form-control" name="type" id="type" placeholder="Enter Type" required>
+            </div>
+
+            <!-- Enter Bonus Amount -->
+            <div class="form-group">
+                <label for="bonusAmount" class="form-label">Enter Bonus Amount</label>
+                <input type="number" class="form-control" name="bonusamount" id="bonusamount" placeholder="Enter Bonus Amount" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn create-btn">Add</button>
+            </div>
+        </div>
+        <p style="color:maroon;"><b> @ViewBag.msg</b></p>
+    }
+</div>
+@if (bonasDetails != null)
+{
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Associate Bonus Details</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Agent Code</th>
+                        <th>For Month</th>
+                        <th>Nonth</th>
+                        <th>Year</th>
+                        <th>Type</th>
+                        <th>Bonus Amount</th>
+                    </tr>
+                </thead>
+                @foreach (var item in bonasDetails)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.agentcode</td>
+                            <td>@item.formonth</td>
+                            <td>@item.month</td>
+                            <td>@item.year</td>
+                            <td>@item.type</td>
+                            <td>@item.bonusamount</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+}
+<script>
+    const form = document.getElementById('associateBonusForm');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Gather data from form inputs
+        const associateIdName = document.getElementById('associateIdName').value;
+        const selectMonth = document.getElementById('selectMonth').value;
+        const enterType = document.getElementById('enterType').value;
+        const bonusAmount = document.getElementById('bonusAmount').value;
+
+        // Display or save the form data (placeholder action)
+        console.log({
+            associateIdName,
+            selectMonth,
+            enterType,
+            bonusAmount,
+        });
+
+        alert("Form submitted successfully!");
+
+        // Optionally, reset the form after submission
+        form.reset();
+    });
+</script>

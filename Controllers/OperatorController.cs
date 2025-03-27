@@ -42,10 +42,26 @@ namespace ODHDEVELOPERS.Controllers
 
         public static DateTime stdate = DateTime.Now.Date, enddate = DateTime.Now.Date, pdate = DateTime.Now.Date;
         public static DateTime ab = DateTime.Now.Date, b = DateTime.Now.Date;
-        private static DateTime start = Convert.ToDateTime("10/14/1774 12:00:00 AM");
-        private static DateTime end = Convert.ToDateTime("10/14/1774 12:00:00 AM");
-        private static DateTime edate1 = Convert.ToDateTime("10/14/1774 12:00:00 AM");
-        private static DateTime sdate1 = Convert.ToDateTime("10/14/1774 12:00:00 AM");
+        //private static DateTime start = Convert.ToDateTime("10/14/1774 12:00:00 AM");
+        private static DateTime start = DateTime.ParseExact("10/14/1774 12:00:00 AM",
+                                                    "MM/dd/yyyy hh:mm:ss tt",
+                                                    System.Globalization.CultureInfo.InvariantCulture);
+
+        //private static DateTime end = Convert.ToDateTime("10/14/1774 12:00:00 AM");
+        private static DateTime end = DateTime.ParseExact("10/14/1774 12:00:00 AM",
+                                                  "MM/dd/yyyy hh:mm:ss tt",
+                                                  System.Globalization.CultureInfo.InvariantCulture);
+
+        //private static DateTime edate1 = Convert.ToDateTime("10/14/1774 12:00:00 AM");
+        //private static DateTime sdate1 = Convert.ToDateTime("10/14/1774 12:00:00 AM");
+
+        private static DateTime edate1 = DateTime.ParseExact("10/14/1774 12:00:00 AM",
+                                                     "MM/dd/yyyy hh:mm:ss tt",
+                                                     System.Globalization.CultureInfo.InvariantCulture);
+
+        private static DateTime sdate1 = DateTime.ParseExact("10/14/1774 12:00:00 AM",
+                                                             "MM/dd/yyyy hh:mm:ss tt",
+                                                             System.Globalization.CultureInfo.InvariantCulture);
         Member mrg = new Member();
         CompanyInfo cg = new CompanyInfo();
         #endregion

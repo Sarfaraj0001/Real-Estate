@@ -1,4 +1,5 @@
 ﻿
+
 @using ODHDEVELOPERS.Models;
 @using System;
 @{
@@ -35,84 +36,52 @@
     });
 
 </script>
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 
-<div class="page-content">
+<div class="container mt-5">
+    <h2 class="text-center mb-4 create-title">
 
-    <div class="container">
+        Deal Sheet Report
+    </h2>
+    <form id="paymentForm" class="form-container" action="/Admin/DealSheetReportbyuserid" method="post" target="_blank">
 
-        <div class="page-toolbar">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Deal Sheet Report</div>
-                <div class="page-toolbar-subtitle"></div>
-            </div>
-
-
-
+        <!-- Associate ID -->
+        <div class="form-group">
+            <label for="associateId" class="form-label"> Enter Deal ID :</label>
+            <input type="text" class="form-control"  name="Userid"  id="associateId" placeholder="Enter ID" required>
         </div>
 
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <i class="icon-desktop"></i>
-                <h3>Deal Sheet</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
-                <div class="shortcuts">
-                    <form action="/Admin/DealSheetReportbyuserid" method="post" target="_blank">
-                        <div class="row " id="hide">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
-                                @* <label style="font-weight: bold">Enter the Deal Id :</label>*@
-                                <input type="text" name="Userid" placeholder="Enter the Deal Id " class="form-control" />
-                            </div>
-                            <div class="col-md-2">                              
-                                <button id="btn" type="submit" class="btn btn-primary btn-md" style="margin-top: 0px;">Print Deal Sheet</button>
-                            </div>
-                        </div>
-                    </form>
 
 
-                </div>
-                <!-- /shortcuts -->
-
-            </div>
-            <!-- /widget-content -->
-
+        <!-- Submit Button -->
+        <div class="text-center d-grid gap-2">
+            <button type="submit" class="btn create-btn">Print Deal Sheet</button>
         </div>
-    </div>
-
+    </form>
 </div>
 
 
 
 
 
-@*<div class="page-content">
-    <div class="clearfix"></div>
-    <div class="container">
-        <div class="page-toolbar">
 
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Deal Sheet Letter</div>
-                <div class="page-toolbar-subtitle"></div>
-            </div>
 
-            <div class="page-toolbar-block pull-right">
-            </div>
 
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-       
-    </div>
-    <div class="clearfix"></div>
-</div>*@
+
+
+
+
+
+
+
+
+
+
 
 
 

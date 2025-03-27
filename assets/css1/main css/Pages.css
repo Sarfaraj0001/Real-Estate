@@ -3,6 +3,14 @@
     width: 64px;
 }
 
+
+.card-heading {
+    border-radius: 10px;
+    background-color: #ff5722;
+    margin-top: -15px;
+}
+
+
 .create_logo_img {
     height: 64px;
     width: 64px;
@@ -41,7 +49,7 @@
     padding: 10px;
     border-radius: 8px;
     background: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient background */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Shadow for the background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow for the background */
     animation: fadeIn 1s ease-out; /* Fade-in animation */
     width: 60%; /* Set width to 60% */
 }
@@ -64,7 +72,7 @@ to {
 
 /* Add styling for the section separators */
 .section {
-    padding: 40px 20px;
+    padding: 34px 20px;
     margin-bottom: 40px;
     background-color: #f8f9fa; /* Light gray background */
     border-radius: 8px;
@@ -75,3 +83,6 @@ to {
 .card-title {
     font-size: 14px;
 }
+/*.row{
+    margin:30px;
+}*/

@@ -6,7 +6,7 @@
     UsersContext db = new UsersContext();
     var mr = db.Members.Single(m => m.Id == 1);
 }
-
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/Content/jquery-ui.css" />
 <script type="text/javascript">
     $(document).ready(function () {
@@ -34,63 +34,42 @@
     })
 </script>
 
-@using(Html.BeginForm())
-{
-<div class="page-content">
-
-                <div class="container">
-                    <div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Duplicate @mr.custname Report</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                           
-                        </div>           
-                        
-                    </div>
-  <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                                <div class="block-content controls">
-                               
-                                <div class="row-form">
-                                        
-                <div class="col-md-9">
-
-                <div class="input-group input-group-lg">
-                                <span class="input-group-addon">@mr.custname Id :</span>
-              <input type="text" class="form-control" id="newbond"  name="newbondid"  />
-                            </div>     
 
 
-                </div>
-                                    </div>
-                                   
-                                   
+<div class="container mt-5">
+    <h2 class="text-center mb-4 create-title">Duplicate @mr.custname Report</h2>
 
-                                       <div class="page-toolbar-block pull-right">
-                            <div class="widget-info widget-from">
-                                                          
-                                <button type="submit" class="btn btn-primary" onclick="target='_blank'" ><i class="fa fa-cog"></i>Get Bond</button>                            
-                               
-                            </div>
-                        </div>
-                                   
-                                                                      
-                                                            
-                                    
-                                    
-                                </div>
-                                
-                            </div>
-                            </div>
-                          </div>    
-                     
-                    </div>
+    @using (Html.BeginForm())
+    {
 
-    </div>
-}
+
+        <div id="branchForm" class="form-container">
+
+            <!-- Collection Point Name -->
+            <div class="form-group">
+                <label for="collectionPointName" class="form-label">@mr.custname Id :</label>
+                <input type="text" class="form-control " id="newbond" name="newbondid" placeholder="Enter Id" required>
+            </div>
+
+
+
+            <!-- Create Button -->
+            <div class="text-center d-grid gap-2">
+                <button type="submit" class="btn create-btn" onclick="target='_blank'"><i class="fa fa-cog"></i>Get Bond</button>
+            </div>
+
+
+      
+
+
+
+
+
+            </div>
+
+       
+
+       
+    }
+
+ </div>

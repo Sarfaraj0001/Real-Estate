@@ -1,175 +1,159 @@
-﻿@model IEnumerable<ODHDEVELOPERS.Models.Expense>
-@using ODHDEVELOPERS.Models;
-@{
-    UsersContext db = new UsersContext();
-    var mr = db.Members.Single(m => m.Id == 1);
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewBag.Title = "DeleteExpanse";
-    var a = 0;
-}
-<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+﻿
+@model IEnumerable<ODHDEVELOPERS.Models.Expense>
+    @using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        var mr = db.Members.Single(m => m.Id == 1);
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        ViewBag.Title = "DeleteExpanse";
+        var a = 0;
+    }
+    <link rel="stylesheet" href="~/Content/jquery-ui.css" />
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#branchcode").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/Admin/AutoCompleteBrachcode",
-                    type: "POST",
-                    dataType: "json",
-                    data: { term: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.BranchName, value: item.BranchCode };
-                        }))
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#branchcode").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Admin/AutoCompleteBrachcode",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.BranchName, value: item.BranchCode };
+                            }))
 
-                    }
-                })
-            },
-            messages: {
-                noResults: "", results: ""
-            }
-        });
-    })
-</script>
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
 
+    <link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+    <link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+    <div class="container mt-5">
+        <!-- Title -->
+        <h2 class="text-center create-title">Delete Expanse</h2>
 
-
-<div class="page-content">
-
-                <div class="container">
-
-                    <div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Delete Expanse</div>
-                            <div class="page-toolbar-subtitle"> </div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                            
-                        </div>           
-                        
-                    </div>  
-
-                           <div class="row" >
-                                @using (Html.BeginForm())
-               {   
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" >
-                               
-                                <div class="block-content controls">
-                                     
-                                          <input type="hidden" value="@System.DateTime.Now.Date" name="date" />
-                                   
-                                   <div class="row-form">  
-                                         
-                                    <div class="col-md-9">
-                                      <div class="input-group">
-                                    <span class="input-group-addon"><label class="width">Sales Office Code</label></span>  
-                                    <input type="text"  class="form-control"  name="branchcode" id="branchcode" ></div>
-                                   
-                                        </div>
-                                   </div>
-                                   <div class="page-toolbar-block pull-right">
-                            <div class="widget-info widget-from">
-                                                          
-                                <button type="submit"  class="btn btn-primary"  id="search"><i class="fa fa-search"></i> Search</button>                            
-                               
-                            </div>
-                        </div>  
-                                     
-                                 
-                                </div>
-                                
-                            </div>
-                            </div>
-                                }
-                               <div class="col-md-6" style="width:100%">
-                                   
-                                  
-               <table id="rd" border="1" style="margin-left:1%; margin-right:1px; width:98%;">
-    @foreach(var item in Model){
-        if(a==0)
+        @using (Html.BeginForm())
         {
-         <tr >
-                                <th  colspan="11" style="text-align:center;font-size:large;height:50px;"><b>Expanse-List </b>
+            <!-- Form -->
+            <div id="associateIdForm" class="form-container">
 
-                                </th>
-                            
-                
-                         </tr>
-    
-                   
+                <input type="hidden" value="@System.DateTime.Now.Date" name="date" />
 
-         <tr style="font-size:medium;height:40px;">
-          <th style="width:10%;text-align:center;">
-           <label id="amount"><b>Amount</b></label>
-            </th>
-        <th style="width:10%;text-align:center;">
-           <label id="date_time"><b>Date</b></label>
-            </th>
-             <th style="width:10%;text-align:center;">
-           <label id="opid"><b>Collection Point Id</b></label>
-            </th>
-        <th style="width:10%;text-align:center;">
-           <label id="Remark "><b>Remark</b></label>
-            </th>
-             <th style="width:10%;text-align:center;">
-           <label id="head"><b>Head</b></label>
-            </th>
-      
-            
-        <th style="width:10%;text-align:center;">
-           <label id="action"><b>Action</b></label>
-            </th>
-        
- 
-      
-    </tr>
-                    }
+                <!-- Associate Id Input -->
+                <div class="form-group">
+                    <label for="associateId" class="form-label">Sales Office or Code</label>
+                    <input type="text" class="form-control" name="branchcode" id="branchcode" placeholder="Enter Office Or Code" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn create-btn" id="search">Search</button>
+                </div>
+            </div>
+        }
+  
+
+
+    @*<div class="col-md-6" style="width:100%">*@
+
+        <div class="index_body">
+            <div class="table-container">
+                <table>
+                    @foreach (var item in Model)
+                    {
+                        if (a == 0)
+                        {
+                            <thead>
+                                <tr class="header-row">
+                                    <th colspan="11" style="text-align: center; background-color:#ff5722; color:white" >
+                                        <b >Expanse-List </b>
+
+                                    </th>
+
+
+                                </tr>
+                           
+
+                                <tr >
+                                    <th >
+                                        <label ><b>Amount</b></label>
+                                    </th>
+                                    <th >
+                                        <label ><b>Date</b></label>
+                                    </th>
+                                    <th >
+                                        <label ><b>Collection Point Id</b></label>
+                                    </th>
+                                    <th >
+                                        <label ><b>Remark</b></label>
+                                    </th>
+                                    <th >
+                                        <label ><b>Head</b></label>
+                                    </th>
+
+
+                                    <th >
+                                        <label ><b>Action</b></label>
+                                    </th>
+
+
+
+                                </tr>
+                            </thead>
+                        }
                         a = a + 1;
-         <tr style="text-align:center;">
-        
-        
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.amount)
-        </td>
-        
-        <td>
-           @Convert.ToDateTime(item.date_time).ToString("dd/MM/yyyy")
-        </td>
-             <td>
-            @Html.DisplayFor(modelItem => item.opid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Remark)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.head)
-        </td>
-       
-        <td>
-            @Html.ActionLink("Delete", "DeleteExpanse", new { branchcode=item.branchcode,Id = item.Id}, new { onclick = "return confirm('Are you sure to delete this Expanse?');" })
-        </td>
-        
-    </tr>
-    } 
-                   
-  
-   
-</table> 
-  
+                <tbody>
+                    <tr >
 
-<h4>@ViewBag.msg</h4>
-                        </div>          
-                        
-                    </div>
-  
-    </div>
-    </div>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.amount)
+                        </td>
+
+                        <td>
+                            @Convert.ToDateTime(item.date_time).ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.opid)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.head)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Delete", "DeleteExpanse", new { branchcode = item.branchcode, Id = item.Id }, new { onclick = "return confirm('Are you sure to delete this Expanse?');" })
+                        </td>
+
+                    </tr>
+                </tbody>
+                    }
+
+
+
+                </table>
+
+
+                <h4>@ViewBag.msg</h4>
+            </div>
+
+        </div>
+
+
+        </div>
+        </div>
+
 
 
 

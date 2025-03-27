@@ -16,55 +16,36 @@
     incometype = r.IncomeType;
 }
 
-<div class="page-content">
-
-    <div class="container" style="width: 775px; padding-left: 0px; padding-right: 0px;">
-
-        <div class="page-toolbar" style="width: 770px;">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title"></div>
-
-
-                <h4><b>Welcome, @br.CompanyName</b></h4>
-            </div>
-            <div style="margin-top: 0px; float: right; margin-right: 10px;">
-            </div>
-
-        </div>
-
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <i class="icon-plus"></i>
-                <h3>Registry</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
-
-                <div class="shortcuts">
-                    <a href="~/Admin/PlotRegistry" class="shortcut">
-                        <img alt="" src="~/Images/icon/home_registration.png" />
-                        <span class="shortcut-label">Plot Registry</span>
-                    </a>
-
-                    <a href="~/Admin/PreSurrender" class="shortcut">
-                        <img alt="" src="~/Images/icon/32.png" />
-                        <span class="shortcut-label">Pre Surrender</span>
-                    </a>
-                    @*<a href="~/Admin/CreateHr" class="shortcut">
-                        <img alt="" src="~/Images/icon/16.png" />
-                        <span class="shortcut-label">Plot No. Free</span>
-                    </a>*@
-                </div>
-                <!-- /shortcuts -->
-
-            </div>
-            <!-- /widget-content -->
-
-        </div>
-
+<link href="~/assets/css1/main css/Registry.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/Pages.css" rel="stylesheet" />
+<!-- Section 1: Final Report -->
+<div class="section">
+   
+    <div class="w-100 card-heading">
+        <h3 class="text-center text-white pt-2 pb-2">Registry</h3>
     </div>
 
-</div>
+    <!-- Main Container -->
+    <div class="container mt-5">
+        <!-- First Row (Centered Cards with Responsive Behavior) -->
+        <div class="centered-row">
+            <!-- Card 1 (Plot Registry) -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/PlotRegistry" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/Create_logos/property.png" />
+                        <h6 class="card-title mt-3">Plot Registry </h6>
+                    </div>
+                </a>
+            </div>
+            <!-- Card 2 (Pre Surrender) -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Admin/PreSurrender" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/Create_logos/browsing.png" />
+                        <h6 class="card-title mt-3">Pre Surrender</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>

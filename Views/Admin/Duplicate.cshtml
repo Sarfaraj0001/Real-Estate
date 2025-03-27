@@ -14,111 +14,135 @@
     logo = r.CompanyLogo;
     companyname = r.CompanyName;
     incometype = r.IncomeType;
-    
+
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "Duplicate";
 }
 
-
-<div class="page-content">
-
-    <div class="container" style="width: 775px; padding-left: 0px; padding-right: 0px;">
-
-        <div class="page-toolbar" style="width: 770px;">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title"></div>
-                @*  <div class="page-toolbar-subtitle">Welcome, @br.CompanyName</div>*@
-
-                <h4><b>Welcome, @br.CompanyName</b></h4>
-            </div>
-            <div style="margin-top: 0px; float: right; margin-right: 10px;">
-                <div class="widget-info widget-from">
-                    <div class="page-toolbar-block pull-right">
-                        <label>@DateTime.Now</label>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <i class="icon-print"></i>
-                <h3>Duplicate</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
-
-                <div class="shortcuts">
-                     <a href="~/Admin/AgentWelcomeLetter" class="shortcut">
-                        <img alt="" src="~/Images/icon/2.png" />
-                        <span class="shortcut-label">Agent Welcome Letter</span><br />
-                    </a>
-                    <a href="~/Admin/WelcomeLetter" class="shortcut">
-                        <img alt="" src="~/Images/icon/2.png" />
-                        <span class="shortcut-label">@mr.custname Welcome Letter</span><br />
-                    </a>
-                    <a href="~/Admin/AllotmentLetter" class="shortcut">
-                        <img alt="" src="~/Images/icon/74.png" />
-                        <span class="shortcut-label">@mr.custname EMI Allotment Letter</span><br />
-                    </a>
-                     <a href="~/Admin/agreementmodePART" class="shortcut">
-                        <img alt="" src="~/Images/icon/74.png" />
-                        <span class="shortcut-label">@mr.custname Part Payment Allotment Letter</span><br />
-                    </a>
-                     <a href="~/Admin/PartAllotMentLetter" class="shortcut">
-                        <img alt="" src="~/Images/icon/74.png" />
-                        <span class="shortcut-label">@mr.custname Full Payment Allotment Letter</span><br />
-                    </a>
-                    <a href="~/Admin/DuplicateBond" class="shortcut">
-                        <img alt="" src="~/Images/icon/2.png" />
-                        <span class="shortcut-label">@mr.custname</span><br /><br />
-                    </a>
-
-                     <a href="~/Admin/ChequeDuplicateReceipt" class="shortcut">
-                        <img alt="" src="~/Images/icon/2.png" />
-                        <span class="shortcut-label">Pending @mr.custname</span><br />
-                    </a>
-
-                    <a href="~/Admin/DuplicateReceipt" class="shortcut">
-                        <img alt="" src="~/Images/icon/54.png" />
-                        <span class="shortcut-label">Renewal</span><br />
-                    </a>
-                      <a href="~/Admin/ChequeDuplicateRenewalReceipt" class="shortcut">
-                        <img alt="" src="~/Images/icon/54.png" />
-                        <span class="shortcut-label">Pending Renewal</span><br />
-                    </a>
-                    <a href="~/Admin/DupliSpotCommission" class="shortcut">
-                        <img alt="" src="~/Images/icon/spotcomm.jpg" />
-                        <span class="shortcut-label">Spot Commission</span>
-                        <br />
-                    </a>
-                     <a href="~/Admin/PossessionReport" class="shortcut">
-                        <img alt="" src="~/Images/icon/icon-reports.jpg" />
-                        <span class="shortcut-label">Possession Report</span>
-                    </a>
-                     <a href="~/Admin/agreementmodeEMI" class="shortcut" style="width:110px;height:177px;">
-                        <img alt="" src="~/Images/icon/spotcomm.jpg" />
-                        <span class="shortcut-label">AGREEMENT TO SELL PROPERTY (EMI)</span>
-                        <br />
-                    </a>
-                    <a href="~/Admin/DealSheetReportbyuserid" class="shortcut" style="width:110px;height:177px;">
-                        <img alt="" src="~/Images/icon/spotcomm.jpg" />
-                        <span class="shortcut-label">Deal Sheet Report</span>
-                        <br />
-                    </a>
-                </div>
-                <!-- /shortcuts -->
-
-            </div>
-            <!-- /widget-content -->
-
-        </div>
+<link href="~/assets/css1/main css/Pages.css" rel="stylesheet" />
+<!-- Section 1: Final Report -->
+<div class="section">
+   
+    <div class="w-100 card-heading">
+        <h3 class="text-center text-white pt-2 pb-2"> Printing</h3>
     </div>
-    <!-- /widget-content -->
+    <div class="row g-3">
+        <!-- Main Container -->
+        <div class="container mt-5">
+            <!-- First Row -->
+            <div class="row g-3">
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/AgentWelcomeLetter" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/agent (1).png" />
+                            <h6 class="card-title mt-3">Agent Welcome Letter</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/WelcomeLetter" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/writing.png" />
+                            <h6 class="card-title mt-3">@mr.custname Welcome Letter</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/DuplicateBond" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/client.png" />
+                            <h6 class="card-title mt-3">@mr.custname</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/ChequeDuplicateReceipt" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/rating (1).png" />
+                            <h6 class="card-title mt-3">Pending @mr.custname</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/AllotmentLetter" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/money.png" />
+                            <h6 class="card-title mt-3">@mr.custname EMI Allotment Letter</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/agreementmodePART" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/income.png" />
+                            <h6 class="card-title mt-3">@mr.custname Part Payment Allotment Letter</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-</div>
+            <!-- Second Row -->
+            <div class="row g-3 mt-3">
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/PartAllotMentLetter" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/payment-method.png" />
+                            <h6 class="card-title mt-3">@mr.custname Full Payment Allotment Letter</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/PossessionReport" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/report.png" />
+                            <h6 class="card-title mt-3">Possession Report</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/DuplicateReceipt" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/receipt.png" />
+                            <h6 class="card-title mt-3">Renewal</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/ChequeDuplicateRenewalReceipt" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/receipt (1).png" />
+                            <h6 class="card-title mt-3">Pending Renewal</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/DupliSpotCommission" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/commission.png" />
+                            <h6 class="card-title mt-3">Spot Commission</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/agreementmodeEMI" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/business-aggrement.png" />
+                            <h6 class="card-title mt-3">Agreement to Sell Property (EMI)</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
+            <!-- Third Row -->
+            <div class="row g-3 mt-3 d-flex justify-content-center">
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/DealSheetReportbyuserid" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/images/logo/ProntingLogo/student-grades.png" />
+                            <h6 class="card-title mt-3">Deal Sheet Report</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>

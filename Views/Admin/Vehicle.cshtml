@@ -6,74 +6,63 @@
     var companyname = string.Empty;
     var incometype = string.Empty;
     var mr = db.Members.Single(m => m.Id == 1);
- 
 
- 
+
+
     logo = br.CompanyLogo;
     companyname = br.CompanyName;
     incometype = br.IncomeType;
 
 
     ViewBag.Title = "Vehicle";
-  
+
 }
 
-<div class="page-content">
-
-    <div class="container" style="width: 775px; padding-left: 0px; padding-right: 0px;">
-
-        <div class="page-toolbar" style="width: 770px;">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title"></div>
+<link href="~/assets/css1/main css/Pages.css" rel="stylesheet" />
 
 
-                <h4><b>Welcome, @br.CompanyName</b></h4>
-            </div>
-            <div style="margin-top: 0px; float: right; margin-right: 10px;">
-            </div>
 
-        </div>
-
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <i class="icon-plus"></i>
-                <h3>Extra</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
-
-                <div class="shortcuts">
-                    <a href="/Admin/AgentVehicleRequest" class="shortcut">
-                        <img alt="" src="~/Images/icon/26.png" />
-                        <span class="shortcut-label">Vehicle Request</span>
-                    </a>
-
-                    <a href="/Admin/AgentVehicleRequestHistory" class="shortcut">
-                        <img alt="" src="~/Images/icon/32.png" />
-                        <span class="shortcut-label">Agent Vehicle Request History</span>
-                    </a>
-
-                     <a href="/Admin/ReceptionistList" class="shortcut">
-                        <img alt="" src="~/Images/icon/32.png" />
-                        <span class="shortcut-label">Receptionist List</span>
-                    </a>
-
-                       <a href="/Admin/SendCredential" class="shortcut">
-                      <img src="~/Photo/credentials.png"  width="60%" />
-                        <span class="shortcut-label">Send Credentials</span>
-                    </a>
-
-                </div>
-                <!-- /shortcuts -->
-
-            </div>
-            <!-- /widget-content -->
-
-        </div>
-
+<!-- Section 1: Final Report -->
+<div class="section">
+    <div class="w-100 card-heading">
+        <h3 class="text-center text-white pt-2 pb-2">Extra</h3>
     </div>
-
+    <div class="container mt-5">
+        <!-- Extra Cards Row -->
+        <div class="row g-3 d-flex justify-content-center">
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="/Admin/AgentVehicleRequest" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img src="~/images/logo/Extra_logo/vehicle.png" class="imageSize" />
+                        <h6 class="card-title mt-3">Vehicle Request</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="/Admin/AgentVehicleRequestHistory" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img src="~/images/logo/Extra_logo/autonomous-car.png" class="imageSize" />
+                        <h6 class="card-title mt-3">Agent Vehicle Request History</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="/Admin/ReceptionistList" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img src="~/images/logo/Extra_logo/receptionist.png" class="imageSize" />
+                        <h6 class="card-title mt-3">Receptionist List</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="/Admin/SendCredential" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img src="~/images/logo/Extra_logo/log-in.png" class="imageSize" />
+                        <h6 class="card-title mt-3">Send Credentials</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+

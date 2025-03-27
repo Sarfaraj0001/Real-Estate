@@ -39,7 +39,7 @@ namespace ODHDEVELOPERS.Controllers
         public static int plancode = 0, PId, pplancode;
         public static string NewBondid, typ;
         public static string NewAgentid, Branchcode, OperatorId, newaccountid, NewMemberid, block, bblock;
-        public static int paymentno = 0, vmonth = 0, vvyear = 0, scss = 0, ecss, check = 0, sfilter = 0, Ttype = 0, Mon = 0, Yr = 0 ,pphaseid=0;
+        public static int paymentno = 0, vmonth = 0, vvyear = 0, scss = 0, ecss, check = 0, sfilter = 0, Ttype = 0, Mon = 0, Yr = 0, pphaseid = 0;
         public static string vnewagentid = string.Empty, opid = string.Empty, newbond = string.Empty;
         public static string ptype, shead;
         public static double bamt = 0, bussinessamt = 0;
@@ -54,7 +54,7 @@ namespace ODHDEVELOPERS.Controllers
         Member mrg = new Member();
         CompanyInfo cg = new CompanyInfo();
         #endregion
-       
+
         #region Public Class Start Here
         public int authen()
         {
@@ -68,7 +68,7 @@ namespace ODHDEVELOPERS.Controllers
                 if (count == 1)
                 {
                     var log = db.NewLogins.Single(a => a.UserName == User.Identity.Name);
-                    if (log.status == 1 && log.type == "Admin")
+                    if (log.status == 1 && (log.type == "Admin" || log.type == "Subadmin"))
                     {
 
                         return 1;
@@ -778,7 +778,7 @@ namespace ODHDEVELOPERS.Controllers
         //    return Json(plist.OrderBy(a => a.plotno), JsonRequestBehavior.AllowGet);
         //}
 
-      
+
         public JsonResult AutoCompletetempRenewalBondId(string term)
         {
             var mlist = db.appltabs.Where(g => g.status == 1).ToList();
@@ -968,7 +968,7 @@ namespace ODHDEVELOPERS.Controllers
 
         public JsonResult AutoCompleteBondId(string term)
         {
-            
+
             var list = (from r in db.appltabs where r.newbondid.ToLower().Contains(term.ToLower()) || r.name.ToLower().Contains(term.ToLower()) select new { r.newbondid, r.name }).Distinct();
             return Json(list, JsonRequestBehavior.AllowGet);
 
@@ -1094,16 +1094,16 @@ namespace ODHDEVELOPERS.Controllers
         public ActionResult Index()
         {
             List<Branchtab> br = new List<Branchtab>();
-            if (!IsLoggedIn())
-            {
-                return RedirectToAction("Logout", "Admin");
-            }
-            else
-            {
-                var ba = (from pass in db.Branchtabs select pass).ToList();
-                return View(ba);
+            //if (!IsLoggedIn())
+            //{
+            //    return RedirectToAction("Logout", "Admin");
+            //}
+            //else
+            //{
+            var ba = (from pass in db.Branchtabs select pass).ToList();
+            return View(ba);
 
-            }
+            //    }
         }
 
         [HttpGet]
@@ -1261,10 +1261,10 @@ namespace ODHDEVELOPERS.Controllers
             {
                 return RedirectToAction("Logout", "Admin");
             }
-            else
-            {
-                return View();
-            }
+
+            var data = db.Branchtabs.ToList();
+            return View(data);
+
         }
         [HttpPost]
         public ActionResult CreateBranch(Branchtab model)
@@ -1308,7 +1308,7 @@ namespace ODHDEVELOPERS.Controllers
                         {
                             con.Open();
                             cmd.ExecuteNonQuery();
-                            MyClass.Sendmsg(model.mobile, mr.branchname + " " + model.BranchName + " Created Successfully, UserId: " + model.BranchCode + " and Password: " + pass + " Please Visit "+cg.HeadOffice);
+                            MyClass.Sendmsg(model.mobile, mr.branchname + " " + model.BranchName + " Created Successfully, UserId: " + model.BranchCode + " and Password: " + pass + " Please Visit " + cg.HeadOffice);
                             ViewBag.msg = mr.branchname + " Created Successfully....";
 
                         }
@@ -1378,7 +1378,7 @@ namespace ODHDEVELOPERS.Controllers
                         {
                             con.Open();
                             cmd.ExecuteNonQuery();
-                            MyClass.Sendmsg(model.OperatorMobile, "Dear " + model.OperatorName + " Welcome to joining " + ci.CompanyName + ", your UserId is " + model.OperatorId + " and Password: " + pass + " Please Visit "+cg.HeadOffice);
+                            MyClass.Sendmsg(model.OperatorMobile, "Dear " + model.OperatorName + " Welcome to joining " + ci.CompanyName + ", your UserId is " + model.OperatorId + " and Password: " + pass + " Please Visit " + cg.HeadOffice);
                             ViewBag.msg = "Collection Point Created Successfully....";
                         }
 
@@ -1452,7 +1452,7 @@ namespace ODHDEVELOPERS.Controllers
                     db.NewLogins.Add(nl);
                     db.SaveChanges();
 
-                    MyClass.Sendmsg(model.Mobile, "Dear " + model.HRName + " Welcome to joining " + ci.CompanyName + ", your UserId is " + model.HRId + " and Password: " + pass + " Please Visit "+cg.HeadOffice);
+                    MyClass.Sendmsg(model.Mobile, "Dear " + model.HRName + " Welcome to joining " + ci.CompanyName + ", your UserId is " + model.HRId + " and Password: " + pass + " Please Visit " + cg.HeadOffice);
                     ViewBag.msg = "HR Created Successfully....";
 
                 }
@@ -4032,7 +4032,7 @@ namespace ODHDEVELOPERS.Controllers
                     {
                         con.Open();
                         cmd.ExecuteNonQuery();
-                       
+
                         DuplicateTab dt = new DuplicateTab();
                         dt.newbondid = newbondid;
                         dt.payamount = payamount;
@@ -4043,10 +4043,10 @@ namespace ODHDEVELOPERS.Controllers
                         dt.type = "Receipt";
                         db.DuplicateTabs.Add(dt);
                         db.SaveChanges();
-                        
-                        
+
+
                         List<RecieptTab> drlist = new List<RecieptTab>();
-                        
+
                         foreach (var cc in db.RecieptTabs.ToList())
                         {
 
@@ -5759,7 +5759,7 @@ namespace ODHDEVELOPERS.Controllers
                     var netamount = Math.Round((gcommission + bonusamount - lesstds), 2);
                     if (netamount > 0)
                     {
-                        vlist.Add(new VoucherList { newagentid = br.newagentid, name = br.name, introducerid = br.newintroducerid, business = gbusiness,TDSAmount=lesstds,GrossAmount=gcommission, amount = netamount, status = vcount, month = vmonth, year = vvyear, monthname = monthname });
+                        vlist.Add(new VoucherList { newagentid = br.newagentid, name = br.name, introducerid = br.newintroducerid, business = gbusiness, TDSAmount = lesstds, GrossAmount = gcommission, amount = netamount, status = vcount, month = vmonth, year = vvyear, monthname = monthname });
                     }
 
 
@@ -5922,7 +5922,7 @@ namespace ODHDEVELOPERS.Controllers
             //Double sumcommission = 0;
             //Double netpayamount=0;
             //var netpayamount = Session["netpayment"];
-           
+
             MonthName mn = new MonthName();
             var monthname = mn.numbertomonthname(vmonth) + "," + vvyear;
             List<VoucherList> vlist = new List<VoucherList>();
@@ -6019,10 +6019,10 @@ namespace ODHDEVELOPERS.Controllers
                             //sumcommission = sumcommission + commission;
                             //var lesstds = Math.Round((sumcommission * tdsper) / 100, 2);
                             //netpayamount = (sumcommission + bonusamount) - lesstds;
-                             NumberToEnglish n = new NumberToEnglish();
-                             netpayamount = Math.Round(netpayamount, 0);
-                             var amountinwords = n.changeToWords(netpayamount.ToString(), true);
-                             rlist.Add(new require { domainname = cg.HeadOffice, amountinword = amountinwords, agentid = ar.agencycode, newagentid = ar.newagentid, name = ar.name, rankname = ar.rankname, planname = pc.planname, year = spy.year, business = business, percentage = percentage, commission = commission, tds = tdsper, bonusamount = bonusamount, brokerid = br.newagentid, brokername = br.name, brokerrank = br.rankname, panno = br.panno, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1 });
+                            NumberToEnglish n = new NumberToEnglish();
+                            netpayamount = Math.Round(netpayamount, 0);
+                            var amountinwords = n.changeToWords(netpayamount.ToString(), true);
+                            rlist.Add(new require { domainname = cg.HeadOffice, amountinword = amountinwords, agentid = ar.agencycode, newagentid = ar.newagentid, name = ar.name, rankname = ar.rankname, planname = pc.planname, year = spy.year, business = business, percentage = percentage, commission = commission, tds = tdsper, bonusamount = bonusamount, brokerid = br.newagentid, brokername = br.name, brokerrank = br.rankname, panno = br.panno, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1 });
                         }
                     }
                 }
@@ -6115,7 +6115,7 @@ namespace ODHDEVELOPERS.Controllers
             }
         }
 
-       
+
         public ActionResult PrintBWBrokerVoucher()
         {
             MonthName mn = new MonthName();
@@ -6168,7 +6168,7 @@ namespace ODHDEVELOPERS.Controllers
                     {
                         vlist.Add(new VoucherList { newagentid = br.newagentid, name = br.name, TDSAmount = lesstds, GrossAmount = gcommission, introducerid = br.newintroducerid, business = gbusiness, amount = netamount, status = vcount, month = vmonth, year = vvyear });
                     }
-      
+
                 }
 
                 ReportDocument rd = new ReportDocument();
@@ -6203,7 +6203,7 @@ namespace ODHDEVELOPERS.Controllers
             {
                 Response.Write("<script>alert('Voucher is not Generate.. Please Generate Voucher For this month...')</script>");
             }
-           
+
             return View(vlist);
         }
 
@@ -6432,7 +6432,7 @@ namespace ODHDEVELOPERS.Controllers
                 var appr = db.appltabs.Single(b => b.newbondid == com.newbondid);
                 NumberToEnglish n = new NumberToEnglish();
                 var amountinwords = n.changeToWords(netpayamount.ToString(), true);
-                bwvlist.Add(new BondwiseVoucherlist { bond=amountinwords, newbondid = com.newbondid, bondname = com.bondname, bondintroducerid = appr.newintroducerid, planname = appr.planname, mode = appr.mode, percentage = com.percentage, business = com.amount, commission = com.commission, newrenew = com.newrenew, tds = tdsper, bonusamount = bonusamount, brokerid = vnewagentid, brokername = br.name, brokerrank = br.rankname, panno = br.panno, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno, branchname = User.Identity.Name, companyname = cr.CompanyName, branch = mr.branchname, agent = mr.agentname,  plan = mr.planname });
+                bwvlist.Add(new BondwiseVoucherlist { bond = amountinwords, newbondid = com.newbondid, bondname = com.bondname, bondintroducerid = appr.newintroducerid, planname = appr.planname, mode = appr.mode, percentage = com.percentage, business = com.amount, commission = com.commission, newrenew = com.newrenew, tds = tdsper, bonusamount = bonusamount, brokerid = vnewagentid, brokername = br.name, brokerrank = br.rankname, panno = br.panno, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno, branchname = User.Identity.Name, companyname = cr.CompanyName, branch = mr.branchname, agent = mr.agentname, plan = mr.planname });
             }
 
 
@@ -7745,7 +7745,7 @@ namespace ODHDEVELOPERS.Controllers
 
                         agd.name = da.name;
                         agd.RankName = row.RankName;
-                      
+
                         agd.Father = da.Father;
                         agd.Mother = da.Mother;
                         agd.Gender = da.Gender;
@@ -7891,7 +7891,7 @@ namespace ODHDEVELOPERS.Controllers
             }
             foreach (var p in splist)
             {
-                plist.Remove(plist.Single(rr => rr.plotno == p.plotno ));
+                plist.Remove(plist.Single(rr => rr.plotno == p.plotno));
 
             }
 
@@ -7909,7 +7909,7 @@ namespace ODHDEVELOPERS.Controllers
             }
             return Json(plist.OrderBy(a => a.plotno), JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpGet]
         public ActionResult UpdateBond()
         {
@@ -7973,7 +7973,7 @@ namespace ODHDEVELOPERS.Controllers
                         }
                         else
                         {
-                            var phr=new PhaseTab();
+                            var phr = new PhaseTab();
                             var countapplltab = db.appltabs.Where(ui => ui.newbondid == bd.newbondid).Count();
                             if (countapplltab != 0)
                             {
@@ -8480,17 +8480,17 @@ namespace ODHDEVELOPERS.Controllers
                                 {
                                     ViewBag.msg = "Please Cancel all renewal to update " + mrg.custname + " " + bd.name + " (" + bd.newbondid + ")";
                                 }
-                               
+
                             }
-                             else
-                                {
-                                    ViewBag.msg = " Invalid Customer....";
-                                }
+                            else
+                            {
+                                ViewBag.msg = " Invalid Customer....";
+                            }
                         }
                         break;
-                       
+
                 }
-              
+
             }
             return View(mt);
         }
@@ -10006,7 +10006,7 @@ namespace ODHDEVELOPERS.Controllers
                 {
                     TempData["newmessg"] = "There is no " + mr.custname + " related to this " + mr.agentname + "";
                     //Response.Write("<script>alert('There is no " + mr.custname + " related to this " + mr.agentname + "')<script");
-                    return RedirectToAction("BrokerwiseAccountDetail","Admin");
+                    return RedirectToAction("BrokerwiseAccountDetail", "Admin");
                 }
 
                 NewAgentid = newagentid;
@@ -10098,7 +10098,7 @@ namespace ODHDEVELOPERS.Controllers
             }
             else
             {
-                ViewData["newmsg"]=TempData["newmsg"] ;
+                ViewData["newmsg"] = TempData["newmsg"];
                 return View(bsclist);
             }
         }
@@ -10123,7 +10123,7 @@ namespace ODHDEVELOPERS.Controllers
 
                     var ag = db.AgentDetails.Single(hj => hj.NewAgentId == newagent);
 
-                    var tbd = db.appltabs.Where(ap => ap.newintroducerid == newagent ).Select(x => x.bondid).ToList();
+                    var tbd = db.appltabs.Where(ap => ap.newintroducerid == newagent).Select(x => x.bondid).ToList();
                     //var tbd = (from ap in db.appltabs where ap.newintroducerid == newagent  select ap.bondid);
                     var bd = (from yt in db.Installmenttabs where yt.paymentdate >= sdate && yt.paymentdate <= edate && tbd.Contains(yt.bondid) select new { yt.bondid }).Distinct();
                     var count = tbd.Count();
@@ -10264,7 +10264,7 @@ namespace ODHDEVELOPERS.Controllers
             if (agcount > 0)
             {
                 var ag = db.AgentDetails.Single(hj => hj.NewAgentId == NewAgentid);
-                var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                 var bd = (from yt in db.Installmenttabs where yt.paymentdate >= stdate && yt.paymentdate <= enddate && tbd.Contains(yt.bondid) select new { yt.bondid }).Distinct();
                 var count = tbd.Count();
                 if (count > 0)
@@ -11005,7 +11005,7 @@ namespace ODHDEVELOPERS.Controllers
                     #region Here Start select Business
                     foreach (var bc in bclist)
                     {
-                        var tbd = (from ap in db.appltabs where ap.introducerid == bc.agentid  select ap.bondid);
+                        var tbd = (from ap in db.appltabs where ap.introducerid == bc.agentid select ap.bondid);
                         var bondlist = (from yt in db.Installmenttabs where yt.paymentdate.Value.Month == month && yt.paymentdate.Value.Year == year && tbd.Contains(yt.bondid) select new { yt.newbondid }).Distinct();
                         foreach (var bond in bondlist.ToList())
                         {
@@ -11150,7 +11150,7 @@ namespace ODHDEVELOPERS.Controllers
 
                     var ag = db.AgentDetails.Single(hj => hj.NewAgentId == bc.newagentid);
 
-                    var tbd = (from ap in db.appltabs where ap.newintroducerid == bc.newagentid  select ap.bondid).ToList();
+                    var tbd = (from ap in db.appltabs where ap.newintroducerid == bc.newagentid select ap.bondid).ToList();
                     var bd = (from yt in db.Installmenttabs where yt.paymentdate >= sdate && yt.paymentdate <= edate && tbd.Contains(yt.bondid) select new { yt.bondid }).Distinct();
                     var count = tbd.Count();
                     if (count > 0)
@@ -11343,7 +11343,7 @@ namespace ODHDEVELOPERS.Controllers
                 var ag = db.AgentDetails.Single(hj => hj.NewAgentId == bc.newagentid);
 
 
-                var tbd = (from ap in db.appltabs where ap.newintroducerid == bc.newagentid  select ap.bondid).ToList();
+                var tbd = (from ap in db.appltabs where ap.newintroducerid == bc.newagentid select ap.bondid).ToList();
                 var bd = (from yt in db.Installmenttabs where yt.paymentdate >= stdate && yt.paymentdate <= enddate && tbd.Contains(yt.bondid) select new { yt.bondid }).Distinct();
                 var count = tbd.Count();
                 if (count > 0)
@@ -12575,7 +12575,7 @@ namespace ODHDEVELOPERS.Controllers
                 var dclist = (from dcl in db.Branchtabs select dcl).ToList();
                 foreach (var dcl in dclist)
                 {
-                    blist.Add(new Branchlist { BranchName = dcl.BranchName, BranchCode = dcl.BranchCode, BranchDistrict = dcl.BranchDistrict, branchaddress = dcl.branchaddress, mobile = dcl.mobile, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice,password = dcl.password });
+                    blist.Add(new Branchlist { BranchName = dcl.BranchName, BranchCode = dcl.BranchCode, BranchDistrict = dcl.BranchDistrict, branchaddress = dcl.branchaddress, mobile = dcl.mobile, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice, password = dcl.password });
                 }
                 return View(blist);
 
@@ -12697,7 +12697,7 @@ namespace ODHDEVELOPERS.Controllers
                 var dclist = (from dcl in db.HRTabs select dcl).ToList();
                 foreach (var dcl in dclist)
                 {
-                    blist.Add(new hrlist { HRId = dcl.HRId, BranchCode = dcl.BranchCode, HRName = dcl.HRName, hAddress = dcl.Address, email = dcl.emailid, Mobile = dcl.Mobile, date = dcl.date, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice,password = dcl.Password});
+                    blist.Add(new hrlist { HRId = dcl.HRId, BranchCode = dcl.BranchCode, HRName = dcl.HRName, hAddress = dcl.Address, email = dcl.emailid, Mobile = dcl.Mobile, date = dcl.date, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice, password = dcl.Password });
                 }
                 return View(blist);
 
@@ -13064,7 +13064,7 @@ namespace ODHDEVELOPERS.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AssignPlotCustomer(int plancode,int phaseid, string block)
+        public ActionResult AssignPlotCustomer(int plancode, int phaseid, string block)
         {
             List<DatewiseCustomerList> clist = new List<DatewiseCustomerList>();
             if (!IsLoggedIn())
@@ -13077,7 +13077,7 @@ namespace ODHDEVELOPERS.Controllers
                 var cr = db.CompanyInfos.Single(c => c.Id == 1);
                 var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
 
-                var tlist = (from cu in db.appltabs where cu.projectid == plancode && cu.phaseid==phaseid && cu.block == block && cu.status == 1 && cu.PYN == "Y" orderby cu.formdate select cu).ToList();
+                var tlist = (from cu in db.appltabs where cu.projectid == plancode && cu.phaseid == phaseid && cu.block == block && cu.status == 1 && cu.PYN == "Y" orderby cu.formdate select cu).ToList();
 
                 foreach (var i in tlist)
                 {
@@ -13110,7 +13110,7 @@ namespace ODHDEVELOPERS.Controllers
                 var mr = db.Members.Single(m => m.Id == 1);
                 var cr = db.CompanyInfos.Single(c => c.Id == 1);
                 var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
-                var tlist = (from cu in db.appltabs where cu.projectid == pplancode && cu.phaseid==pphaseid && cu.block == bblock && cu.status == 1 && cu.PYN == "Y" orderby cu.formdate select cu).ToList();
+                var tlist = (from cu in db.appltabs where cu.projectid == pplancode && cu.phaseid == pphaseid && cu.block == bblock && cu.status == 1 && cu.PYN == "Y" orderby cu.formdate select cu).ToList();
 
                 foreach (var i in tlist)
                 {
@@ -13185,7 +13185,7 @@ namespace ODHDEVELOPERS.Controllers
                             var newlogin = db.NewLogins.Single(c => c.UserName == newbondid);
                             var appl = db.appltabs.Single(v => v.newbondid == newbondid);
                             var ins = db.Installmenttabs.Single(z => z.newbondid == newbondid && z.installmentno == 1);
-                            MyClass.Sendmsg(mobileno, "Dear " + appl.name + ", Welcome To ODHDEVELOPERS INDIA YourID: " + newbondid + " and Password:" + newlogin.Mobile + ".Your Amt of " + appl.payment + " INR is received in mode of " + appl.paymethod + " and receipt no." + ins.receiptno + ". Visit "+cg.HeadOffice+"  For Info.");
+                            MyClass.Sendmsg(mobileno, "Dear " + appl.name + ", Welcome To ODHDEVELOPERS INDIA YourID: " + newbondid + " and Password:" + newlogin.Mobile + ".Your Amt of " + appl.payment + " INR is received in mode of " + appl.paymethod + " and receipt no." + ins.receiptno + ". Visit " + cg.HeadOffice + "  For Info.");
                             ViewBag.msg = "Message send sucessfully....";
                             var plan4 = db.Plans.Single(p4 => p4.Plancode == 4);
 
@@ -14292,9 +14292,9 @@ namespace ODHDEVELOPERS.Controllers
                 var cr = db.CompanyInfos.Single(c => c.Id == 1);
                 var inst = (from vb in db.Installmenttabs where vb.newbondid == NewBondid select vb).ToList();
                 var paid_amt = inst.Select(d => d.payamount).DefaultIfEmpty(0).Sum();
-                  var brow = db.appltabs.Single(po => po.newbondid == NewBondid);
-                  var p1 = db.Plans.FirstOrDefault(d => d.Plancode == brow.projectid);
-                  string _property_type = p1 == null ? "Residential" : p1.type.Replace("Commercial", "Residential Cum Commercial");
+                var brow = db.appltabs.Single(po => po.newbondid == NewBondid);
+                var p1 = db.Plans.FirstOrDefault(d => d.Plancode == brow.projectid);
+                string _property_type = p1 == null ? "Residential" : p1.type.Replace("Commercial", "Residential Cum Commercial");
                 foreach (var item in inst.ToList())
                 {
                     if (item.payamount == 0)
@@ -14320,7 +14320,7 @@ namespace ODHDEVELOPERS.Controllers
                         }
 
                     }
-                  
+
                     var bro = db.AgentDetails.Single(bo => bo.NewAgentId == brow.newintroducerid);
                     var bb = db.Branchtabs.Single(b => b.BranchCode == item.branch);
                     //var totapaidamount = db.Database.SqlQuery<Double>("select isnull(sum(payamount),0) from installmenttab where payamount>0 and newbondid='"+item.newbondid+"' ").SingleOrDefault();
@@ -14328,7 +14328,7 @@ namespace ODHDEVELOPERS.Controllers
                     string Paymethod = "";
                     if (item.paymethod == "banktransaction")
                     {
-                        Paymethod =  item.transactiontype;
+                        Paymethod = item.transactiontype;
                     }
                     else
                     {
@@ -14531,7 +14531,7 @@ namespace ODHDEVELOPERS.Controllers
                 var headrow = (from dcl in db.Expenses where dcl.date_time >= sdate && dcl.date_time <= edate && dcl.head == head select dcl).ToList();
                 foreach (var h in headrow)
                 {
-                    ins.Add(new HeadwiseExpense { head = head, date = h.date_time, remark = h.Remark, amount = h.amount, sdate = sdate, edate = edate, companyname = cr.CompanyName, branchname = User.Identity.Name, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice,paymethod=h.paymethod,opid=h.opid });
+                    ins.Add(new HeadwiseExpense { head = head, date = h.date_time, remark = h.Remark, amount = h.amount, sdate = sdate, edate = edate, companyname = cr.CompanyName, branchname = User.Identity.Name, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice, paymethod = h.paymethod, opid = h.opid });
                 }
                 shead = head;
                 ab = sdate;
@@ -14548,7 +14548,7 @@ namespace ODHDEVELOPERS.Controllers
             var headrow = (from dcl in db.Expenses where dcl.date_time >= ab && dcl.date_time <= b && dcl.head == shead select dcl).ToList();
             foreach (var h in headrow)
             {
-                ins.Add(new HeadwiseExpense { head = shead, date = h.date_time, remark = h.Remark, amount = h.amount, sdate = ab, edate = b, companyname = cr.CompanyName, branchname = User.Identity.Name, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice,paymethod=h.paymethod,opid=h.opid });
+                ins.Add(new HeadwiseExpense { head = shead, date = h.date_time, remark = h.Remark, amount = h.amount, sdate = ab, edate = b, companyname = cr.CompanyName, branchname = User.Identity.Name, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice, paymethod = h.paymethod, opid = h.opid });
             }
             ReportDocument rd = new ReportDocument();
             rd.Load(Path.Combine(Server.MapPath("~/Reports"), "HeadWiseExpense.rpt"));
@@ -14644,7 +14644,7 @@ namespace ODHDEVELOPERS.Controllers
                     {
                         case 1:
                             Double fee = 0;
-                            var tbd = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                            var tbd = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                             var bd = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd.Contains(p.bondid) select new { p.bondid }).Distinct();
                             appsumB = (from ag in db.appltabs where ag.formdate == date && ag.newintroducerid == newagentid && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                             formsumB = (from ag in db.AgentDetails where ag.Doj == date && ag.NewAgentId == newagentid select ag.formfee).DefaultIfEmpty(0).Sum();
@@ -14815,7 +14815,7 @@ namespace ODHDEVELOPERS.Controllers
 
                         case 2:
                             Double fee1 = 0;
-                            var tbd2 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                            var tbd2 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                             appsumB = (from ag in db.appltabs where ag.formdate == date && ag.newintroducerid == newagentid && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                             formsumB = (from ag in db.AgentDetails where ag.Doj == date && ag.NewAgentId == newagentid select ag.formfee).DefaultIfEmpty(0).Sum();
                             var agentB = db.appltabs.Where(s => s.formdate == date && s.newintroducerid == newagentid && s.status == 1).ToList();
@@ -14946,7 +14946,7 @@ namespace ODHDEVELOPERS.Controllers
                         case 3:
                             if (year > 0)
                             {
-                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                                 var bd3 = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd3.Contains(p.bondid) select new { p.bondid }).Distinct();
                                 if (bd3.Count() > 0)
                                 {
@@ -15054,7 +15054,7 @@ namespace ODHDEVELOPERS.Controllers
                             }
                             else
                             {
-                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                                 var bd3 = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd3.Contains(p.bondid) select new { p.bondid }).Distinct();
                                 if (bd3.Count() > 0)
                                 {
@@ -15760,7 +15760,7 @@ namespace ODHDEVELOPERS.Controllers
                 {
                     case 1:
                         Double fee2 = 0;
-                        var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                        var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                         appsumB = (from ag in db.appltabs where ag.formdate == pdate && ag.newintroducerid == NewAgentid && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                         formsumB = (from ag in db.AgentDetails where ag.Doj == pdate && ag.NewAgentId == NewAgentid select ag.formfee).DefaultIfEmpty(0).Sum();
                         var agent = db.appltabs.Where(s => s.formdate == pdate && s.newintroducerid == NewAgentid && s.status == 1).ToList();
@@ -15927,7 +15927,7 @@ namespace ODHDEVELOPERS.Controllers
 
                     case 2:
                         Double fee1 = 0;
-                        var tbd2 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                        var tbd2 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                         appsumB = (from ag in db.appltabs where ag.formdate == pdate && ag.newintroducerid == NewAgentid && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                         formsumB = (from ag in db.AgentDetails where ag.Doj == pdate && ag.NewAgentId == NewAgentid select ag.formfee).DefaultIfEmpty(0).Sum();
                         var agentB = db.appltabs.Where(s => s.formdate == pdate && s.newintroducerid == NewAgentid && s.status == 1).ToList();
@@ -16058,7 +16058,7 @@ namespace ODHDEVELOPERS.Controllers
                     case 3:
                         if (vvyear > 0)
                         {
-                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                             var bd3 = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd3.Contains(p.bondid) select new { p.bondid }).Distinct();
                             if (bd3.Count() > 0)
                             {
@@ -16166,7 +16166,7 @@ namespace ODHDEVELOPERS.Controllers
                         }
                         else
                         {
-                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                             var bd3 = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd3.Contains(p.bondid) select new { p.bondid }).Distinct();
                             if (bd3.Count() > 0)
                             {
@@ -17413,7 +17413,7 @@ namespace ODHDEVELOPERS.Controllers
             }
             else
             {
-               
+
                 ViewData["sdate"] = sdate;
                 ViewData["edate"] = edate;
                 List<Chequecollection> model = new List<Chequecollection>();
@@ -19732,9 +19732,9 @@ namespace ODHDEVELOPERS.Controllers
                         if (count.Count() > 0)
                         {
                             //  var vr1 = db.Voucher_Reports.Single(tr => tr.date >= sdate && tr.date <= edate);
-                            var vr = db.Voucher_Reports.Single(v => v.Id==itemlist.Id);
+                            var vr = db.Voucher_Reports.Single(v => v.Id == itemlist.Id);
                             //var vr = db.Voucher_Reports.Where(v => v.agentid == ar.AgencyCode && v.date >= sdate && v.date <= edate).ToList();
-                           // var comm = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= sdate && v.date <= edate select v.commission).DefaultIfEmpty(0).Sum();
+                            // var comm = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= sdate && v.date <= edate select v.commission).DefaultIfEmpty(0).Sum();
                             //var tds = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= sdate && v.date <= edate select v.tds).DefaultIfEmpty(0).Sum();
                             //var netvoucher = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= sdate && v.date <= edate select v.netamount).DefaultIfEmpty(0).Sum();
 
@@ -19742,7 +19742,7 @@ namespace ODHDEVELOPERS.Controllers
                             var tds = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month == itemlist.month && v.year == itemlist.year select v.tds).DefaultIfEmpty(0).Sum();
                             var netvoucher = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month == itemlist.month && v.year == itemlist.year select v.netamount).DefaultIfEmpty(0).Sum();
                             recoveryamount = Math.Round(comm - tds - netvoucher, 0);
-                             rdate = itemlist.date.ToString("dd/MM/yyy");
+                            rdate = itemlist.date.ToString("dd/MM/yyy");
                             ap.Add(new AdvPaymentTemp { newagentid = item.newagentid, name = ar.name, amount = item.amount, recoveryamount = recoveryamount, date = item.date, recoverydate = rdate, Remark = item.Remark, opid = item.opid, branchcode = item.branchcode, companyname = cr.CompanyName, monthname = fromtodate });
                         }
                         else
@@ -19752,7 +19752,7 @@ namespace ODHDEVELOPERS.Controllers
                     }
                 }
                 stdate = sdate;
-                enddate = edate; 
+                enddate = edate;
                 return View(ap);
             }
         }
@@ -19776,33 +19776,33 @@ namespace ODHDEVELOPERS.Controllers
                     Double recoveryamount = 0;
                     string rdate = "-";
                     var ar = db.AgentDetails.Single(a => a.NewAgentId == item.newagentid);
-                   // var count = (from vc in db.Voucher_Reports where vc.agentid == ar.AgencyCode && vc.date >= stdate && vc.date <= enddate select vc).Count();
+                    // var count = (from vc in db.Voucher_Reports where vc.agentid == ar.AgencyCode && vc.date >= stdate && vc.date <= enddate select vc).Count();
                     var count = (from vc in db.Voucher_Reports where vc.agentid == ar.AgencyCode && vc.date >= stdate && vc.date <= enddate select vc).ToList();
-                   foreach(var itemlist in count)
-                   {
-                    if (count.Count() > 0)
+                    foreach (var itemlist in count)
                     {
-                        //var vr = db.Voucher_Reports.Single(v => v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate);
-                      //  var vr = db.Voucher_Reports.Where(v => v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate).ToList();
-                      //  var comm = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate select v.commission).DefaultIfEmpty(0).Sum();
-                      //  var tds = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate select v.tds).DefaultIfEmpty(0).Sum();
-                       // var netvoucher = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate select v.netamount).DefaultIfEmpty(0).Sum();
-                       // recoveryamount = comm - tds - netvoucher;
-                       // rdate = vr.date.ToString("dd/MM/yyy");
-                        var vr = db.Voucher_Reports.Single(v => v.Id == itemlist.Id);
-                        var comm = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month==itemlist.month && v.year == itemlist.year select v.commission).DefaultIfEmpty(0).Sum();
-                        var tds = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month == itemlist.month && v.year == itemlist.year select v.tds).DefaultIfEmpty(0).Sum();
-                        var netvoucher = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month == itemlist.month && v.year == itemlist.year select v.netamount).DefaultIfEmpty(0).Sum();
-                        recoveryamount = comm - tds - netvoucher;
-                         rdate = vr.date.ToString("dd/MM/yyy");
-                        ap.Add(new AdvPaymentTemp { newagentid = item.newagentid, name = ar.name, amount = item.amount, recoveryamount = recoveryamount, date = item.date, recoverydate = rdate, Remark = item.Remark, opid = item.opid, branchcode = item.branchcode, companyname = cr.CompanyName, monthname = fromtodate });
+                        if (count.Count() > 0)
+                        {
+                            //var vr = db.Voucher_Reports.Single(v => v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate);
+                            //  var vr = db.Voucher_Reports.Where(v => v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate).ToList();
+                            //  var comm = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate select v.commission).DefaultIfEmpty(0).Sum();
+                            //  var tds = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate select v.tds).DefaultIfEmpty(0).Sum();
+                            // var netvoucher = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.date >= stdate && v.date <= enddate select v.netamount).DefaultIfEmpty(0).Sum();
+                            // recoveryamount = comm - tds - netvoucher;
+                            // rdate = vr.date.ToString("dd/MM/yyy");
+                            var vr = db.Voucher_Reports.Single(v => v.Id == itemlist.Id);
+                            var comm = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month == itemlist.month && v.year == itemlist.year select v.commission).DefaultIfEmpty(0).Sum();
+                            var tds = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month == itemlist.month && v.year == itemlist.year select v.tds).DefaultIfEmpty(0).Sum();
+                            var netvoucher = (from v in db.Voucher_Reports where v.agentid == ar.AgencyCode && v.month == itemlist.month && v.year == itemlist.year select v.netamount).DefaultIfEmpty(0).Sum();
+                            recoveryamount = comm - tds - netvoucher;
+                            rdate = vr.date.ToString("dd/MM/yyy");
+                            ap.Add(new AdvPaymentTemp { newagentid = item.newagentid, name = ar.name, amount = item.amount, recoveryamount = recoveryamount, date = item.date, recoverydate = rdate, Remark = item.Remark, opid = item.opid, branchcode = item.branchcode, companyname = cr.CompanyName, monthname = fromtodate });
+                        }
+                        else
+                        {
+                            ap.Add(new AdvPaymentTemp { newagentid = item.newagentid, name = ar.name, amount = item.amount, recoveryamount = recoveryamount, date = item.date, recoverydate = rdate, Remark = item.Remark, opid = item.opid, branchcode = item.branchcode, companyname = cr.CompanyName, monthname = fromtodate });
+
+                        }
                     }
-                    else
-                    {
-                        ap.Add(new AdvPaymentTemp { newagentid = item.newagentid, name = ar.name, amount = item.amount, recoveryamount = recoveryamount, date = item.date, recoverydate = rdate, Remark = item.Remark, opid = item.opid, branchcode = item.branchcode, companyname = cr.CompanyName, monthname = fromtodate });
-                 
-                    }
-                   }
                 }
 
                 ReportDocument rd = new ReportDocument();
@@ -20368,7 +20368,7 @@ namespace ODHDEVELOPERS.Controllers
                 var ins = (from dcl in db.Expenses where dcl.date_time >= sdate && dcl.date_time <= edate && dcl.branchcode == bcode select dcl).ToList();
                 foreach (var i in ins)
                 {
-                    elist.Add(new ExpenseList { head = i.head, Remark = i.Remark, amount = i.amount, date_time = i.date_time, sdate = sdate, edate = edate, branchcode = i.branchcode, opid = i.opid, branchname = User.Identity.Name, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice,paymethod=i.paymethod });
+                    elist.Add(new ExpenseList { head = i.head, Remark = i.Remark, amount = i.amount, date_time = i.date_time, sdate = sdate, edate = edate, branchcode = i.branchcode, opid = i.opid, branchname = User.Identity.Name, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice, paymethod = i.paymethod });
                 }
                 ab = sdate;
                 b = edate;
@@ -20385,7 +20385,7 @@ namespace ODHDEVELOPERS.Controllers
             var ins = (from dcl in db.Expenses where dcl.date_time >= ab && dcl.date_time <= b && dcl.branchcode == Branchcode select dcl).ToList();
             foreach (var i in ins)
             {
-                elist.Add(new ExpenseList { head = i.head, Remark = i.Remark, amount = i.amount, date_time = i.date_time, sdate = ab, edate = b, branchcode = i.branchcode, opid = i.opid, branchname = User.Identity.Name, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice,paymethod=i.paymethod });
+                elist.Add(new ExpenseList { head = i.head, Remark = i.Remark, amount = i.amount, date_time = i.date_time, sdate = ab, edate = b, branchcode = i.branchcode, opid = i.opid, branchname = User.Identity.Name, companyname = cr.CompanyName, address = cr.Address, emailid = cr.Emailid, contact = cr.Contact, domainname = cr.HeadOffice, paymethod = i.paymethod });
             }
             ReportDocument rd = new ReportDocument();
             rd.Load(Path.Combine(Server.MapPath("~/Reports"), "DailyExpanse.rpt"));
@@ -20708,7 +20708,7 @@ namespace ODHDEVELOPERS.Controllers
                     {
                         case 1:
                             double fee = 0;
-                            var tbd = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                            var tbd = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                             var bd = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd.Contains(p.bondid) && p.branch == bbb.BranchCode select new { p.bondid }).Distinct();
                             appsumB = (from ag in db.appltabs where ag.formdate == date && ag.newintroducerid == newagentid && ag.branchcode == bbb.BranchCode && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                             formsumB = (from ag in db.AgentDetails where ag.Doj == date && ag.NewAgentId == newagentid && ag.BranchCode == bbb.BranchCode select ag.formfee).DefaultIfEmpty(0).Sum();
@@ -20880,7 +20880,7 @@ namespace ODHDEVELOPERS.Controllers
 
                         case 2:
                             double fee1 = 0;
-                            var tbd2 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                            var tbd2 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                             appsumB = (from ag in db.appltabs where ag.formdate == date && ag.newintroducerid == newagentid && ag.branchcode == bbb.BranchCode && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                             formsumB = (from ag in db.AgentDetails where ag.Doj == date && ag.NewAgentId == newagentid && ag.BranchCode == bbb.BranchCode select ag.formfee).DefaultIfEmpty(0).Sum();
                             var agentB = db.appltabs.Where(s => s.formdate == date && s.newintroducerid == newagentid && s.branchcode == bbb.BranchCode && s.status == 1).ToList();
@@ -21014,7 +21014,7 @@ namespace ODHDEVELOPERS.Controllers
                         case 3:
                             if (year > 0)
                             {
-                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                                 var bd3 = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.branch == bbb.BranchCode select new { p.bondid }).Distinct();
                                 if (bd3.Count() > 0)
                                 {
@@ -21122,7 +21122,7 @@ namespace ODHDEVELOPERS.Controllers
                             }
                             else
                             {
-                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                                 var bd3 = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.branch == bbb.BranchCode select new { p.bondid }).Distinct();
                                 if (bd3.Count() > 0)
                                 {
@@ -21828,7 +21828,7 @@ namespace ODHDEVELOPERS.Controllers
                 {
                     case 1:
                         Double fee = 0;
-                        var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                        var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                         var bd = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd.Contains(p.bondid) && p.branch == bbb.BranchCode select new { p.bondid }).Distinct();
                         appsumB = (from ag in db.appltabs where ag.formdate == pdate && ag.newintroducerid == NewAgentid && ag.branchcode == bbb.BranchCode && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                         formsumB = (from ag in db.AgentDetails where ag.Doj == pdate && ag.NewAgentId == NewAgentid && ag.BranchCode == bbb.BranchCode select ag.formfee).DefaultIfEmpty(0).Sum();
@@ -21999,7 +21999,7 @@ namespace ODHDEVELOPERS.Controllers
 
                     case 2:
                         double fee1 = 0;
-                        var tbd2 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                        var tbd2 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                         appsumB = (from ag in db.appltabs where ag.formdate == pdate && ag.newintroducerid == NewAgentid && ag.branchcode == bbb.BranchCode && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                         formsumB = (from ag in db.AgentDetails where ag.Doj == pdate && ag.NewAgentId == NewAgentid && ag.BranchCode == bbb.BranchCode select ag.formfee).DefaultIfEmpty(0).Sum();
                         var agentB = db.appltabs.Where(s => s.formdate == pdate && s.newintroducerid == NewAgentid && s.branchcode == bbb.BranchCode && s.status == 1).ToList();
@@ -22130,7 +22130,7 @@ namespace ODHDEVELOPERS.Controllers
                     case 3:
                         if (vvyear > 0)
                         {
-                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                             var bd3 = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.branch == bbb.BranchCode select new { p.bondid }).Distinct();
                             if (bd3.Count() > 0)
                             {
@@ -22238,7 +22238,7 @@ namespace ODHDEVELOPERS.Controllers
                         }
                         else
                         {
-                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                             var bd3 = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.branch == bbb.BranchCode select new { p.bondid }).Distinct();
                             if (bd3.Count() > 0)
                             {
@@ -24598,7 +24598,7 @@ namespace ODHDEVELOPERS.Controllers
                     {
                         case 1:
                             Double fee = 0;
-                            var tbd = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                            var tbd = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                             var bd = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd.Contains(p.bondid) && p.opid == pr.OperatorId select new { p.bondid }).Distinct();
                             appsumB = (from ag in db.appltabs where ag.formdate == date && ag.newintroducerid == newagentid && ag.opid == pr.OperatorId && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                             formsumB = (from ag in db.AgentDetails where ag.Doj == date && ag.NewAgentId == newagentid && ag.operatorid == pr.OperatorId select ag.formfee).DefaultIfEmpty(0).Sum();
@@ -24769,7 +24769,7 @@ namespace ODHDEVELOPERS.Controllers
 
                         case 2:
                             Double fee1 = 0;
-                            var tbd2 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                            var tbd2 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                             appsumB = (from ag in db.appltabs where ag.formdate == date && ag.newintroducerid == newagentid && ag.opid == pr.OperatorId && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                             formsumB = (from ag in db.AgentDetails where ag.Doj == date && ag.NewAgentId == newagentid && ag.operatorid == pr.OperatorId select ag.formfee).DefaultIfEmpty(0).Sum();
                             var agentB = db.appltabs.Where(s => s.formdate == date && s.newintroducerid == newagentid && s.opid == pr.OperatorId && s.status == 1).ToList();
@@ -24900,7 +24900,7 @@ namespace ODHDEVELOPERS.Controllers
                         case 3:
                             if (year > 0)
                             {
-                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                                 var bd3 = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.opid == pr.OperatorId select new { p.bondid }).Distinct();
                                 if (bd3.Count() > 0)
                                 {
@@ -25008,7 +25008,7 @@ namespace ODHDEVELOPERS.Controllers
                             }
                             else
                             {
-                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid  select ap.bondid);
+                                var tbd3 = (from ap in db.appltabs where ap.newintroducerid == newagentid select ap.bondid);
                                 var bd3 = (from p in db.Installmenttabs where p.paymentdate == date && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.opid == pr.OperatorId select new { p.bondid }).Distinct();
                                 if (bd3.Count() > 0)
                                 {
@@ -25713,7 +25713,7 @@ namespace ODHDEVELOPERS.Controllers
                 {
                     case 1:
                         Double fee = 0;
-                        var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                        var tbd = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                         var bd = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd.Contains(p.bondid) && p.opid == pr.OperatorId select new { p.bondid }).Distinct();
                         appsumB = (from ag in db.appltabs where ag.formdate == pdate && ag.newintroducerid == NewAgentid && ag.opid == pr.OperatorId && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                         formsumB = (from ag in db.AgentDetails where ag.Doj == pdate && ag.NewAgentId == NewAgentid && ag.operatorid == pr.OperatorId select ag.formfee).DefaultIfEmpty(0).Sum();
@@ -25884,7 +25884,7 @@ namespace ODHDEVELOPERS.Controllers
 
                     case 2:
                         Double fee1 = 0;
-                        var tbd2 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                        var tbd2 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                         appsumB = (from ag in db.appltabs where ag.formdate == pdate && ag.newintroducerid == NewAgentid && ag.opid == pr.OperatorId && ag.status == 1 select ag.applicationcharge).DefaultIfEmpty(0).Sum();
                         formsumB = (from ag in db.AgentDetails where ag.Doj == pdate && ag.NewAgentId == NewAgentid && ag.operatorid == pr.OperatorId select ag.formfee).DefaultIfEmpty(0).Sum();
                         var agentB = db.appltabs.Where(s => s.formdate == pdate && s.newintroducerid == NewAgentid && s.opid == pr.OperatorId && s.status == 1).ToList();
@@ -26015,7 +26015,7 @@ namespace ODHDEVELOPERS.Controllers
                     case 3:
                         if (vvyear > 0)
                         {
-                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                             var bd3 = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.opid == pr.OperatorId select new { p.bondid }).Distinct();
                             if (bd3.Count() > 0)
                             {
@@ -26123,7 +26123,7 @@ namespace ODHDEVELOPERS.Controllers
                         }
                         else
                         {
-                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid  select ap.bondid);
+                            var tbd3 = (from ap in db.appltabs where ap.newintroducerid == NewAgentid select ap.bondid);
                             var bd3 = (from p in db.Installmenttabs where p.paymentdate == pdate && p.paymentno != 0 && tbd3.Contains(p.bondid) && p.opid == pr.OperatorId select new { p.bondid }).Distinct();
                             if (bd3.Count() > 0)
                             {
@@ -27463,7 +27463,7 @@ namespace ODHDEVELOPERS.Controllers
                 list = db.APIKeyCertificates.ToList();
                 return View(list);
             }
-            else 
+            else
 
             {
                 return RedirectToAction("Logout", "Admin");
@@ -27590,7 +27590,7 @@ namespace ODHDEVELOPERS.Controllers
                 ob.logout = logout;
                 ob.status = status;
                 //db.Entry(ob).State = EntityState.Modified;
-                db.Entry<InOutTime >(ob).State = System.Data.Entity.EntityState.Modified;
+                db.Entry<InOutTime>(ob).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 Response.Write("<script>alert('Time updated successfully ')</script>");
                 return View();
@@ -27904,7 +27904,7 @@ namespace ODHDEVELOPERS.Controllers
                     db.SaveChanges();
                     brolist = (from pl in db.AgentDetails select pl).ToList();
                     MyClass.Sendmsg(ob.Mobile, "Dear " + ob.name + " Your User ID - " + NewAgentId + " has been blocked. Please contact Administrator / Company for unblocked - Regards :- ODH GROUP");
-                    
+
                     return RedirectToAction("BlockUnblockBroker");
                 }
                 else if (NewAgentId != null && Status == 0)
@@ -28513,7 +28513,7 @@ namespace ODHDEVELOPERS.Controllers
                     db.Entry<AgentDetail>(df).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     var nar = db.AgentDetails.Single(c => c.NewAgentId == intro);
-                    MyClass.Sendmsg(nar.Mobile, "Congratulations " + nar.name + " you are promoted by admin at " + mr.rankname + ":" + nar.RankName + " Please Visit "+cg.HeadOffice);
+                    MyClass.Sendmsg(nar.Mobile, "Congratulations " + nar.name + " you are promoted by admin at " + mr.rankname + ":" + nar.RankName + " Please Visit " + cg.HeadOffice);
                     Response.Write("<script>alert('Agent Successfully Updated')</script>");
 
                 }
@@ -28597,104 +28597,104 @@ namespace ODHDEVELOPERS.Controllers
                         //var diff = dt.Subtract(tsr.Date).TotalDays;
                         //if (diff >= 1)
                         //{
-                            SMSSpotCommTab ob = new SMSSpotCommTab();
-                            ob.newagentid = "NA";
-                            ob.date = DateTime.Now.Date;
-                            ob.business = 1;
-                            ob.commission = 0;
-                            db.SMSSpotCommTabs.Add(ob);
-                            db.SaveChanges();
+                        SMSSpotCommTab ob = new SMSSpotCommTab();
+                        ob.newagentid = "NA";
+                        ob.date = DateTime.Now.Date;
+                        ob.business = 1;
+                        ob.commission = 0;
+                        db.SMSSpotCommTabs.Add(ob);
+                        db.SaveChanges();
 
-                            var bondlist = (from ii in db.Installmenttabs where ii.prevexpirydate <= dt && ii.payamount == 0 select ii).Distinct().ToList();
-                            var bb = bondlist.Count();
-                            foreach (var bond in bondlist)
-                            {
+                        var bondlist = (from ii in db.Installmenttabs where ii.prevexpirydate <= dt && ii.payamount == 0 select ii).Distinct().ToList();
+                        var bb = bondlist.Count();
+                        foreach (var bond in bondlist)
+                        {
 
-                                var br = db.appltabs.Single(b => b.newbondid == bond.newbondid);
-                                var min = (from u in db.Installmenttabs where u.prevexpirydate <= dt && u.newbondid == bond.newbondid && u.payamount == 0 select u.installmentno).Min();
-                                var max = (from u in db.Installmenttabs where u.prevexpirydate <= dt && u.newbondid == bond.newbondid && u.payamount == 0 select u.installmentno).Max();
-                                var dueamount = (from ii in db.Installmenttabs where ii.prevexpirydate <= dt && ii.payamount == 0 && ii.newbondid == br.newbondid select ii.amount).DefaultIfEmpty(0).Sum();
+                            var br = db.appltabs.Single(b => b.newbondid == bond.newbondid);
+                            var min = (from u in db.Installmenttabs where u.prevexpirydate <= dt && u.newbondid == bond.newbondid && u.payamount == 0 select u.installmentno).Min();
+                            var max = (from u in db.Installmenttabs where u.prevexpirydate <= dt && u.newbondid == bond.newbondid && u.payamount == 0 select u.installmentno).Max();
+                            var dueamount = (from ii in db.Installmenttabs where ii.prevexpirydate <= dt && ii.payamount == 0 && ii.newbondid == br.newbondid select ii.amount).DefaultIfEmpty(0).Sum();
 
-                                #region Calculate Latefine Start Here
+                            #region Calculate Latefine Start Here
 
-                                //Double totallatefine = 0;
-                                //var llr = db.TDSLF_tabs.Single(l => l.Id == 1);
-                                //var mr = db.Members.Single(m => m.Id == 1);
-                                //while (min <= max)
-                                //{
-                                //    Double latefine = 0;
-                                //    var sredr = db.Installmenttabs.Single(i => i.newbondid == bond.newbondid && i.installmentno == min);
+                            //Double totallatefine = 0;
+                            //var llr = db.TDSLF_tabs.Single(l => l.Id == 1);
+                            //var mr = db.Members.Single(m => m.Id == 1);
+                            //while (min <= max)
+                            //{
+                            //    Double latefine = 0;
+                            //    var sredr = db.Installmenttabs.Single(i => i.newbondid == bond.newbondid && i.installmentno == min);
 
-                                //    if (sredr.mode == "Monthly")
-                                //    {
-                                //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddDays(15);
-                                //        if (DateTime.Now.Date > pdate.Date)
-                                //        {
-                                //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
-                                //            int r = diffe / 30;
-                                //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
-                                //            //latefine = (sredr.amount * llr.latefine) / 100;
-                                //            totallatefine = totallatefine + latefine;
+                            //    if (sredr.mode == "Monthly")
+                            //    {
+                            //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddDays(15);
+                            //        if (DateTime.Now.Date > pdate.Date)
+                            //        {
+                            //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
+                            //            int r = diffe / 30;
+                            //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
+                            //            //latefine = (sredr.amount * llr.latefine) / 100;
+                            //            totallatefine = totallatefine + latefine;
 
-                                //        }
-                                //    }
-                                //    else if (sredr.mode == "Quarterly")
-                                //    {
-                                //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddMonths(1);
-                                //        if (DateTime.Now.Date > pdate.Date)
-                                //        {
-                                //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
-                                //            int r = diffe / 91;
-                                //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
-                                //            //latefine = (sredr.amount * llr.latefine) / 100;
-                                //            totallatefine = totallatefine + latefine;
-                                //        }
-                                //    }
-                                //    else if (sredr.mode == "Halfyearly")
-                                //    {
-                                //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddMonths(1);
-                                //        if (DateTime.Now.Date > pdate.Date)
-                                //        {
-                                //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
-                                //            int r = diffe / 182;
-                                //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
-                                //            //latefine = (sredr.amount * llr.latefine) / 100;
-                                //            totallatefine = totallatefine + latefine;
-                                //        }
-                                //    }
-                                //    else if (sredr.mode == "Yearly")
-                                //    {
-                                //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddMonths(1);
-                                //        if (DateTime.Now.Date > pdate.Date)
-                                //        {
-                                //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
-                                //            int r = diffe / 365;
-                                //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
-                                //            //latefine = (sredr.amount * llr.latefine) / 100;
-                                //            totallatefine = totallatefine + latefine;
-                                //        }
-                                //    }
+                            //        }
+                            //    }
+                            //    else if (sredr.mode == "Quarterly")
+                            //    {
+                            //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddMonths(1);
+                            //        if (DateTime.Now.Date > pdate.Date)
+                            //        {
+                            //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
+                            //            int r = diffe / 91;
+                            //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
+                            //            //latefine = (sredr.amount * llr.latefine) / 100;
+                            //            totallatefine = totallatefine + latefine;
+                            //        }
+                            //    }
+                            //    else if (sredr.mode == "Halfyearly")
+                            //    {
+                            //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddMonths(1);
+                            //        if (DateTime.Now.Date > pdate.Date)
+                            //        {
+                            //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
+                            //            int r = diffe / 182;
+                            //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
+                            //            //latefine = (sredr.amount * llr.latefine) / 100;
+                            //            totallatefine = totallatefine + latefine;
+                            //        }
+                            //    }
+                            //    else if (sredr.mode == "Yearly")
+                            //    {
+                            //        DateTime pdate = Convert.ToDateTime(sredr.prevexpirydate).AddMonths(1);
+                            //        if (DateTime.Now.Date > pdate.Date)
+                            //        {
+                            //            int diffe = Convert.ToInt32(DateTime.Now.Date.Subtract(pdate).TotalDays);
+                            //            int r = diffe / 365;
+                            //            latefine = Math.Round(((sredr.amount * llr.latefine) / 100) * (r + 1), 2);
+                            //            //latefine = (sredr.amount * llr.latefine) / 100;
+                            //            totallatefine = totallatefine + latefine;
+                            //        }
+                            //    }
 
-                                //    min = min + 1;
+                            //    min = min + 1;
 
-                                //}
+                            //}
 
-                                //Double amount = dueamount + totallatefine;
+                            //Double amount = dueamount + totallatefine;
 
-                                #endregion
-                                var cm = db.CompanyInfos.Single(aa => aa.Id == 1);
-                                var pdt = bond.prevexpirydate.ToString("MMM/yyyy");
-                                //MyClass.Sendmsg(br.mobileno, "Dear " + mr.custname + " Kindly deposit your installment amount " + amount + " Rs. for A/c no- " + bond.newbondid + "on or before date- " + pdt + " Regards ODHDEVELOPERS Nidhi Ltd.");
-                                MyClass.Sendmsg(br.mobileno, "Dear " + br.name + "inspite of reminders your emi of " + pdt + "  for Rs. " + dueamount + " is still overdue. Please pay immediately to avoid late payment charges . Regards-" + cm + ".");
-                                }
-                            if (bondlist.Count > 0)
-                            {
-                                Response.Write("<script>alert('Message Sent Successfully...')</script>");
-                            }
-                            else
-                            {
-                                Response.Write("<script>alert('Message Not Send. Due to no due installments')</script>");
-                            }
+                            #endregion
+                            var cm = db.CompanyInfos.Single(aa => aa.Id == 1);
+                            var pdt = bond.prevexpirydate.ToString("MMM/yyyy");
+                            //MyClass.Sendmsg(br.mobileno, "Dear " + mr.custname + " Kindly deposit your installment amount " + amount + " Rs. for A/c no- " + bond.newbondid + "on or before date- " + pdt + " Regards ODHDEVELOPERS Nidhi Ltd.");
+                            MyClass.Sendmsg(br.mobileno, "Dear " + br.name + "inspite of reminders your emi of " + pdt + "  for Rs. " + dueamount + " is still overdue. Please pay immediately to avoid late payment charges . Regards-" + cm + ".");
+                        }
+                        if (bondlist.Count > 0)
+                        {
+                            Response.Write("<script>alert('Message Sent Successfully...')</script>");
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('Message Not Send. Due to no due installments')</script>");
+                        }
                         //}
                         //else if (diff < 30)
                         //{
@@ -28702,10 +28702,10 @@ namespace ODHDEVELOPERS.Controllers
                         //}
                     }
 
-                    
+
                 }
 
-          
+
                 return View();
             }
         }
@@ -28765,7 +28765,7 @@ namespace ODHDEVELOPERS.Controllers
                         else
                         {
                             DateTime dt = DateTime.Parse(date, new CultureInfo("en-CA"));
-                            
+
                             string cdmm = dt.ToString("MM/dd/yyyy");
                             //DateTime newdate = DateTime.Parse(cdmm, new CultureInfo("en-CA"));
                             //DateTime newdate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
@@ -28981,12 +28981,12 @@ namespace ODHDEVELOPERS.Controllers
                     {
                         Paymethod = ob.paymethod;
                     }
-                   /* if (cr.paymenttype == "EMI")
-                    {
-                        MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your EMI of Rs." + ob.payamount + " for the month " + Convert.ToDateTime(ob.paymentdate).ToString("MMMM") + " for loan a/c no. " + cr.loanid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards- " + cm.CompanyName);
-                    }
-                    else {*/
-                        MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your PAYMENT of Rs." + ob.payamount + ",OF YOUR ID NO.-" + cr.newbondid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards-" + cg.CompanyName);
+                    /* if (cr.paymenttype == "EMI")
+                     {
+                         MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your EMI of Rs." + ob.payamount + " for the month " + Convert.ToDateTime(ob.paymentdate).ToString("MMMM") + " for loan a/c no. " + cr.loanid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards- " + cm.CompanyName);
+                     }
+                     else {*/
+                    MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your PAYMENT of Rs." + ob.payamount + ",OF YOUR ID NO.-" + cr.newbondid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards-" + cg.CompanyName);
                     /*}*/
                     Response.Write("<script>alert('SMS sent to " + cr.name + "(" + cr.newbondid + ") successfully...')</script>");
                     rllist = (from rl in db.Installmenttabs where rl.newbondid == newbondid && rl.payamount != 0 select rl).ToList();
@@ -29473,7 +29473,7 @@ namespace ODHDEVELOPERS.Controllers
                         br.status = 2;
                         db.SaveChanges();
                         ViewBag.cpy = "Maturity Done Successfully..";
-                        MyClass.Sendmsg(info.mobileno, "Dear Customer your Bond no- " + newbondid + " .You request for maturity is accepted. Thank you for your kind believe us for help contact. "+cg.CompanyName);
+                        MyClass.Sendmsg(info.mobileno, "Dear Customer your Bond no- " + newbondid + " .You request for maturity is accepted. Thank you for your kind believe us for help contact. " + cg.CompanyName);
 
                     }
                 }
@@ -30244,7 +30244,7 @@ namespace ODHDEVELOPERS.Controllers
             }
             else
             {
-               // List<tempappltab> vlist = (from vl in db.tempappltabs where vl.discountper > 2 select vl).ToList();
+                // List<tempappltab> vlist = (from vl in db.tempappltabs where vl.discountper > 2 select vl).ToList();
                 List<tempappltab> vlist = (from vl in db.tempappltabs select vl).ToList();
                 if (nnewbondid != null && printstatus == 1)
                 {
@@ -30252,14 +30252,14 @@ namespace ODHDEVELOPERS.Controllers
                     var mr = db.Members.Single(m => m.Id == 1);
                     var br = db.Branchtabs.Single(bc => bc.BranchCode == branchcode);
                     var adr = db.AgentDetails.Single(ad => ad.NewAgentId == newintroducerid);
-                    var cr = db.CompanyInfos.Single(csn => csn.Id==1);
+                    var cr = db.CompanyInfos.Single(csn => csn.Id == 1);
                     //var pr = db.ProTerms.Single(p => p.projectid == projectid && p.term == term);
                     int max = (from a in db.appltabs select a).Count();
                     var bondid = max + 1;
                     DateTime chequeappdate = DateTime.Now.Date;
                     string dd = DateTime.Now.Date.Month.ToString("00");
                     int yr = DateTime.Now.Date.Year;
-                   // var newbondid = br.prefix + branchcode + "/C0" + dd + bondid.ToString().Substring(0, 2) + DateTime.Now.Date.Day.ToString("00") + bondid.ToString().Substring(2) + yr.ToString().Substring(2);
+                    // var newbondid = br.prefix + branchcode + "/C0" + dd + bondid.ToString().Substring(0, 2) + DateTime.Now.Date.Day.ToString("00") + bondid.ToString().Substring(2) + yr.ToString().Substring(2);
                     var newbondid = br.prefix + br.BranchCode + "/C0" + bondid;
                     #region APPLTAB
 
@@ -30400,7 +30400,7 @@ namespace ODHDEVELOPERS.Controllers
                     bd.pcity = List.pcity;
                     bd.pstate = List.pstate;
                     bd.ppincode = List.ppincode;
-                    
+
                     var csr = gidref();
 
                     int year = DateTime.Now.Year, syear = year + 1;
@@ -30529,13 +30529,13 @@ namespace ODHDEVELOPERS.Controllers
                     db.tempappltabs.Remove(ob);
                     db.SaveChanges();
                     var cr = db.CompanyInfos.Single(d => d.Id == 1);
-                    MyClass.Sendmsg(ob.mobileno, "Dear " + ob.name + "Your Plot Agreement of Rs. " + ob.bookingamount + " vide "+ob.paymethod +" has dishonoured. Please contact " + cr.CompanyName + ".");
-         
+                    MyClass.Sendmsg(ob.mobileno, "Dear " + ob.name + "Your Plot Agreement of Rs. " + ob.bookingamount + " vide " + ob.paymethod + " has dishonoured. Please contact " + cr.CompanyName + ".");
+
 
                     return RedirectToAction("BondApproval");
                 }
 
-                    #endregion
+                #endregion
                 return View(vlist);
             }
         }
@@ -30687,7 +30687,7 @@ namespace ODHDEVELOPERS.Controllers
                     comm.Penality = penality;
                     //db.Entry(comm).State = EntityState.Modified;
                     db.Entry<TempInstallmenttab>(comm).State = System.Data.Entity.EntityState.Modified;
-                   
+
                     var tins = db.Installmenttabs.FirstOrDefault(a => a.newbondid == comm.newbondid && a.installmentno == comm.installmentno);
                     DateTime prevexpirydate = tins == null ? Convert.ToDateTime(comm.paymentdate) : Convert.ToDateTime(tins.prevexpirydate);
                     MyClass.Sendmsg(ap.mobileno, "Dear " + ap.name + ", Your Payment of Rs. " + Amount + " for the month " + prevexpirydate.ToString("MMMMMMMMMM") + "for loan a/c no. " + ap.loanid + " vide ECS has dishonoured. Please contact " + cm.CompanyName + " at earliest.");
@@ -30698,7 +30698,7 @@ namespace ODHDEVELOPERS.Controllers
 
                 }
                 db.SaveChanges();
-       return RedirectToAction("ApproveRenewal");
+                return RedirectToAction("ApproveRenewal");
             }
         }
 
@@ -31131,7 +31131,7 @@ namespace ODHDEVELOPERS.Controllers
         }
 
         [HttpGet]
-        public ActionResult Plotholding(string project, string block, int plotno = 0,int phaseid=0, int status = 0)
+        public ActionResult Plotholding(string project, string block, int plotno = 0, int phaseid = 0, int status = 0)
         {
 
             if (!IsLoggedIn())
@@ -31144,7 +31144,7 @@ namespace ODHDEVELOPERS.Controllers
                 List<plotlist> plist = new List<plotlist>();
                 if (project != null && status == 1)
                 {
-                    var bl = db.BlockTabs.Single(a => a.Planname == project && a.phaseid==phaseid && a.block == block);
+                    var bl = db.BlockTabs.Single(a => a.Planname == project && a.phaseid == phaseid && a.block == block);
                     //var bl = db.BlockTabs.Single(a =>a.phaseid==phaseid && a.block == block);
                     HoldingPlot hp = new HoldingPlot();
                     hp.holddate = DateTime.Now.Date;
@@ -31161,7 +31161,7 @@ namespace ODHDEVELOPERS.Controllers
                 else if (project != null && status == 2)
                 {
                     var blist = db.BlockTabs.Single(a => a.Planname == project && a.phaseid == phaseid && a.block == block);
-                    HoldingPlot hh = db.HoldingPlots.Single(a => a.holdprojectid == blist.Plancode && a.holdphaseid==blist.phaseid && a.holdblock == blist.Id && a.holdplotno == plotno);
+                    HoldingPlot hh = db.HoldingPlots.Single(a => a.holdprojectid == blist.Plancode && a.holdphaseid == blist.phaseid && a.holdblock == blist.Id && a.holdplotno == plotno);
                     db.HoldingPlots.Remove(hh);
                     db.SaveChanges();
                     return RedirectToAction("Plotholding");
@@ -31170,7 +31170,7 @@ namespace ODHDEVELOPERS.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Plotholding(string block, int projectid = 0, int phaseid=0)
+        public ActionResult Plotholding(string block, int projectid = 0, int phaseid = 0)
         {
 
             if (!IsLoggedIn())
@@ -31180,7 +31180,7 @@ namespace ODHDEVELOPERS.Controllers
             else
             {
                 List<plotlist> plist = new List<plotlist>();
-                if (block == "NA" || projectid == 0 || phaseid==0)
+                if (block == "NA" || projectid == 0 || phaseid == 0)
                 {
                     Response.Write("<script>alert('Please select block and project')</script>");
                 }
@@ -31195,7 +31195,7 @@ namespace ODHDEVELOPERS.Controllers
                     var splist = (from sp in db.appltabs where sp.block == block && sp.projectid == projectid && sp.phaseid == phaseid && sp.status == 1 select new { sp.plotno }).Distinct().ToList();
                     var holdlist = (from sp in db.HoldingPlots where sp.holdblock == blockid.Id && sp.holdprojectid == projectid && sp.holdphaseid == phaseid && sp.holdstatus == 1 select new { sp.holdplotno }).Distinct().ToList();
                     var pr = db.Plans.Single(a => a.Plancode == projectid);
-                    
+
                     while (min <= max)
                     {
                         plist.Add(new plotlist { plotno = min, block = block, project = pr.Planname, phaseid = phaseid });
@@ -31210,7 +31210,7 @@ namespace ODHDEVELOPERS.Controllers
                     //{
                     //    plist.Remove(plist.Single(rr => rr.plotno == h.holdplotno));
                     //}
-                  
+
                     foreach (var c in chelist)
                     {
                         plist.Remove(plist.Single(rr => rr.plotno == c.plotno));
@@ -31599,8 +31599,8 @@ namespace ODHDEVELOPERS.Controllers
                 }
                 else
                 {
-                   ReportDocument rd = new ReportDocument();
-                   if (st.paymenttype == "EMI")
+                    ReportDocument rd = new ReportDocument();
+                    if (st.paymenttype == "EMI")
                     {
                         dl = db.Database.SqlQuery<AllotmentLetter>("select format (a.formdate,'dd/MM/yyyy') as bookingdate, a.newmemberid customerid,a.name customername,a.addr customeraddress,a.propertyid,a.refno,a.plotno propertyno,m.category,a.incomegroup,a.bookingamount,a.totalcon propertycost,a.planname projectname,a.phase,a.propertytype,a.nolandunit propertyarea,a.block prppertyblock,a.propertyaddress,a.propertypreference,a.plotdesp,a.northeast,a.northwest,a.southeast,a.southwest,i.installmentno,(case when i.installmentno <> 1 then format(i.prevexpirydate,'dd/MM/yyyy') else NULL end) as paymentdate,i.amount installmentamount,i.paymentno,a.northwest,a.northeast,a.southwest,a.southeast from appltab a right join Installmenttab i on a.newbondid=i.newbondid join Member_tab m on a.newmemberid=m.NewMemberId where a.newbondid='" + newbondid + "' and i.installmentno>1").ToList();
                         if (dl.Count > 0)
@@ -31618,12 +31618,12 @@ namespace ODHDEVELOPERS.Controllers
                         }
                         rd.Load(Server.MapPath("/Reports/EMIAllotmentLetter.rpt"));
                     }
-                   //else if (st.paymenttype == "FULL")
-                   //{
-                   //    dl = db.Database.SqlQuery<fullwellcome>("select a.newmemberid,a.newbondid,a.name,a.plotno,a.formdate,m.state,m.district,m.pin,a.totalcon,a.projectid,a.newintroducerid,a.addr,a.mobileno,a.bookingamount,a.payment from appltab as a inner join Member_tab as m on a.newmemberid=m.NewMemberId where a.newbondid='" + newbondid + "'").ToList();
-                   //    rd.Load(Path.Combine(Server.MapPath("~/Reports"), "EMIWelcomeLetter.rpt"));
-                   //}
-                   
+                    //else if (st.paymenttype == "FULL")
+                    //{
+                    //    dl = db.Database.SqlQuery<fullwellcome>("select a.newmemberid,a.newbondid,a.name,a.plotno,a.formdate,m.state,m.district,m.pin,a.totalcon,a.projectid,a.newintroducerid,a.addr,a.mobileno,a.bookingamount,a.payment from appltab as a inner join Member_tab as m on a.newmemberid=m.NewMemberId where a.newbondid='" + newbondid + "'").ToList();
+                    //    rd.Load(Path.Combine(Server.MapPath("~/Reports"), "EMIWelcomeLetter.rpt"));
+                    //}
+
                     rd.SetDataSource(dl);
                     Response.Buffer = false;
                     Response.ClearContent();
@@ -31832,7 +31832,7 @@ namespace ODHDEVELOPERS.Controllers
             if (Recogniser == "Print")
             {
                 var l = db.AgentDetails.Where(o => o.NewAgentId.ToUpper().Contains(AgentId.ToUpper())).Select(o => new { o.NewAgentId, o.name }).ToList();
-                
+
                 return Json(l, 0);
             }
 
@@ -31870,14 +31870,14 @@ namespace ODHDEVELOPERS.Controllers
             return View();
         }
         #endregion
-        
+
         [HttpPost]
         public ActionResult AgentWelcomeLetter(string AgentId)
         {
             List<AgentDetail> list = db.AgentDetails.Where(o => o.NewAgentId == AgentId).ToList();
             foreach (var i in list)
             {
-                i.BloodGroup = i.refno; 
+                i.BloodGroup = i.refno;
                 if (i.Mobile != i.Mobileno)
                 {
                     i.Mobileno = i.Mobile;
@@ -32069,7 +32069,7 @@ namespace ODHDEVELOPERS.Controllers
 
             return View();
         }
-       
+
         [HttpGet]
         public ActionResult ReceptionistList()
         {
@@ -32189,7 +32189,7 @@ namespace ODHDEVELOPERS.Controllers
                 return View();
             }
         }
-       
+
         public ActionResult statuschange2(int s, int m)
         {
             if (!IsLoggedIn())
@@ -32213,7 +32213,7 @@ namespace ODHDEVELOPERS.Controllers
             }
             return RedirectToAction("Achievers", "Admin");
         }
-       
+
         public JsonResult getachiverlist(int newid)
         {
             var list = db.Acheviers.Where(x => x.Id == newid).ToList();
@@ -32245,7 +32245,7 @@ namespace ODHDEVELOPERS.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Media_Centre(Mediagallery ns, HttpPostedFileBase Image, string command,string Heading,  int newid=0)
+        public ActionResult Media_Centre(Mediagallery ns, HttpPostedFileBase Image, string command, string Heading, int newid = 0)
         {
 
             if (!IsLoggedIn())
@@ -32391,7 +32391,7 @@ namespace ODHDEVELOPERS.Controllers
             return RedirectToAction("Media_Centre", "Admin");
 
         }
-       
+
         [HttpGet]
         public ActionResult banner_upload()
         {
@@ -32794,1028 +32794,1028 @@ namespace ODHDEVELOPERS.Controllers
 
         #region 27-Mar-2019 Renewal Option
 
-      [HttpGet]
-      public ActionResult PaymentRenewal()
-      {
-
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Branch");
-          }
-          else
-          {
-              DateTime maxdate1 = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name select a.date).DefaultIfEmpty().Max();
-              int trid = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.date == maxdate1 select a.trid).DefaultIfEmpty().Max();
-              DateTime maxdate = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.trid == trid select a.date).DefaultIfEmpty().Max();
-              var clcount = (from c in db.ClosingMatchingTabs where c.date == maxdate && c.opid == User.Identity.Name && c.pagename == "PaymentRenewal" select c).Count();
-              int dcount = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.trid == trid && a.date == maxdate select a).Count();
-              if (dcount > 0)
-              {
-                  if (clcount == 0)
-                  {
-                      TempData["pagename"] = "PaymentRenewal";
-                      return RedirectToAction("MatchingDailyClosing", "Branch");
-                  }
-              }
-              return View();
-          }
-      }
-      [HttpPost]
-      public ActionResult PaymentRenewal(TempInstallmenttab tp, HttpPostedFileBase Chequeimage, string newbondid2, string planname, Double term, string mode, Double latefine, int from, int to, string paymethod, DateTime pdate, string checkorddno, string drawno, Double relief, Double payamount, string amountinword, string trbank, string transactionid, string transactiondate, string tramount, string trpmethod, string holderacno, DateTime prevexpirydate)
-      {
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Branch");
-          }
-          else
-          {
-              var tempcount = db.TempInstallmenttabs.Where(c => c.newbondid == newbondid2 && c.status == 1).Count();
-              var ds = db.Blockdates.Where(c => c.date == pdate && c.branchcode == User.Identity.Name && c.status == 0).Count();
-              if (ds > 0)
-              {
-                  Response.Write("<script>alert('This Date is closed please select another date')</script>");
-              }
-              else
-              {
-                  string localIP = "";
-                  foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
-                  {
-                      if (nic.OperationalStatus == OperationalStatus.Up)
-                      {
-                          localIP += nic.GetPhysicalAddress().ToString();
-                          break;
-                      }
-                  }
-                  if (tempcount == 0)
-                  {
-                      if (paymethod == "Cheque" || paymethod == "banktransaction")
-                      {
-                          if (paymethod == "Cheque" && (tp.chequeno == null || tp.Chequedate == null || tp.ChequeAmount == null || tp.Bbranch == null || tp.bank == null || tp.Account == null || tp.Account == null || tp.IFSCCode == null))
-                          {
-                              Response.Write("<script>alert('Please Complete Cheque Detail')</script>");
-                          }
-                          else
-                          {
-                              var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
-                              con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                              SqlCommand cmd = new SqlCommand();
-                              cmd.CommandText = "tempinsertrcptinfo";
-                              cmd.CommandType = CommandType.StoredProcedure;
-                              cmd.Connection = con;
-
-                              cmd.Parameters.AddWithValue("@newbondid", newbondid2);
-                              cmd.Parameters.AddWithValue("@planname", planname);
-                              cmd.Parameters.AddWithValue("@term", term);
-                              cmd.Parameters.AddWithValue("@mode", mode);
-                              cmd.Parameters.AddWithValue("@latefine", latefine);
-                              cmd.Parameters.AddWithValue("@from", from);
-                              cmd.Parameters.AddWithValue("@to", to);
-                              cmd.Parameters.AddWithValue("@paymethod", paymethod);
-                              cmd.Parameters.AddWithValue("@pdate", pdate);
-                              cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
-                              cmd.Parameters.AddWithValue("@drawno", drawno);
-                              cmd.Parameters.AddWithValue("@relief", relief);
-                              cmd.Parameters.AddWithValue("@payamount", (payamount) - (latefine - relief));
-                              cmd.Parameters.AddWithValue("@amountinword", amountinword);
-                              cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
-
-                              cmd.Parameters.AddWithValue("@macaddress", localIP);
-                              if (paymethod == "Cheque")
-                              {
-                                  cmd.Parameters.AddWithValue("@Chequeno", tp.chequeno);
-                                  cmd.Parameters.AddWithValue("@Account", tp.Account);
-                                  cmd.Parameters.AddWithValue("@acholdername", tp.ACholdername);
-                                  cmd.Parameters.AddWithValue("@bank", tp.bank);
-                                  cmd.Parameters.AddWithValue("@branch", tp.Bbranch);
-                                  cmd.Parameters.AddWithValue("@chequedate", tp.Chequedate);
-                                  if (Chequeimage != null)
-                                  {
-
-                                      string imgname = gid();
-                                      //  tp.Chequeimage = "~/Photo/" + imgname + ".jpg";
-                                      Chequeimage.SaveAs(HttpContext.Server.MapPath("~/Photo/" + imgname + ".jpg"));
-                                      cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/" + imgname + ".jpg");
-                                  }
-                                  else
-                                  {
-                                      cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
-                                  }
-                                  cmd.Parameters.AddWithValue("@chequeamount", tp.ChequeAmount);
-                                  cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
-                                  cmd.Parameters.AddWithValue("@IFSCCode", tp.IFSCCode);
-                                  cmd.Parameters.AddWithValue("@transactiontype", "NA");
-                              }
-
-                              else if (paymethod == "banktransaction")
-                              {
-                                  cmd.Parameters.AddWithValue("@Chequeno", transactionid);
-                                  cmd.Parameters.AddWithValue("@Account", holderacno);
-                                  cmd.Parameters.AddWithValue("@acholdername", "NA");
-                                  cmd.Parameters.AddWithValue("@bank", trbank);
-                                  cmd.Parameters.AddWithValue("@branch", "NA");
-                                  cmd.Parameters.AddWithValue("@chequedate", transactiondate);
-                                  cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
-                                  cmd.Parameters.AddWithValue("@chequeamount", tramount);
-                                  cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
-                                  cmd.Parameters.AddWithValue("@IFSCCode", "NA");
-                                  cmd.Parameters.AddWithValue("@transactiontype", tp.transactiontype);
-                              }
-
-                              SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
-                              p.Direction = ParameterDirection.Output;
-                              cmd.Parameters.Add(p);
-
-                              try
-                              {
-                                  con.Open();
-                                  cmd.ExecuteNonQuery();
-
-                                  paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
-                                  ViewData["newbondid"] = newbondid2;
-                                  ViewData["paymethod"] = paymethod;
-                                  ViewData["paymentno"] = paymentno;
-
-                                  ViewBag.msg = "Renewel pending...";
-                                  return View();
-                              }
-
-                              catch (Exception e)
-                              {
-                                  ViewBag.msg = e.Message;
-                              }
-                              finally
-                              {
-                                  con.Close();
-                              }
-                          }
-                      }
-
-                      else
-                      {
-
-                          var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
-                          con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                          SqlCommand cmd = new SqlCommand();
-                          cmd.CommandText = "insertrcptinfo";
-                          cmd.CommandType = CommandType.StoredProcedure;
-                          cmd.Connection = con;
-                          var Payamount = (payamount) - (latefine - relief);
-                          cmd.Parameters.AddWithValue("@newbondid", newbondid2);
-                          cmd.Parameters.AddWithValue("@planname", planname);
-                          cmd.Parameters.AddWithValue("@term", term);
-                          cmd.Parameters.AddWithValue("@mode", mode);
-                          cmd.Parameters.AddWithValue("@latefine", latefine);
-                          cmd.Parameters.AddWithValue("@from", from);
-                          cmd.Parameters.AddWithValue("@to", to);
-                          cmd.Parameters.AddWithValue("@paymethod", paymethod);
-                          cmd.Parameters.AddWithValue("@pdate", pdate);
-                          cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
-                          cmd.Parameters.AddWithValue("@drawno", drawno);
-                          cmd.Parameters.AddWithValue("@relief", relief);
-                          cmd.Parameters.AddWithValue("@payamount", Payamount);
-                          cmd.Parameters.AddWithValue("@amountinword", amountinword);
-                          cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
-                          cmd.Parameters.AddWithValue("@macaddress", localIP);
-                          cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
-                          cmd.Parameters.AddWithValue("@transactiontype", "NA");
-
-                          SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
-                          p.Direction = ParameterDirection.Output;
-                          cmd.Parameters.Add(p);
-
-                          try
-                          {
-                              con.Open();
-                              cmd.ExecuteNonQuery();
-                              paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
-                              ViewData["newbondid"] = newbondid2;
-                              ViewData["paymethod"] = paymethod;
-                              ViewData["paymentno"] = paymentno;
-                              tp.chequeno = tp.chequeno == null ? "" : "no. " + tp.chequeno;
-                              var cm = db.CompanyInfos.Single(d => d.Id == 1);
-                              //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ",Your renewal of Rs " + payamount + " is received for plan " + planname + " for Bond: " + newbondid2 + " on date: " + pdate.ToString("dd/MM/yyyy"));
-                              //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your EMI of Rs." + payamount + " for the month " + prevexpirydate.ToString("MMMM") + " for loan a/c no. " + cr.loanid + " vide " + paymethod + "cheque no " + tp.chequeno + " has been deposited successfully. Regards- " + cm.CompanyName);
-                              string Paymethod = "", chequeno = "";
-                              if (paymethod == "banktransaction")
-                              {
-                                  Paymethod = "Bank Transaction" + "/" + tp.transactiontype;
-                                  chequeno = "Transaction Id " + tp.chequeno;
-                              }
-                              else if (paymethod != "Cash")
-                              {
-                                  chequeno = paymethod + " No " + tp.chequeno;
-                                  Paymethod = paymethod;
-                              }
-                              else
-                              {
-                                  Paymethod = paymethod;
-                              }
-                              //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your EMI of Rs." + payamount + " for the month " + prevexpirydate.ToString("MMMM") + " for loan a/c no. " + cr.loanid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards- " + cg.CompanyName);
-                              MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your PAYMENT of Rs." + payamount + ",OF YOUR ID NO.-" + cr.newbondid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards-" + cg.CompanyName);
-                              ViewBag.msg = "Renewel Done Successfully....";
-                              return View();
-                          }
-
-                          catch (Exception e)
-                          {
-                              ViewBag.msg = e.Message;
-                          }
-                          finally
-                          {
-                              con.Close();
-                          }
-                      }
-                  }
-                  else
-                  {
-                      Response.Write("<script>alert('Your Last Renewal is pending Please Contact to Admin')</script>");
-                  }
-
-
-
-              }
-          }
-          return View();
-      }
-      public ActionResult PrintRenewalReport()
-      {
-          List<RecieptTab> bond = new List<RecieptTab>();
-          bond = db.RecieptTabs.ToList();
-          ReportDocument rd = new ReportDocument();
-          rd.Load(Path.Combine(Server.MapPath("~/Reports"), "NewRenewal.rpt"));
-          rd.SetDataSource(bond);
-
-          Response.Buffer = false;
-          Response.ClearContent();
-          Response.ClearHeaders();
-
-
-          try
-          {
-              Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-              stream.Seek(0, SeekOrigin.Begin);
-
-              return new FileStreamResult(stream, "application/pdf");
-          }
-
-          catch (Exception ex)
-          {
-              Response.Write("<script>alert('" + ex.Message + "')</script>");
-          }
-          finally
-          {
-              rd.Close();
-              rd.Dispose();
-          }
-          return View();
-
-
-      }
-      public ActionResult PrintRenewalReportCheque(string newbondid, int paymentno = 0)
-      {
-
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Branch");
-          }
-          else
-          {
-              List<tempcheque> bond = new List<tempcheque>();
-
-
-              var max = (from t in db.TempInstallmenttabs where t.newbondid == newbondid && t.paymentno == paymentno && t.status == 1 select t.installmentno).Max();
-              var ta = db.TempInstallmenttabs.Single(t => t.newbondid == newbondid && t.paymentno == paymentno && t.installmentno == max && t.status == 1);
-              var list = db.appltabs.Single(a => a.newbondid == newbondid);
-              bond.Add(new tempcheque { newbondid = ta.newbondid, name = list.name, nolandunit = list.nolandunit, opid = ta.opid, bookingamount = ta.payamount, bank = ta.bank, Account = ta.Account, chequeno = ta.chequeno, ACholdername = ta.ACholdername, Branch = ta.Bbranch, IFSCCode = ta.IFSCCode, ChequeAmount = ta.ChequeAmount, Chequedate = Convert.ToDateTime(ta.Chequedate), Chequeimage = ta.Chequeimage });
-
-              ReportDocument rd = new ReportDocument();
-              rd.Load(Path.Combine(Server.MapPath("~/Reports"), "RenewAckReceipt.rpt"));
-              rd.SetDataSource(bond);
-
-              Response.Buffer = false;
-              Response.ClearContent();
-              Response.ClearHeaders();
-
-
-              try
-              {
-                  Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-                  stream.Seek(0, SeekOrigin.Begin);
-                  return new FileStreamResult(stream, "application/pdf");
-
-
-              }
-              catch (Exception ex)
-              {
-                  Response.Write("<script>alert('" + ex.Message + "')</script>");
-              }
-              finally
-              {
-                  rd.Close();
-                  rd.Dispose();
-              }
-              return View();
-
-          }
-      }
-      [HttpGet]
-      public ActionResult PartPayment()
-      {
-
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Branch");
-          }
-          else
-          {
-
-              return View();
-          }
-      }
-      [HttpPost]
-      public ActionResult PartPayment(TempInstallmenttab tp, HttpPostedFileBase Chequeimage, string newbondid2, string planname, Double term, string mode, Double latefine, int from, string paymethod, DateTime pdate, string checkorddno, string drawno, Double payamount, string amountinword, string trbank, string transactionid, string transactiondate, string tramount, string trpmethod, string holderacno)
-      {
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Branch");
-          }
-          else
-          {
-              var tempcount = db.TempInstallmenttabs.Where(c => c.newbondid == newbondid2 && c.status == 1).Count();
-              var ds = db.Blockdates.Where(c => c.date == pdate && c.branchcode == User.Identity.Name && c.status == 0).Count();
-              if (ds > 0)
-              {
-                  Response.Write("<script>alert('This Date is closed please select another date')</script>");
-              }
-              else
-              {
-                  string localIP = "";
-                  foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
-                  {
-                      if (nic.OperationalStatus == OperationalStatus.Up)
-                      {
-                          localIP += nic.GetPhysicalAddress().ToString();
-                          break;
-                      }
-                  }
-                  if (tempcount == 0)
-                  {
-                      if (paymethod == "Cheque" || paymethod == "banktransaction")
-                      {
-                          if (paymethod == "Cheque" && (tp.chequeno == null || tp.Chequedate == null || tp.ChequeAmount == null || tp.Bbranch == null || tp.bank == null || tp.Account == null || tp.Account == null || tp.IFSCCode == null))
-                          {
-                              Response.Write("<script>alert('Please Complete Cheque Detail')</script>");
-                          }
-                          else
-                          {
-                              var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
-                              con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                              SqlCommand cmd = new SqlCommand();
-                              cmd.CommandText = "tempinsertrcptinfo";
-                              cmd.CommandType = CommandType.StoredProcedure;
-                              cmd.Connection = con;
-
-                              cmd.Parameters.AddWithValue("@newbondid", newbondid2);
-                              cmd.Parameters.AddWithValue("@planname", planname);
-                              cmd.Parameters.AddWithValue("@term", term);
-                              cmd.Parameters.AddWithValue("@mode", mode);
-                              cmd.Parameters.AddWithValue("@latefine", latefine);
-                              cmd.Parameters.AddWithValue("@from", from);
-                              cmd.Parameters.AddWithValue("@to", from);
-                              cmd.Parameters.AddWithValue("@paymethod", paymethod);
-                              cmd.Parameters.AddWithValue("@pdate", pdate);
-                              cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
-                              cmd.Parameters.AddWithValue("@drawno", drawno);
-                              cmd.Parameters.AddWithValue("@relief", 0);
-                              cmd.Parameters.AddWithValue("@payamount", payamount - latefine);
-                              cmd.Parameters.AddWithValue("@amountinword", amountinword);
-                              cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
-
-                              cmd.Parameters.AddWithValue("@macaddress", localIP);
-                              if (paymethod == "Cheque")
-                              {
-                                  cmd.Parameters.AddWithValue("@Chequeno", tp.chequeno);
-                                  cmd.Parameters.AddWithValue("@Account", tp.Account);
-                                  cmd.Parameters.AddWithValue("@acholdername", tp.ACholdername);
-                                  cmd.Parameters.AddWithValue("@bank", tp.bank);
-                                  cmd.Parameters.AddWithValue("@branch", tp.Bbranch);
-                                  cmd.Parameters.AddWithValue("@chequedate", tp.Chequedate);
-                                  if (Chequeimage != null)
-                                  {
-
-                                      string imgname = gid();
-                                      //  tp.Chequeimage = "~/Photo/" + imgname + ".jpg";
-                                      Chequeimage.SaveAs(HttpContext.Server.MapPath("~/Photo/" + imgname + ".jpg"));
-                                      cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/" + imgname + ".jpg");
-                                  }
-                                  else
-                                  {
-                                      cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
-                                  }
-                                  cmd.Parameters.AddWithValue("@chequeamount", tp.ChequeAmount);
-                                  cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
-                                  cmd.Parameters.AddWithValue("@IFSCCode", tp.IFSCCode);
-                                  cmd.Parameters.AddWithValue("@transactiontype", "NA");
-                              }
-
-                              else if (paymethod == "banktransaction")
-                              {
-                                  cmd.Parameters.AddWithValue("@Chequeno", transactionid);
-                                  cmd.Parameters.AddWithValue("@Account", holderacno);
-                                  cmd.Parameters.AddWithValue("@acholdername", "NA");
-                                  cmd.Parameters.AddWithValue("@bank", trbank);
-                                  cmd.Parameters.AddWithValue("@branch", "NA");
-                                  cmd.Parameters.AddWithValue("@chequedate", transactiondate);
-                                  cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
-                                  cmd.Parameters.AddWithValue("@chequeamount", tramount);
-                                  cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
-                                  cmd.Parameters.AddWithValue("@IFSCCode", "NA");
-                                  cmd.Parameters.AddWithValue("@transactiontype", tp.transactiontype);
-                              }
-
-                              SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
-                              p.Direction = ParameterDirection.Output;
-                              cmd.Parameters.Add(p);
-
-                              try
-                              {
-                                  con.Open();
-                                  cmd.ExecuteNonQuery();
-
-                                  paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
-                                  ViewData["newbondid"] = newbondid2;
-                                  ViewData["paymethod"] = paymethod;
-                                  ViewData["paymentno"] = paymentno;
-
-                                  ViewBag.msg = "Renewel pending...";
-                                  return View();
-                              }
-
-                              catch (Exception e)
-                              {
-                                  ViewBag.msg = e.Message;
-                              }
-                              finally
-                              {
-                                  con.Close();
-                              }
-                          }
-                      }
-
-                      else
-                      {
-
-                          var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
-                          con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-                          SqlCommand cmd = new SqlCommand();
-                          cmd.CommandText = "insertrcptinfo";
-                          cmd.CommandType = CommandType.StoredProcedure;
-                          cmd.Connection = con;
-                          var Payamount = payamount - latefine;
-                          cmd.Parameters.AddWithValue("@newbondid", newbondid2);
-                          cmd.Parameters.AddWithValue("@planname", planname);
-                          cmd.Parameters.AddWithValue("@term", term);
-                          cmd.Parameters.AddWithValue("@mode", mode);
-                          cmd.Parameters.AddWithValue("@latefine", latefine);
-                          cmd.Parameters.AddWithValue("@from", from);
-                          cmd.Parameters.AddWithValue("@to", from);
-                          cmd.Parameters.AddWithValue("@paymethod", paymethod);
-                          cmd.Parameters.AddWithValue("@pdate", pdate);
-                          cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
-                          cmd.Parameters.AddWithValue("@drawno", drawno);
-                          cmd.Parameters.AddWithValue("@relief", 0);
-                          cmd.Parameters.AddWithValue("@payamount", Payamount);
-                          cmd.Parameters.AddWithValue("@amountinword", amountinword);
-                          cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
-                          cmd.Parameters.AddWithValue("@macaddress", localIP);
-                          cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
-                          cmd.Parameters.AddWithValue("@transactiontype", "NA");
-
-                          SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
-                          p.Direction = ParameterDirection.Output;
-                          cmd.Parameters.Add(p);
-
-                          try
-                          {
-                              con.Open();
-                              cmd.ExecuteNonQuery();
-                              paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
-                              ViewData["newbondid"] = newbondid2;
-                              ViewData["paymethod"] = paymethod;
-                              ViewData["paymentno"] = paymentno;
-                              //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ",Your renewal of Rs " + payamount + " is received for plan " + planname + " for Bond: " + newbondid2 + " on date: " + pdate.ToString("dd/MM/yyyy"));
-                              string Paymethod = "", chequeno = "";
-                              if (paymethod == "banktransaction")
-                              {
-                                  Paymethod = "Bank Transaction" + "/" + tp.transactiontype;
-                                  chequeno = "Transaction Id " + tp.chequeno;
-                              }
-                              else if (paymethod != "Cash")
-                              {
-                                  chequeno = paymethod + ", No. " + tp.chequeno;
-                                  Paymethod = paymethod;
-                              }
-                              else
-                              {
-                                  Paymethod = paymethod;
-                              }
-                              MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your PAYMENT of Rs." + payamount + ",OF YOUR ID NO.-" + cr.newbondid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards-" + cg.CompanyName);
-                                
-                              ViewBag.msg = "Renewel Done Successfully....";
-                              return View();
-                          }
-
-                          catch (Exception e)
-                          {
-                              ViewBag.msg = e.Message;
-                          }
-                          finally
-                          {
-                              con.Close();
-                          }
-                      }
-                  }
-                  else
-                  {
-                      Response.Write("<script>alert('Your Last Renewal is pending Please Contact to Admin')</script>");
-                  }
-
-
-
-              }
-          }
-          return View();
-      }
-
-      [HttpGet]
-      public ActionResult BrokerAdvancePayment()
-      {
-
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Admin");
-          }
-          else
-          {
-              int count = (from n in db.NewLogins where n.UserName == User.Identity.Name select n.UserName).Count();
-              if (count == 1)
-              {
-                  var log = db.NewLogins.Single(a => a.UserName == User.Identity.Name);
-                  if (log.status == 1 && log.type == "Admin")
-                  {
-                      DateTime maxdate1 = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name select a.date).DefaultIfEmpty().Max();
-                      int trid = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.date == maxdate1 select a.trid).DefaultIfEmpty().Max();
-                      DateTime maxdate = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.trid == trid select a.date).DefaultIfEmpty().Max();
-                      var clcount = (from c in db.ClosingMatchingTabs where c.date == maxdate && c.opid == User.Identity.Name && c.pagename == "BrokerAdvancePayment" select c).Count();
-                      if (clcount == 0)
-                      {
-                          TempData["pagename"] = "BrokerAdvancePayment";
-
-                      }
-                      return View();
-                  }
-                  else
-                  {
-                      return RedirectToAction("Logout", "Branch");
-                  }
-              }
-              else
-              {
-                  return RedirectToAction("Logout", "Branch");
-              }
-          }
-      }
-      [HttpPost]
-      public ActionResult BrokerAdvancePayment(AdvBrokerPaymentTab ob)
-      {
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Branch");
-          }
-          else
-          {
-              var ds = db.Blockdates.Where(c => c.date == ob.date && c.branchcode == User.Identity.Name && c.status == 0).Count();
-              if (ds > 0)
-              {
-                  Response.Write("<script>alert('This Date is closed please select another date')</script>");
-              }
-              else
-              {
-                  Double balance = 0;
-                  var paymentsum = (from df in db.AdvBrokerPaymentTabs where df.newagentid == ob.newagentid select df.amount).DefaultIfEmpty(0).Sum();
-                  var receivesum = (from df in db.AdvBrokerPaymentTabs where df.newagentid == ob.newagentid select df.returnamount).DefaultIfEmpty(0).Sum();
-                  if (ob.type == 0)
-                  {
-                      balance = (paymentsum + ob.amount - receivesum);
-                  }
-                  else if (ob.type == 1)
-                  {
-                      balance = (paymentsum - ob.amount - receivesum);
-                  }
-                  var agt = db.AgentDetails.Single(d => d.NewAgentId == ob.newagentid);
-                  AdvBrokerPaymentTab cob = new AdvBrokerPaymentTab();
-                  cob.newagentid = ob.newagentid;
-                  cob.Remark = ob.Remark;
-                  if (ob.type == 0)
-                  {
-                      cob.amount = ob.amount;
-                      cob.returnamount = 0;
-                  }
-                  else if (ob.type == 1)
-                  {
-                      cob.amount = 0;
-                      cob.returnamount = ob.amount;
-                  }
-                  cob.balanceamount = balance;
-                  cob.date = ob.date;
-                  cob.branchcode = agt.BranchCode;
-                  cob.opid = User.Identity.Name;
-                  cob.type = ob.type;
-                  db.AdvBrokerPaymentTabs.Add(cob);
-                  db.SaveChanges();
-                  Response.Write("<script>alert('Payment done Successfully')</script>");
-              }
-              return View();
-          }
-      }
-      [HttpGet]
-      public ActionResult SearchPendingBond()
-      {
-          List<tempappltab> ad = new List<tempappltab>();
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Admin");
-          }
-          else
-          {
-              return View(ad);
-          }
-      }
-      [HttpPost]
-      public ActionResult SearchPendingBond(string NewBondId, string command, string newbondid)
-      {
-          if (command == "Search")
-          {
-              List<tempappltab> ad = new List<tempappltab>();
-              if (!IsLoggedIn())
-              {
-                  return RedirectToAction("Logout", "Admin");
-              }
-              else
-              {
-
-                  ad = (from dcl in db.tempappltabs where dcl.newbondid == NewBondId select dcl).ToList();
-                  return View(ad);
-              }
-          }
-          else if (command == "PDF")
-          {
-              var dn = (from a in db.tempappltabs where a.newbondid == newbondid select a).ToList();
-              ReportDocument rd = new ReportDocument();
-              rd.Load(Path.Combine(Server.MapPath("~/Reports"), "Customer.rpt"));
-              rd.SetDataSource(dn);
-
-              Response.Buffer = false;
-              Response.ClearContent();
-              Response.ClearHeaders();
-
-
-              try
-              {
-                  Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-                  stream.Seek(0, SeekOrigin.Begin);
-                  return new FileStreamResult(stream, "application/pdf");
-              }
-              catch (Exception ex)
-              {
-                  Response.Write("<script>alert('" + ex.Message + "')</script>");
-              }
-
-              return View(dn);
-
-          }
-          return View();
-      }
-      public ActionResult Block_unblock_video(int opid = 0, int status = 0)
-      {
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("logout", "Home");
-          }
-          else
-          {
-              var getstatus = db.upload_video_tabs.Single(x => x.Id == opid && x.status == status);
-
-              if (status == 1)
-              {
-                  getstatus.status = 0;
-              }
-              else
-              {
-                  getstatus.status = 1;
-              }
+        [HttpGet]
+        public ActionResult PaymentRenewal()
+        {
+
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Branch");
+            }
+            else
+            {
+                DateTime maxdate1 = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name select a.date).DefaultIfEmpty().Max();
+                int trid = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.date == maxdate1 select a.trid).DefaultIfEmpty().Max();
+                DateTime maxdate = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.trid == trid select a.date).DefaultIfEmpty().Max();
+                var clcount = (from c in db.ClosingMatchingTabs where c.date == maxdate && c.opid == User.Identity.Name && c.pagename == "PaymentRenewal" select c).Count();
+                int dcount = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.trid == trid && a.date == maxdate select a).Count();
+                if (dcount > 0)
+                {
+                    if (clcount == 0)
+                    {
+                        TempData["pagename"] = "PaymentRenewal";
+                        return RedirectToAction("MatchingDailyClosing", "Branch");
+                    }
+                }
+                return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult PaymentRenewal(TempInstallmenttab tp, HttpPostedFileBase Chequeimage, string newbondid2, string planname, Double term, string mode, Double latefine, int from, int to, string paymethod, DateTime pdate, string checkorddno, string drawno, Double relief, Double payamount, string amountinword, string trbank, string transactionid, string transactiondate, string tramount, string trpmethod, string holderacno, DateTime prevexpirydate)
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Branch");
+            }
+            else
+            {
+                var tempcount = db.TempInstallmenttabs.Where(c => c.newbondid == newbondid2 && c.status == 1).Count();
+                var ds = db.Blockdates.Where(c => c.date == pdate && c.branchcode == User.Identity.Name && c.status == 0).Count();
+                if (ds > 0)
+                {
+                    Response.Write("<script>alert('This Date is closed please select another date')</script>");
+                }
+                else
+                {
+                    string localIP = "";
+                    foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+                    {
+                        if (nic.OperationalStatus == OperationalStatus.Up)
+                        {
+                            localIP += nic.GetPhysicalAddress().ToString();
+                            break;
+                        }
+                    }
+                    if (tempcount == 0)
+                    {
+                        if (paymethod == "Cheque" || paymethod == "banktransaction")
+                        {
+                            if (paymethod == "Cheque" && (tp.chequeno == null || tp.Chequedate == null || tp.ChequeAmount == null || tp.Bbranch == null || tp.bank == null || tp.Account == null || tp.Account == null || tp.IFSCCode == null))
+                            {
+                                Response.Write("<script>alert('Please Complete Cheque Detail')</script>");
+                            }
+                            else
+                            {
+                                var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
+                                con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                                SqlCommand cmd = new SqlCommand();
+                                cmd.CommandText = "tempinsertrcptinfo";
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Connection = con;
+
+                                cmd.Parameters.AddWithValue("@newbondid", newbondid2);
+                                cmd.Parameters.AddWithValue("@planname", planname);
+                                cmd.Parameters.AddWithValue("@term", term);
+                                cmd.Parameters.AddWithValue("@mode", mode);
+                                cmd.Parameters.AddWithValue("@latefine", latefine);
+                                cmd.Parameters.AddWithValue("@from", from);
+                                cmd.Parameters.AddWithValue("@to", to);
+                                cmd.Parameters.AddWithValue("@paymethod", paymethod);
+                                cmd.Parameters.AddWithValue("@pdate", pdate);
+                                cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
+                                cmd.Parameters.AddWithValue("@drawno", drawno);
+                                cmd.Parameters.AddWithValue("@relief", relief);
+                                cmd.Parameters.AddWithValue("@payamount", (payamount) - (latefine - relief));
+                                cmd.Parameters.AddWithValue("@amountinword", amountinword);
+                                cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
+
+                                cmd.Parameters.AddWithValue("@macaddress", localIP);
+                                if (paymethod == "Cheque")
+                                {
+                                    cmd.Parameters.AddWithValue("@Chequeno", tp.chequeno);
+                                    cmd.Parameters.AddWithValue("@Account", tp.Account);
+                                    cmd.Parameters.AddWithValue("@acholdername", tp.ACholdername);
+                                    cmd.Parameters.AddWithValue("@bank", tp.bank);
+                                    cmd.Parameters.AddWithValue("@branch", tp.Bbranch);
+                                    cmd.Parameters.AddWithValue("@chequedate", tp.Chequedate);
+                                    if (Chequeimage != null)
+                                    {
+
+                                        string imgname = gid();
+                                        //  tp.Chequeimage = "~/Photo/" + imgname + ".jpg";
+                                        Chequeimage.SaveAs(HttpContext.Server.MapPath("~/Photo/" + imgname + ".jpg"));
+                                        cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/" + imgname + ".jpg");
+                                    }
+                                    else
+                                    {
+                                        cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
+                                    }
+                                    cmd.Parameters.AddWithValue("@chequeamount", tp.ChequeAmount);
+                                    cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
+                                    cmd.Parameters.AddWithValue("@IFSCCode", tp.IFSCCode);
+                                    cmd.Parameters.AddWithValue("@transactiontype", "NA");
+                                }
+
+                                else if (paymethod == "banktransaction")
+                                {
+                                    cmd.Parameters.AddWithValue("@Chequeno", transactionid);
+                                    cmd.Parameters.AddWithValue("@Account", holderacno);
+                                    cmd.Parameters.AddWithValue("@acholdername", "NA");
+                                    cmd.Parameters.AddWithValue("@bank", trbank);
+                                    cmd.Parameters.AddWithValue("@branch", "NA");
+                                    cmd.Parameters.AddWithValue("@chequedate", transactiondate);
+                                    cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
+                                    cmd.Parameters.AddWithValue("@chequeamount", tramount);
+                                    cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
+                                    cmd.Parameters.AddWithValue("@IFSCCode", "NA");
+                                    cmd.Parameters.AddWithValue("@transactiontype", tp.transactiontype);
+                                }
+
+                                SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
+                                p.Direction = ParameterDirection.Output;
+                                cmd.Parameters.Add(p);
+
+                                try
+                                {
+                                    con.Open();
+                                    cmd.ExecuteNonQuery();
+
+                                    paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
+                                    ViewData["newbondid"] = newbondid2;
+                                    ViewData["paymethod"] = paymethod;
+                                    ViewData["paymentno"] = paymentno;
+
+                                    ViewBag.msg = "Renewel pending...";
+                                    return View();
+                                }
+
+                                catch (Exception e)
+                                {
+                                    ViewBag.msg = e.Message;
+                                }
+                                finally
+                                {
+                                    con.Close();
+                                }
+                            }
+                        }
+
+                        else
+                        {
+
+                            var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
+                            con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.CommandText = "insertrcptinfo";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Connection = con;
+                            var Payamount = (payamount) - (latefine - relief);
+                            cmd.Parameters.AddWithValue("@newbondid", newbondid2);
+                            cmd.Parameters.AddWithValue("@planname", planname);
+                            cmd.Parameters.AddWithValue("@term", term);
+                            cmd.Parameters.AddWithValue("@mode", mode);
+                            cmd.Parameters.AddWithValue("@latefine", latefine);
+                            cmd.Parameters.AddWithValue("@from", from);
+                            cmd.Parameters.AddWithValue("@to", to);
+                            cmd.Parameters.AddWithValue("@paymethod", paymethod);
+                            cmd.Parameters.AddWithValue("@pdate", pdate);
+                            cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
+                            cmd.Parameters.AddWithValue("@drawno", drawno);
+                            cmd.Parameters.AddWithValue("@relief", relief);
+                            cmd.Parameters.AddWithValue("@payamount", Payamount);
+                            cmd.Parameters.AddWithValue("@amountinword", amountinword);
+                            cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
+                            cmd.Parameters.AddWithValue("@macaddress", localIP);
+                            cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
+                            cmd.Parameters.AddWithValue("@transactiontype", "NA");
+
+                            SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
+                            p.Direction = ParameterDirection.Output;
+                            cmd.Parameters.Add(p);
+
+                            try
+                            {
+                                con.Open();
+                                cmd.ExecuteNonQuery();
+                                paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
+                                ViewData["newbondid"] = newbondid2;
+                                ViewData["paymethod"] = paymethod;
+                                ViewData["paymentno"] = paymentno;
+                                tp.chequeno = tp.chequeno == null ? "" : "no. " + tp.chequeno;
+                                var cm = db.CompanyInfos.Single(d => d.Id == 1);
+                                //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ",Your renewal of Rs " + payamount + " is received for plan " + planname + " for Bond: " + newbondid2 + " on date: " + pdate.ToString("dd/MM/yyyy"));
+                                //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your EMI of Rs." + payamount + " for the month " + prevexpirydate.ToString("MMMM") + " for loan a/c no. " + cr.loanid + " vide " + paymethod + "cheque no " + tp.chequeno + " has been deposited successfully. Regards- " + cm.CompanyName);
+                                string Paymethod = "", chequeno = "";
+                                if (paymethod == "banktransaction")
+                                {
+                                    Paymethod = "Bank Transaction" + "/" + tp.transactiontype;
+                                    chequeno = "Transaction Id " + tp.chequeno;
+                                }
+                                else if (paymethod != "Cash")
+                                {
+                                    chequeno = paymethod + " No " + tp.chequeno;
+                                    Paymethod = paymethod;
+                                }
+                                else
+                                {
+                                    Paymethod = paymethod;
+                                }
+                                //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your EMI of Rs." + payamount + " for the month " + prevexpirydate.ToString("MMMM") + " for loan a/c no. " + cr.loanid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards- " + cg.CompanyName);
+                                MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your PAYMENT of Rs." + payamount + ",OF YOUR ID NO.-" + cr.newbondid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards-" + cg.CompanyName);
+                                ViewBag.msg = "Renewel Done Successfully....";
+                                return View();
+                            }
+
+                            catch (Exception e)
+                            {
+                                ViewBag.msg = e.Message;
+                            }
+                            finally
+                            {
+                                con.Close();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Your Last Renewal is pending Please Contact to Admin')</script>");
+                    }
+
+
+
+                }
+            }
+            return View();
+        }
+        public ActionResult PrintRenewalReport()
+        {
+            List<RecieptTab> bond = new List<RecieptTab>();
+            bond = db.RecieptTabs.ToList();
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports"), "NewRenewal.rpt"));
+            rd.SetDataSource(bond);
+
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+
+
+            try
+            {
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+
+                return new FileStreamResult(stream, "application/pdf");
+            }
+
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "')</script>");
+            }
+            finally
+            {
+                rd.Close();
+                rd.Dispose();
+            }
+            return View();
+
+
+        }
+        public ActionResult PrintRenewalReportCheque(string newbondid, int paymentno = 0)
+        {
+
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Branch");
+            }
+            else
+            {
+                List<tempcheque> bond = new List<tempcheque>();
+
+
+                var max = (from t in db.TempInstallmenttabs where t.newbondid == newbondid && t.paymentno == paymentno && t.status == 1 select t.installmentno).Max();
+                var ta = db.TempInstallmenttabs.Single(t => t.newbondid == newbondid && t.paymentno == paymentno && t.installmentno == max && t.status == 1);
+                var list = db.appltabs.Single(a => a.newbondid == newbondid);
+                bond.Add(new tempcheque { newbondid = ta.newbondid, name = list.name, nolandunit = list.nolandunit, opid = ta.opid, bookingamount = ta.payamount, bank = ta.bank, Account = ta.Account, chequeno = ta.chequeno, ACholdername = ta.ACholdername, Branch = ta.Bbranch, IFSCCode = ta.IFSCCode, ChequeAmount = ta.ChequeAmount, Chequedate = Convert.ToDateTime(ta.Chequedate), Chequeimage = ta.Chequeimage });
+
+                ReportDocument rd = new ReportDocument();
+                rd.Load(Path.Combine(Server.MapPath("~/Reports"), "RenewAckReceipt.rpt"));
+                rd.SetDataSource(bond);
+
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
+
+
+                try
+                {
+                    Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    return new FileStreamResult(stream, "application/pdf");
+
+
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script>alert('" + ex.Message + "')</script>");
+                }
+                finally
+                {
+                    rd.Close();
+                    rd.Dispose();
+                }
+                return View();
+
+            }
+        }
+        [HttpGet]
+        public ActionResult PartPayment()
+        {
+
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Branch");
+            }
+            else
+            {
+
+                return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult PartPayment(TempInstallmenttab tp, HttpPostedFileBase Chequeimage, string newbondid2, string planname, Double term, string mode, Double latefine, int from, string paymethod, DateTime pdate, string checkorddno, string drawno, Double payamount, string amountinword, string trbank, string transactionid, string transactiondate, string tramount, string trpmethod, string holderacno)
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Branch");
+            }
+            else
+            {
+                var tempcount = db.TempInstallmenttabs.Where(c => c.newbondid == newbondid2 && c.status == 1).Count();
+                var ds = db.Blockdates.Where(c => c.date == pdate && c.branchcode == User.Identity.Name && c.status == 0).Count();
+                if (ds > 0)
+                {
+                    Response.Write("<script>alert('This Date is closed please select another date')</script>");
+                }
+                else
+                {
+                    string localIP = "";
+                    foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+                    {
+                        if (nic.OperationalStatus == OperationalStatus.Up)
+                        {
+                            localIP += nic.GetPhysicalAddress().ToString();
+                            break;
+                        }
+                    }
+                    if (tempcount == 0)
+                    {
+                        if (paymethod == "Cheque" || paymethod == "banktransaction")
+                        {
+                            if (paymethod == "Cheque" && (tp.chequeno == null || tp.Chequedate == null || tp.ChequeAmount == null || tp.Bbranch == null || tp.bank == null || tp.Account == null || tp.Account == null || tp.IFSCCode == null))
+                            {
+                                Response.Write("<script>alert('Please Complete Cheque Detail')</script>");
+                            }
+                            else
+                            {
+                                var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
+                                con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                                SqlCommand cmd = new SqlCommand();
+                                cmd.CommandText = "tempinsertrcptinfo";
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Connection = con;
+
+                                cmd.Parameters.AddWithValue("@newbondid", newbondid2);
+                                cmd.Parameters.AddWithValue("@planname", planname);
+                                cmd.Parameters.AddWithValue("@term", term);
+                                cmd.Parameters.AddWithValue("@mode", mode);
+                                cmd.Parameters.AddWithValue("@latefine", latefine);
+                                cmd.Parameters.AddWithValue("@from", from);
+                                cmd.Parameters.AddWithValue("@to", from);
+                                cmd.Parameters.AddWithValue("@paymethod", paymethod);
+                                cmd.Parameters.AddWithValue("@pdate", pdate);
+                                cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
+                                cmd.Parameters.AddWithValue("@drawno", drawno);
+                                cmd.Parameters.AddWithValue("@relief", 0);
+                                cmd.Parameters.AddWithValue("@payamount", payamount - latefine);
+                                cmd.Parameters.AddWithValue("@amountinword", amountinword);
+                                cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
+
+                                cmd.Parameters.AddWithValue("@macaddress", localIP);
+                                if (paymethod == "Cheque")
+                                {
+                                    cmd.Parameters.AddWithValue("@Chequeno", tp.chequeno);
+                                    cmd.Parameters.AddWithValue("@Account", tp.Account);
+                                    cmd.Parameters.AddWithValue("@acholdername", tp.ACholdername);
+                                    cmd.Parameters.AddWithValue("@bank", tp.bank);
+                                    cmd.Parameters.AddWithValue("@branch", tp.Bbranch);
+                                    cmd.Parameters.AddWithValue("@chequedate", tp.Chequedate);
+                                    if (Chequeimage != null)
+                                    {
+
+                                        string imgname = gid();
+                                        //  tp.Chequeimage = "~/Photo/" + imgname + ".jpg";
+                                        Chequeimage.SaveAs(HttpContext.Server.MapPath("~/Photo/" + imgname + ".jpg"));
+                                        cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/" + imgname + ".jpg");
+                                    }
+                                    else
+                                    {
+                                        cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
+                                    }
+                                    cmd.Parameters.AddWithValue("@chequeamount", tp.ChequeAmount);
+                                    cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
+                                    cmd.Parameters.AddWithValue("@IFSCCode", tp.IFSCCode);
+                                    cmd.Parameters.AddWithValue("@transactiontype", "NA");
+                                }
+
+                                else if (paymethod == "banktransaction")
+                                {
+                                    cmd.Parameters.AddWithValue("@Chequeno", transactionid);
+                                    cmd.Parameters.AddWithValue("@Account", holderacno);
+                                    cmd.Parameters.AddWithValue("@acholdername", "NA");
+                                    cmd.Parameters.AddWithValue("@bank", trbank);
+                                    cmd.Parameters.AddWithValue("@branch", "NA");
+                                    cmd.Parameters.AddWithValue("@chequedate", transactiondate);
+                                    cmd.Parameters.AddWithValue("@chequeimg", "~/Photo/default.jpg");
+                                    cmd.Parameters.AddWithValue("@chequeamount", tramount);
+                                    cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
+                                    cmd.Parameters.AddWithValue("@IFSCCode", "NA");
+                                    cmd.Parameters.AddWithValue("@transactiontype", tp.transactiontype);
+                                }
+
+                                SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
+                                p.Direction = ParameterDirection.Output;
+                                cmd.Parameters.Add(p);
+
+                                try
+                                {
+                                    con.Open();
+                                    cmd.ExecuteNonQuery();
+
+                                    paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
+                                    ViewData["newbondid"] = newbondid2;
+                                    ViewData["paymethod"] = paymethod;
+                                    ViewData["paymentno"] = paymentno;
+
+                                    ViewBag.msg = "Renewel pending...";
+                                    return View();
+                                }
+
+                                catch (Exception e)
+                                {
+                                    ViewBag.msg = e.Message;
+                                }
+                                finally
+                                {
+                                    con.Close();
+                                }
+                            }
+                        }
+
+                        else
+                        {
+
+                            var cr = db.appltabs.Single(c => c.newbondid == newbondid2);
+                            con.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.CommandText = "insertrcptinfo";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Connection = con;
+                            var Payamount = payamount - latefine;
+                            cmd.Parameters.AddWithValue("@newbondid", newbondid2);
+                            cmd.Parameters.AddWithValue("@planname", planname);
+                            cmd.Parameters.AddWithValue("@term", term);
+                            cmd.Parameters.AddWithValue("@mode", mode);
+                            cmd.Parameters.AddWithValue("@latefine", latefine);
+                            cmd.Parameters.AddWithValue("@from", from);
+                            cmd.Parameters.AddWithValue("@to", from);
+                            cmd.Parameters.AddWithValue("@paymethod", paymethod);
+                            cmd.Parameters.AddWithValue("@pdate", pdate);
+                            cmd.Parameters.AddWithValue("@checkorddno", checkorddno);
+                            cmd.Parameters.AddWithValue("@drawno", drawno);
+                            cmd.Parameters.AddWithValue("@relief", 0);
+                            cmd.Parameters.AddWithValue("@payamount", Payamount);
+                            cmd.Parameters.AddWithValue("@amountinword", amountinword);
+                            cmd.Parameters.AddWithValue("@opid", User.Identity.Name);
+                            cmd.Parameters.AddWithValue("@macaddress", localIP);
+                            cmd.Parameters.AddWithValue("@time", DateTime.Now.ToShortTimeString());
+                            cmd.Parameters.AddWithValue("@transactiontype", "NA");
+
+                            SqlParameter p = new SqlParameter("@paymentno", SqlDbType.Int);
+                            p.Direction = ParameterDirection.Output;
+                            cmd.Parameters.Add(p);
+
+                            try
+                            {
+                                con.Open();
+                                cmd.ExecuteNonQuery();
+                                paymentno = Convert.ToInt32(cmd.Parameters["@paymentno"].Value.ToString());
+                                ViewData["newbondid"] = newbondid2;
+                                ViewData["paymethod"] = paymethod;
+                                ViewData["paymentno"] = paymentno;
+                                //MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ",Your renewal of Rs " + payamount + " is received for plan " + planname + " for Bond: " + newbondid2 + " on date: " + pdate.ToString("dd/MM/yyyy"));
+                                string Paymethod = "", chequeno = "";
+                                if (paymethod == "banktransaction")
+                                {
+                                    Paymethod = "Bank Transaction" + "/" + tp.transactiontype;
+                                    chequeno = "Transaction Id " + tp.chequeno;
+                                }
+                                else if (paymethod != "Cash")
+                                {
+                                    chequeno = paymethod + ", No. " + tp.chequeno;
+                                    Paymethod = paymethod;
+                                }
+                                else
+                                {
+                                    Paymethod = paymethod;
+                                }
+                                MyClass.Sendmsg(cr.mobileno, "Dear " + cr.name + ", Your PAYMENT of Rs." + payamount + ",OF YOUR ID NO.-" + cr.newbondid + " vide " + Paymethod + " " + chequeno + " has been deposited successfully. Regards-" + cg.CompanyName);
+
+                                ViewBag.msg = "Renewel Done Successfully....";
+                                return View();
+                            }
+
+                            catch (Exception e)
+                            {
+                                ViewBag.msg = e.Message;
+                            }
+                            finally
+                            {
+                                con.Close();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Your Last Renewal is pending Please Contact to Admin')</script>");
+                    }
+
+
+
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult BrokerAdvancePayment()
+        {
+
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Admin");
+            }
+            else
+            {
+                int count = (from n in db.NewLogins where n.UserName == User.Identity.Name select n.UserName).Count();
+                if (count == 1)
+                {
+                    var log = db.NewLogins.Single(a => a.UserName == User.Identity.Name);
+                    if (log.status == 1 && log.type == "Admin")
+                    {
+                        DateTime maxdate1 = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name select a.date).DefaultIfEmpty().Max();
+                        int trid = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.date == maxdate1 select a.trid).DefaultIfEmpty().Max();
+                        DateTime maxdate = (from a in db.DailyDepositTabs where a.opid == User.Identity.Name && a.trid == trid select a.date).DefaultIfEmpty().Max();
+                        var clcount = (from c in db.ClosingMatchingTabs where c.date == maxdate && c.opid == User.Identity.Name && c.pagename == "BrokerAdvancePayment" select c).Count();
+                        if (clcount == 0)
+                        {
+                            TempData["pagename"] = "BrokerAdvancePayment";
+
+                        }
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Logout", "Branch");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Logout", "Branch");
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult BrokerAdvancePayment(AdvBrokerPaymentTab ob)
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Branch");
+            }
+            else
+            {
+                var ds = db.Blockdates.Where(c => c.date == ob.date && c.branchcode == User.Identity.Name && c.status == 0).Count();
+                if (ds > 0)
+                {
+                    Response.Write("<script>alert('This Date is closed please select another date')</script>");
+                }
+                else
+                {
+                    Double balance = 0;
+                    var paymentsum = (from df in db.AdvBrokerPaymentTabs where df.newagentid == ob.newagentid select df.amount).DefaultIfEmpty(0).Sum();
+                    var receivesum = (from df in db.AdvBrokerPaymentTabs where df.newagentid == ob.newagentid select df.returnamount).DefaultIfEmpty(0).Sum();
+                    if (ob.type == 0)
+                    {
+                        balance = (paymentsum + ob.amount - receivesum);
+                    }
+                    else if (ob.type == 1)
+                    {
+                        balance = (paymentsum - ob.amount - receivesum);
+                    }
+                    var agt = db.AgentDetails.Single(d => d.NewAgentId == ob.newagentid);
+                    AdvBrokerPaymentTab cob = new AdvBrokerPaymentTab();
+                    cob.newagentid = ob.newagentid;
+                    cob.Remark = ob.Remark;
+                    if (ob.type == 0)
+                    {
+                        cob.amount = ob.amount;
+                        cob.returnamount = 0;
+                    }
+                    else if (ob.type == 1)
+                    {
+                        cob.amount = 0;
+                        cob.returnamount = ob.amount;
+                    }
+                    cob.balanceamount = balance;
+                    cob.date = ob.date;
+                    cob.branchcode = agt.BranchCode;
+                    cob.opid = User.Identity.Name;
+                    cob.type = ob.type;
+                    db.AdvBrokerPaymentTabs.Add(cob);
+                    db.SaveChanges();
+                    Response.Write("<script>alert('Payment done Successfully')</script>");
+                }
+                return View();
+            }
+        }
+        [HttpGet]
+        public ActionResult SearchPendingBond()
+        {
+            List<tempappltab> ad = new List<tempappltab>();
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Admin");
+            }
+            else
+            {
+                return View(ad);
+            }
+        }
+        [HttpPost]
+        public ActionResult SearchPendingBond(string NewBondId, string command, string newbondid)
+        {
+            if (command == "Search")
+            {
+                List<tempappltab> ad = new List<tempappltab>();
+                if (!IsLoggedIn())
+                {
+                    return RedirectToAction("Logout", "Admin");
+                }
+                else
+                {
+
+                    ad = (from dcl in db.tempappltabs where dcl.newbondid == NewBondId select dcl).ToList();
+                    return View(ad);
+                }
+            }
+            else if (command == "PDF")
+            {
+                var dn = (from a in db.tempappltabs where a.newbondid == newbondid select a).ToList();
+                ReportDocument rd = new ReportDocument();
+                rd.Load(Path.Combine(Server.MapPath("~/Reports"), "Customer.rpt"));
+                rd.SetDataSource(dn);
+
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
+
+
+                try
+                {
+                    Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    return new FileStreamResult(stream, "application/pdf");
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script>alert('" + ex.Message + "')</script>");
+                }
+
+                return View(dn);
+
+            }
+            return View();
+        }
+        public ActionResult Block_unblock_video(int opid = 0, int status = 0)
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("logout", "Home");
+            }
+            else
+            {
+                var getstatus = db.upload_video_tabs.Single(x => x.Id == opid && x.status == status);
+
+                if (status == 1)
+                {
+                    getstatus.status = 0;
+                }
+                else
+                {
+                    getstatus.status = 1;
+                }
 
                 //db.Entry(getstatus).State = EntityState.Modified;
                 db.Entry<upload_video_tab>(getstatus).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-          }
-          return RedirectToAction("upload_video", "Admin");
+            }
+            return RedirectToAction("upload_video", "Admin");
 
-      }
-      [HttpGet]
-      public ActionResult Website()
-      {
-          if (!IsLoggedIn())
-          {
-              return RedirectToAction("Logout", "Admin");
-          }
-          else
-          {
-              return View();
-          }
-      }
-      [HttpPost]
-      public JsonResult AllBroker(string smsid)
-      {
+        }
+        [HttpGet]
+        public ActionResult Website()
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Logout", "Admin");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpPost]
+        public JsonResult AllBroker(string smsid)
+        {
 
-          string sms_result = "Record not found!";
-          var count = db.appltabs.Count(d => d.newbondid == smsid);
-          if (count == 1)
-          {
-              var ad = db.appltabs.Single(d => d.newbondid == smsid);
-              var nl = db.NewLogins.Single(d => d.UserName == ad.newbondid);
-              var cr = db.CompanyInfos.Single(d => d.Id == 1);
-              MyClass.Sendmsg(ad.mobileno, "Dear " + ad.name + ",Thank you for Being a part of " + cr.CompanyName + " Login on " + cr.HeadOffice + " with your user ID as " + nl.UserName + " and password is " + nl.Password + ". Use " + nl.UserName + " as referral ID. Regards- " + cr.CompanyName + ".");
-              sms_result = "SMS sent successfully to " + ad.name;
-          }
-          return Json(sms_result, JsonRequestBehavior.DenyGet);
-      }
-      [HttpPost]
-      public JsonResult AllBroker_List(string smsid)
-      {
+            string sms_result = "Record not found!";
+            var count = db.appltabs.Count(d => d.newbondid == smsid);
+            if (count == 1)
+            {
+                var ad = db.appltabs.Single(d => d.newbondid == smsid);
+                var nl = db.NewLogins.Single(d => d.UserName == ad.newbondid);
+                var cr = db.CompanyInfos.Single(d => d.Id == 1);
+                MyClass.Sendmsg(ad.mobileno, "Dear " + ad.name + ",Thank you for Being a part of " + cr.CompanyName + " Login on " + cr.HeadOffice + " with your user ID as " + nl.UserName + " and password is " + nl.Password + ". Use " + nl.UserName + " as referral ID. Regards- " + cr.CompanyName + ".");
+                sms_result = "SMS sent successfully to " + ad.name;
+            }
+            return Json(sms_result, JsonRequestBehavior.DenyGet);
+        }
+        [HttpPost]
+        public JsonResult AllBroker_List(string smsid)
+        {
 
-          string sms_result = "Record not found!";
-          var count = db.AgentDetails.Count(d => d.NewAgentId == smsid);
-          if (count == 1)
-          {
-              var ad = db.AgentDetails.Single(d => d.NewAgentId == smsid);
-              var nl = db.NewLogins.Single(d => d.UserName == ad.NewAgentId);
-              var cr = db.CompanyInfos.Single(d => d.Id == 1);
-              MyClass.Sendmsg(ad.Mobile, "Dear " + ad.name + ",Thank you for Being a part of " + cr.CompanyName + " Login on " + cr.HeadOffice + " with your user ID as " + nl.UserName + " and password is " + nl.Password + ". Use " + nl.UserName + " as referral ID. Regards- " + cr.CompanyName + ".");
-              sms_result = "SMS sent successfully to " + ad.name;
-          }
-          return Json(sms_result, JsonRequestBehavior.DenyGet);
-      }
-      #endregion 27-Mar-2019 Renewal Option
-      
+            string sms_result = "Record not found!";
+            var count = db.AgentDetails.Count(d => d.NewAgentId == smsid);
+            if (count == 1)
+            {
+                var ad = db.AgentDetails.Single(d => d.NewAgentId == smsid);
+                var nl = db.NewLogins.Single(d => d.UserName == ad.NewAgentId);
+                var cr = db.CompanyInfos.Single(d => d.Id == 1);
+                MyClass.Sendmsg(ad.Mobile, "Dear " + ad.name + ",Thank you for Being a part of " + cr.CompanyName + " Login on " + cr.HeadOffice + " with your user ID as " + nl.UserName + " and password is " + nl.Password + ". Use " + nl.UserName + " as referral ID. Regards- " + cr.CompanyName + ".");
+                sms_result = "SMS sent successfully to " + ad.name;
+            }
+            return Json(sms_result, JsonRequestBehavior.DenyGet);
+        }
+        #endregion 27-Mar-2019 Renewal Option
+
 
 
         #region Amit Receptionist
 
-      public ActionResult ReceptionList()
-      {
-          var model = db.DailyVisitors.ToList();
-          return View(model);
-      }
-        
+        public ActionResult ReceptionList()
+        {
+            var model = db.DailyVisitors.ToList();
+            return View(model);
+        }
+
         #endregion
 
 
-      public ActionResult PayoutReport(double sumamount1, double sumcommission1, double advancepayment1, double bonusamount1, double lesstds1, double netpayamount1)
-      {
-          if (!User.Identity.IsAuthenticated)
-          {
-              return RedirectToAction("Logout", "Admin");
-          }
-          double teamincome = 0;
-          List<require> rlist = new List<require>();
-          var tdsr = db.TDSLF_tabs.Single(t => t.Id == 1);
-          var bonusamount = (from cts in db.bonus_tabs where cts.agentcode == vnewagentid && cts.month == vmonth && cts.year == vvyear select cts.bonusamount).DefaultIfEmpty(0).Sum();
-          ViewData["bonusamount"] = bonusamount;
-          var advancepayment = (from cts in db.AdvDeductionVouchers where cts.newagentid == vnewagentid && cts.month == vmonth && cts.year == vvyear select cts.amount).DefaultIfEmpty(0).Sum();
-          List<plan> pclist = new List<plan>();
-          MonthName mn = new MonthName();
-          var monthname = mn.numbertomonthname(vmonth) + "," + vvyear;
-          var mon = mn.numbertomonthname(vmonth);
-          var br = db.BrokerCommLists.Single(a => a.newagentid == vnewagentid && a.month == mon && a.Year == vvyear);
-          var car = db.AgentDetails.Single(rrr => rrr.NewAgentId == vnewagentid);
-          Double tdsper = 0;
-          if (br.panno == null || br.panno == "Form-61")
-          {
-              tdsper = tdsr.NPCTDS;
-          }
-          else
-          {
-              tdsper = tdsr.TDS;
-          }
+        public ActionResult PayoutReport(double sumamount1, double sumcommission1, double advancepayment1, double bonusamount1, double lesstds1, double netpayamount1)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Logout", "Admin");
+            }
+            double teamincome = 0;
+            List<require> rlist = new List<require>();
+            var tdsr = db.TDSLF_tabs.Single(t => t.Id == 1);
+            var bonusamount = (from cts in db.bonus_tabs where cts.agentcode == vnewagentid && cts.month == vmonth && cts.year == vvyear select cts.bonusamount).DefaultIfEmpty(0).Sum();
+            ViewData["bonusamount"] = bonusamount;
+            var advancepayment = (from cts in db.AdvDeductionVouchers where cts.newagentid == vnewagentid && cts.month == vmonth && cts.year == vvyear select cts.amount).DefaultIfEmpty(0).Sum();
+            List<plan> pclist = new List<plan>();
+            MonthName mn = new MonthName();
+            var monthname = mn.numbertomonthname(vmonth) + "," + vvyear;
+            var mon = mn.numbertomonthname(vmonth);
+            var br = db.BrokerCommLists.Single(a => a.newagentid == vnewagentid && a.month == mon && a.Year == vvyear);
+            var car = db.AgentDetails.Single(rrr => rrr.NewAgentId == vnewagentid);
+            Double tdsper = 0;
+            if (br.panno == null || br.panno == "Form-61")
+            {
+                tdsper = tdsr.NPCTDS;
+            }
+            else
+            {
+                tdsper = tdsr.TDS;
+            }
 
-          var introname = db.AgentDetails.Single(ad => ad.NewAgentId == vnewagentid).name;
-          var broker = db.AgentDetails.Single(adg => adg.NewAgentId == vnewagentid);
-          var fathername = broker.Father;
-          var address = broker.Address;
-          var extradetails = db.Member_tabs.Single(mt => mt.NewMemberId == broker.newmemberid);
-          var city = extradetails.District;
-          var pincode = extradetails.Pin;
-          var dob = broker.Dob;
-          string stryear = vvyear.ToString();
-          var voucherno = (from cts in db.Voucher_Reports where cts.agentid == br.agencycode select cts).Count();
-          string paystatus = "";
-          var voucherpaystatus = db.Voucher_Reports.Where(vc => vc.agentid == br.agencycode && vc.month == vmonth && vc.year == stryear).Count();
+            var introname = db.AgentDetails.Single(ad => ad.NewAgentId == vnewagentid).name;
+            var broker = db.AgentDetails.Single(adg => adg.NewAgentId == vnewagentid);
+            var fathername = broker.Father;
+            var address = broker.Address;
+            var extradetails = db.Member_tabs.Single(mt => mt.NewMemberId == broker.newmemberid);
+            var city = extradetails.District;
+            var pincode = extradetails.Pin;
+            var dob = broker.Dob;
+            string stryear = vvyear.ToString();
+            var voucherno = (from cts in db.Voucher_Reports where cts.agentid == br.agencycode select cts).Count();
+            string paystatus = "";
+            var voucherpaystatus = db.Voucher_Reports.Where(vc => vc.agentid == br.agencycode && vc.month == vmonth && vc.year == stryear).Count();
 
-          if (voucherpaystatus > 0)
-          {
-              paystatus = "PAID";
-          }
-          else
-          {
-              paystatus = "UNPAID";
-          }
-          var rankname = string.Empty;
-          //------Inserting self voucher------------
-          var spclist = (from ct in db.commission_tabs where ct.bondintroducerid == br.agencycode && ct.newagentid == vnewagentid && ct.date.Month == vmonth && ct.date.Year == vvyear orderby ct.planname select new { ct.planname }).Distinct();
-          foreach (var p in spclist.ToList())
-          {
-              pclist.Add(new plan { planname = p.planname });
-          }
-
-
-          foreach (var pc in pclist)
-          {
-
-              var spylist = (from sct in db.commission_tabs where sct.bondintroducerid == br.agencycode && sct.newagentid == vnewagentid && sct.date.Month == vmonth && sct.date.Year == vvyear && sct.planname == pc.planname orderby sct.year select new { sct.year }).Distinct();
-              foreach (var spy in spylist.ToList())
-              {
-                  var business = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Voucher" select cts.amount).DefaultIfEmpty(0).Sum();
-                  var commission = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Voucher" select cts.commission).DefaultIfEmpty(0).Sum();
-                  if (business > 0)
-                  {
-                      var percentage = (commission / business) * 100;
-                      rlist.Add(new require { agentid = br.agencycode, newagentid = br.newagentid, name = br.name, emailid = br.panno, rankname = car.RankName, planname = pc.planname, year = spy.year, business = business, percentage = percentage, commission = commission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1, panno = br.panno, commtype = "Voucher", fathername = fathername, address = address, city = city, pincode = pincode, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
-                  }
-
-                  var sbusiness = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Spot" select cts.amount).DefaultIfEmpty(0).Sum();
-                  var scommission = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Spot" select cts.commission).DefaultIfEmpty(0).Sum();
-                  if (sbusiness > 0)
-                  {
-                      var spercentage = (scommission / sbusiness) * 100;
-                      rlist.Add(new require { agentid = br.agencycode, newagentid = br.newagentid, name = br.name, emailid = br.panno, rankname = car.RankName, planname = pc.planname, year = spy.year, business = sbusiness, percentage = spercentage, commission = scommission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1, panno = br.panno, commtype = "Spot", fathername = fathername, address = address, city = city, pincode = pincode, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
-                  }
-              }
-          }
-
-          var directincome = rlist.Select(ad => ad.commission).DefaultIfEmpty(0).Sum();
-
-          //------End Inserting self voucher----------------
-
-          //----------selecting team business and commission of selected month---------------
-
-          var arlist = (from a in db.BrokerCommLists where a.newintroducerid == vnewagentid && a.month == mon && a.Year == vvyear select a).ToList();
-          List<agents> alist = new List<agents>();
-          foreach (var aar in arlist)
-          {
-              alist.Add(new agents { agentcode = aar.agencycode });
-          }
+            if (voucherpaystatus > 0)
+            {
+                paystatus = "PAID";
+            }
+            else
+            {
+                paystatus = "UNPAID";
+            }
+            var rankname = string.Empty;
+            //------Inserting self voucher------------
+            var spclist = (from ct in db.commission_tabs where ct.bondintroducerid == br.agencycode && ct.newagentid == vnewagentid && ct.date.Month == vmonth && ct.date.Year == vvyear orderby ct.planname select new { ct.planname }).Distinct();
+            foreach (var p in spclist.ToList())
+            {
+                pclist.Add(new plan { planname = p.planname });
+            }
 
 
-          foreach (var a in alist)
-          {
+            foreach (var pc in pclist)
+            {
 
-              List<teamagents> tlist = new List<teamagents>();
-              List<trequire> trlist = new List<trequire>();
-              var nagentid = db.BrokerCommLists.Single(na => na.agencycode == a.agentcode && na.month == mon && na.Year == vvyear);
-              int rcount = 0;
-              rcount = rcount + 1;
-              tlist.Add(new teamagents { sr = rcount, tagentcode = a.agentcode });
-              var maxsragent = tlist.Count;
-              var minsragent = 1;
-              while (minsragent <= maxsragent)
-              {
+                var spylist = (from sct in db.commission_tabs where sct.bondintroducerid == br.agencycode && sct.newagentid == vnewagentid && sct.date.Month == vmonth && sct.date.Year == vvyear && sct.planname == pc.planname orderby sct.year select new { sct.year }).Distinct();
+                foreach (var spy in spylist.ToList())
+                {
+                    var business = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Voucher" select cts.amount).DefaultIfEmpty(0).Sum();
+                    var commission = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Voucher" select cts.commission).DefaultIfEmpty(0).Sum();
+                    if (business > 0)
+                    {
+                        var percentage = (commission / business) * 100;
+                        rlist.Add(new require { agentid = br.agencycode, newagentid = br.newagentid, name = br.name, emailid = br.panno, rankname = car.RankName, planname = pc.planname, year = spy.year, business = business, percentage = percentage, commission = commission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1, panno = br.panno, commtype = "Voucher", fathername = fathername, address = address, city = city, pincode = pincode, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
+                    }
 
-                  var da = tlist.Where(t => t.sr == minsragent);
-                  foreach (var d in da.ToList())
-                  {
-                      var aalist = (from al in db.BrokerCommLists where al.introducerid == d.tagentcode && al.month == mon && al.Year == vvyear select new { al.agencycode }).Distinct();
-                      foreach (var aa in aalist)
-                      {
-                          rcount = rcount + 1;
-                          tlist.Add(new teamagents { sr = rcount, tagentcode = aa.agencycode });
+                    var sbusiness = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Spot" select cts.amount).DefaultIfEmpty(0).Sum();
+                    var scommission = (from cts in db.commission_tabs where cts.planname == pc.planname && cts.year == spy.year && cts.bondintroducerid == br.agencycode && cts.newagentid == vnewagentid && cts.date.Month == vmonth && cts.date.Year == vvyear && cts.comtype == "Spot" select cts.commission).DefaultIfEmpty(0).Sum();
+                    if (sbusiness > 0)
+                    {
+                        var spercentage = (scommission / sbusiness) * 100;
+                        rlist.Add(new require { agentid = br.agencycode, newagentid = br.newagentid, name = br.name, emailid = br.panno, rankname = car.RankName, planname = pc.planname, year = spy.year, business = sbusiness, percentage = spercentage, commission = scommission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1, panno = br.panno, commtype = "Spot", fathername = fathername, address = address, city = city, pincode = pincode, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
+                    }
+                }
+            }
 
-                      }
+            var directincome = rlist.Select(ad => ad.commission).DefaultIfEmpty(0).Sum();
 
-                  }
-                  minsragent = minsragent + 1;
-                  maxsragent = tlist.Count;
-              }
+            //------End Inserting self voucher----------------
 
-              foreach (var tt in tlist)
-              {
-                  var neaid = db.BrokerCommLists.Single(n => n.agencycode == tt.tagentcode && n.month == mon && n.Year == vvyear);
+            //----------selecting team business and commission of selected month---------------
 
-                  var nctrlist = (from nn in db.commission_tabs where nn.bondintroducerid == tt.tagentcode && nn.newagentid == vnewagentid && nn.date.Month == vmonth && nn.date.Year == vvyear select nn).ToList();
-                  foreach (var nctr in nctrlist)
-                  {
-                      trlist.Add(new trequire { newagentid = neaid.newagentid, planname = nctr.planname, plancode = nctr.plancode, year = nctr.year, business = nctr.amount, percentage = nctr.percentage, commission = nctr.commission, commtype = nctr.comtype });
-
-                  }
-
-              }
-
-              var tnrname = db.BrokerCommLists.Single(t => t.newagentid == nagentid.newagentid && t.month == mon && t.Year == vvyear);
-              var tcar = db.AgentDetails.Single(trrr => trrr.AgencyCode == a.agentcode);
-              var dpclist = trlist.Select(tr => new { tr.planname }).Distinct();
-
-              foreach (var dpc in dpclist)
-              {
-                  var dpylist = trlist.Select(tr => new { tr.year }).Distinct();
-                  foreach (var dpy in dpylist)
-                  {
-
-                      var tbusiness = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Voucher").Sum(tr => tr.business);
-                      var tcommission = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Voucher").Sum(tr => tr.commission);
-                      if (tbusiness > 0)
-                      {
-                          var tpercentage = (tcommission / tbusiness) * 100;
-                          rlist.Add(new require { agentid = nagentid.agencycode, newagentid = tnrname.newagentid, name = tnrname.name, rankname = tcar.RankName, planname = dpc.planname, year = dpy.year, business = tbusiness, percentage = tpercentage, commission = tcommission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, panno = br.panno, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1, commtype = "Voucher", fathername = fathername, address = address, city = city, pincode = pincode, directincome = directincome, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
-                      }
-
-                      var stbusiness = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Spot").Sum(tr => tr.business);
-                      var stcommission = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Spot").Sum(tr => tr.commission);
-                      if (stbusiness > 0)
-                      {
-                          var stpercentage = (stcommission / stbusiness) * 100;
+            var arlist = (from a in db.BrokerCommLists where a.newintroducerid == vnewagentid && a.month == mon && a.Year == vvyear select a).ToList();
+            List<agents> alist = new List<agents>();
+            foreach (var aar in arlist)
+            {
+                alist.Add(new agents { agentcode = aar.agencycode });
+            }
 
 
-                          rlist.Add(new require { agentid = nagentid.agencycode, newagentid = tnrname.newagentid, name = tnrname.name, rankname = tcar.RankName, planname = dpc.planname, year = dpy.year, business = stbusiness, percentage = stpercentage, commission = stcommission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, panno = br.panno, newintroducerid = br.newintroducerid, introducername = introname, month = monthname, voucherno = voucherno + 1, commtype = "Spot", fathername = fathername, address = address, city = city, pincode = pincode, directincome = directincome, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
-                      }
-                  }
-              }
-          }
+            foreach (var a in alist)
+            {
 
-          var newrlist = rlist.Select(af => af.commission).DefaultIfEmpty(0).Sum();
-          if (directincome > newrlist)
-          {
-              teamincome = directincome - newrlist;
-          }
-          else if (directincome == newrlist)
-          {
-              teamincome = directincome;
-          }
+                List<teamagents> tlist = new List<teamagents>();
+                List<trequire> trlist = new List<trequire>();
+                var nagentid = db.BrokerCommLists.Single(na => na.agencycode == a.agentcode && na.month == mon && na.Year == vvyear);
+                int rcount = 0;
+                rcount = rcount + 1;
+                tlist.Add(new teamagents { sr = rcount, tagentcode = a.agentcode });
+                var maxsragent = tlist.Count;
+                var minsragent = 1;
+                while (minsragent <= maxsragent)
+                {
 
-          else if (directincome < newrlist)
-          {
-              teamincome = newrlist - directincome;
-          }
+                    var da = tlist.Where(t => t.sr == minsragent);
+                    foreach (var d in da.ToList())
+                    {
+                        var aalist = (from al in db.BrokerCommLists where al.introducerid == d.tagentcode && al.month == mon && al.Year == vvyear select new { al.agencycode }).Distinct();
+                        foreach (var aa in aalist)
+                        {
+                            rcount = rcount + 1;
+                            tlist.Add(new teamagents { sr = rcount, tagentcode = aa.agencycode });
+
+                        }
+
+                    }
+                    minsragent = minsragent + 1;
+                    maxsragent = tlist.Count;
+                }
+
+                foreach (var tt in tlist)
+                {
+                    var neaid = db.BrokerCommLists.Single(n => n.agencycode == tt.tagentcode && n.month == mon && n.Year == vvyear);
+
+                    var nctrlist = (from nn in db.commission_tabs where nn.bondintroducerid == tt.tagentcode && nn.newagentid == vnewagentid && nn.date.Month == vmonth && nn.date.Year == vvyear select nn).ToList();
+                    foreach (var nctr in nctrlist)
+                    {
+                        trlist.Add(new trequire { newagentid = neaid.newagentid, planname = nctr.planname, plancode = nctr.plancode, year = nctr.year, business = nctr.amount, percentage = nctr.percentage, commission = nctr.commission, commtype = nctr.comtype });
+
+                    }
+
+                }
+
+                var tnrname = db.BrokerCommLists.Single(t => t.newagentid == nagentid.newagentid && t.month == mon && t.Year == vvyear);
+                var tcar = db.AgentDetails.Single(trrr => trrr.AgencyCode == a.agentcode);
+                var dpclist = trlist.Select(tr => new { tr.planname }).Distinct();
+
+                foreach (var dpc in dpclist)
+                {
+                    var dpylist = trlist.Select(tr => new { tr.year }).Distinct();
+                    foreach (var dpy in dpylist)
+                    {
+
+                        var tbusiness = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Voucher").Sum(tr => tr.business);
+                        var tcommission = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Voucher").Sum(tr => tr.commission);
+                        if (tbusiness > 0)
+                        {
+                            var tpercentage = (tcommission / tbusiness) * 100;
+                            rlist.Add(new require { agentid = nagentid.agencycode, newagentid = tnrname.newagentid, name = tnrname.name, rankname = tcar.RankName, planname = dpc.planname, year = dpy.year, business = tbusiness, percentage = tpercentage, commission = tcommission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, panno = br.panno, newintroducerid = br.newintroducerid, month = monthname, voucherno = voucherno + 1, commtype = "Voucher", fathername = fathername, address = address, city = city, pincode = pincode, directincome = directincome, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
+                        }
+
+                        var stbusiness = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Spot").Sum(tr => tr.business);
+                        var stcommission = trlist.Where(tr => tr.planname == dpc.planname && tr.year == dpy.year && tr.commtype == "Spot").Sum(tr => tr.commission);
+                        if (stbusiness > 0)
+                        {
+                            var stpercentage = (stcommission / stbusiness) * 100;
 
 
-          if (rlist.Count() > 0)
-          {
-              rlist[0].directincome = directincome;
-              rlist[0].teamincome = teamincome;
-          }
-          try
-          {
+                            rlist.Add(new require { agentid = nagentid.agencycode, newagentid = tnrname.newagentid, name = tnrname.name, rankname = tcar.RankName, planname = dpc.planname, year = dpy.year, business = stbusiness, percentage = stpercentage, commission = stcommission, tds = tdsper, bonusamount = bonusamount, advancepayment = advancepayment, brokerid = vnewagentid, brokername = br.name, brokerrank = car.RankName, panno = br.panno, newintroducerid = br.newintroducerid, introducername = introname, month = monthname, voucherno = voucherno + 1, commtype = "Spot", fathername = fathername, address = address, city = city, pincode = pincode, directincome = directincome, sumamount1 = sumamount1, sumcommission1 = sumcommission1, advancepayment1 = advancepayment1, bonusamount1 = bonusamount1, lesstds1 = lesstds1, netpayamount1 = netpayamount1, paystatus = paystatus });
+                        }
+                    }
+                }
+            }
 
-              ReportDocument rd = new ReportDocument();
-              rd.Load(Path.Combine(Server.MapPath("~/Reports"), "PayoutReportrpt.rpt"));
+            var newrlist = rlist.Select(af => af.commission).DefaultIfEmpty(0).Sum();
+            if (directincome > newrlist)
+            {
+                teamincome = directincome - newrlist;
+            }
+            else if (directincome == newrlist)
+            {
+                teamincome = directincome;
+            }
 
-              //rd.Subreports[0].SetDataSource(rlist);
-              rd.SetDataSource(rlist);
+            else if (directincome < newrlist)
+            {
+                teamincome = newrlist - directincome;
+            }
+
+
+            if (rlist.Count() > 0)
+            {
+                rlist[0].directincome = directincome;
+                rlist[0].teamincome = teamincome;
+            }
+            try
+            {
+
+                ReportDocument rd = new ReportDocument();
+                rd.Load(Path.Combine(Server.MapPath("~/Reports"), "PayoutReportrpt.rpt"));
+
+                //rd.Subreports[0].SetDataSource(rlist);
+                rd.SetDataSource(rlist);
 
 
 
 
-              Response.Buffer = false;
-              Response.ClearContent();
-              Response.ClearHeaders();
+                Response.Buffer = false;
+                Response.ClearContent();
+                Response.ClearHeaders();
 
 
-              try
-              {
-                  Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
-                  stream.Seek(0, SeekOrigin.Begin);
-                  string dt = pdate.ToShortDateString();
+                try
+                {
+                    Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    string dt = pdate.ToShortDateString();
 
-                  return new FileStreamResult(stream, "application/pdf");
-              }
+                    return new FileStreamResult(stream, "application/pdf");
+                }
 
-              catch (Exception ex)
-              {
-                  Response.Write("<script>alert('" + ex.Message + "')</script>");
-              }
-              finally
-              {
-                  rd.Close();
-                  rd.Dispose();
-              }
-          }
-          catch (Exception ex)
-          {
-              Response.Write(ex.Message);
-              return Content("Erro : <br></br>" + ex.Message + "<br></<br>" + ex.ToString());
-          }
+                catch (Exception ex)
+                {
+                    Response.Write("<script>alert('" + ex.Message + "')</script>");
+                }
+                finally
+                {
+                    rd.Close();
+                    rd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write(ex.Message);
+                return Content("Erro : <br></br>" + ex.Message + "<br></<br>" + ex.ToString());
+            }
 
-          return View();
-      }
+            return View();
+        }
 
     }
 }

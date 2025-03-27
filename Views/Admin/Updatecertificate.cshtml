@@ -1,86 +1,50 @@
-﻿@model IEnumerable<ODHDEVELOPERS.Models.APIKeyCertificate>
-@using ODHDEVELOPERS.Models;
-@{
-    UsersContext db = new UsersContext();
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewBag.Title = "Updatecertificate";
-    var a = 0;
-}
+﻿
+@model IEnumerable<ODHDEVELOPERS.Models.APIKeyCertificate>
+    @using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        ViewBag.Title = "Updatecertificate";
+        var a = 0;
+    }
 
-<div class="page-content">
-
-    <div class="container">
-
-        <div class="page-toolbar">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Update API Key & Certificate</div>
-                <div class="page-toolbar-subtitle"></div>
-            </div>
-
-            <div class="page-toolbar-block pull-right">
-            </div>
-
-        </div>
-        <div class="row" style="width: 100%">
-            <div class="col-md-6" style="width: 100%">
-
-                <div class="block" style="width: 100%">
-                    <div class="block-content controls">
-                        @if (Model != null)
-                        {
-                            foreach (var item in Model)
-                            {
-                            <form method="post">
-                            <div class="row-form">
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">KEY-1 </label>
-                                        </span>
-                                        <textarea class="form-control" name="livecert" cols="3">@item.livecert</textarea>
-
-                                    </div>
-                                </div>
-                            </div>
-             
-                            <div class="row-form">
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">KEY-2 </label>
-                                        </span>
-                                        <textarea class="form-control" name="mycert" cols="3">@item.mycert</textarea>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row-form">
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Status </label>
-                                        </span>
-                                        <input type="text" class="form-control" name="status" value="@item.status" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="page-toolbar-block pull-right">
-                                <div class="widget-info widget-from">
-                                    <button type="submit" class="btn btn-primary pull-right">Set</button>
-                                </div>
-                            </div>
-                                
-                            </form>
-                            }
-
-                        }
+    <link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+    <div class="container mt-5">
+        <!-- Title -->
+        <h2 class="text-center create-title">Update API Key & Certificate</h2>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <!-- Form -->
+                <form id="blockForm" class="form-container" method="post">
+                    <!-- KEY-1 Input -->
+                    <div class="form-group">
+                        <label for="key1" class="form-label">KEY-1</label>
+                        <input type="text" class="form-control" id="key1" name="livecert" value="@item.livecert">
+                        @*<textarea class="form-control" name="livecert" cols="3">@item.livecert</textarea>*@
                     </div>
 
-                </div>
-            </div>
+                    <!-- KEY-2 Input -->
+                    <div class="form-group">
+                        <label for="key2" class="form-label">KEY-2</label>
+                        <input type="text" class="form-control" id="key2" name="mycert" value="@item.mycert">
+                    </div>
 
-        </div>
-    </div>
-</div>
+                    <!-- Status (Fixed) -->
+                    <div class="form-group">
+                        <label for="status" class="form-label">Status</label>
+                        <input type="text" class="form-control" id="status" name="status" value="@item.status" readonly>
+                    </div>
+
+
+
+                    <!-- Create Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn create-btn">Set</button>
+                    </div>
+                </form>
+            }
+        }
+            </div>
 

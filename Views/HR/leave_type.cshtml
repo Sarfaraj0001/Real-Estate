@@ -1,4 +1,5 @@
-﻿@using ODHDEVELOPERS.Models;
+﻿
+@using ODHDEVELOPERS.Models;
 @{
     ViewBag.Title = "leave_type";
     Layout = "~/Views/Shared/_HRLayout.cshtml";
@@ -7,63 +8,53 @@
 }
 
 
- <div class="page-content">
- <div class="container">
-    
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Leave Type</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                    </div>
-<form method="get" action="../HR/leave_type">
-
-    <div class="row" >
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" >
-                               
-                                <div class="block-content controls" >
 
 
-     <div class="row-form">
-                                        
-                                        <div class="col-md-9">
-                                            
 
-                                             <div class="input-group">
-                                            <span class="input-group-addon"><label class="width" >Designation</label></span>
+<div class="container mt-5 FormContainer">
+    <h2 class="text-center mb-4">Leave Type</h2>
+    <form id="branchForm" class="border p-4 rounded shadow formtag" method="get" action="../HR/leave_type">
 
 
-                                                 <select id="Select1" class="form-control" name="name">
-                                                     <option value="">Select</option>
-                                                     @foreach(var item in list)
-                                                     {
-                                                     <option value="@item.RankName">@item.RankName</option>
-                                                     }
-                                                     
-                                                 </select>
-                                                </div>
+        <div class="mb-3">
+            <span class="form-label formLabel"><label class="width">Designation</label></span>
 
-                                        </div>
-                                    </div>
-    
-    <div class="row-form">
-                              
-                                        <div class="col-md-9">
-                                             <div class="input-group">
-                                            <span class="input-group-addon"><label class="width" > No Of Leaves</label></span>
-                                                 <input type="text" id="Introducer" required name="leavetype"  class="form-control">
-                                                </div>
+            <label for="year" class="form-label formLabel">Select Date </label>
+            <select id="Select1" class="form-control formInput" name="name">
+                <option value="">Select</option>
+                @foreach (var item in list)
+                {
+                    <option value="@item.RankName">@item.RankName</option>
+                }
 
-                                        </div>
-                                    </div>
-    <div class="widget-info widget-from">                       
-   <button name="submitbtn" type="submit" class="btn btn-primary">Submit</button>                            
-   </div>
-                                    </div>
-                                </div>
-</form>
+            </select>
+        </div>
+
+
+
+        <div class="mb-3">
+
+            <label class="form-label formLabel">No. of Leaves</label>
+
+            <input type="text" id="Introducer"  name="leavetype" class="form-control formInput" required>
+
+
+        </div>
+
+
+
+
+
+        <div class="text-center d-grid gap-2">
+
+            <button name="submitbtn" type="submit" class="btn btn-lg formButtom">Submit</button>
+        </div>
+
+
+
+
+    </form>
+
+
 </div>
-     </div>
+

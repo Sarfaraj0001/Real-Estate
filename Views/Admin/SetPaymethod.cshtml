@@ -1,74 +1,53 @@
 ﻿@model IEnumerable<ODHDEVELOPERS.Models.AppSettingTab>
-@using ODHDEVELOPERS.Models;
-@{
-    UsersContext db = new UsersContext();
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewBag.Title = "SetPaymethod";
-    var a = 0;
-}
-
-<div class="page-content">
-
-    <div class="container">
-
-        <div class="page-toolbar">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Active-Deactive Wallet</div>
-                <div class="page-toolbar-subtitle"></div>
-            </div>
-
-            <div class="page-toolbar-block pull-right">
-            </div>
-
-        </div>
-
-        <table border="1" style="margin-left: 15%; margin-right: 25%; width: 50%;">
-
-            @foreach (var item in Model)
-            {
-                if (a == 0)
-                {
-                <tr>
-                    <th style="width: 10%; text-align: center;">
-                        <label id="sn"><b>S.N.</b></label>
-                    </th>
-                    <th style="width: 20%; text-align: center;">
-                        <label id="BranchCode"><b>Wallet</b></label>
-                    </th>
-                    <th style="width: 20%; text-align: center;">
-                        <label id="Action"><b>Action</b></label>
-                    </th>
-                </tr>
-        }
-
-        a = a + 1;
-                <tr style="text-align: center;">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.type)
-                    </td>
+    @using ODHDEVELOPERS.Models;
+    @{
+        UsersContext db = new UsersContext();
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        ViewBag.Title = "SetPaymethod";
+        var a = 0;
+    }
 
 
-                    @if (item.status == 0)
+    <link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Active-Deactive Wallet</div>
+            <table>
+                <thead>
+                 
+                            <tr>
+                                <th>S.no</th>
+                                <th>Wallet</th>
+                                <th>Action</th>
+                            </tr>
+                    
+                        </thead>
+                <tbody>
+                    @foreach (var item in Model)
                     {
-                        <td>
+                        a = a + 1;
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.type)</td>
+                            @if (item.status == 0)
+                            {
+                                <td>
 
-                            @Html.ActionLink("Active", "SetPaymethod", new { Id = item.Id, status = 1 }, new { onclick = "return confirm('Are you sure to Active Wallet?');" })
-                        </td>
+                                    @Html.ActionLink("Active", "SetPaymethod", new { Id = item.Id, status = 1 }, new { onclick = "return confirm('Are you sure to Active Wallet?');" })
+                                </td>
+                            }
+
+                            @if (item.status == 1)
+                            {
+                                <td>
+                                    @Html.ActionLink("Deactive", "SetPaymethod", new { Id = item.Id, status = 0 }, new { onclick = "return confirm('Are you sure to Deactive Wallet?');" })
+                                </td>
+                            }
+                        </tr>
                     }
-                    @if (item.status == 1)
-                    {
-                        <td>
-                            @Html.ActionLink("Deactive", "SetPaymethod", new { Id = item.Id, status = 0 }, new { onclick = "return confirm('Are you sure to Deactive Wallet?');" })
-                        </td>
-                   }
-                </tr>
-            }
-
-        </table>
+                    </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
+    

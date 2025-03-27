@@ -1,23 +1,23 @@
 ﻿@using ODHDEVELOPERS.Models;
 @using System;
 @{
-    Layout="~/Views/Shared/_AdminLayout.cshtml";
- }
-
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
 <script>
     $(function () {
-        $('[name=AgentId]').autocomplete({            
+        $('[name=AgentId]').autocomplete({
             source: function (request, response) {
                 debugger;
                 $.ajax({
                     url: "/Admin/AgentWelcomeLetter",
                     type: "Get",
                     datatype: "JSON",
-                    data: { AgentId: request.term ,Recogniser:"Print"},
+                    data: { AgentId: request.term, Recogniser: "Print" },
                     success: function (data) {
                         debugger;
                         response($.map(data, function (item) {
-                            return { label: item.name, value: item.NewAgentId }                           
+                            return { label: item.name, value: item.NewAgentId }
                         }));
                     }
                 });
@@ -25,50 +25,43 @@
         });
 
         $("#btn").on("click", function (e) {
-           
-           // window.open("");
+
+            // window.open("");
 
         });
 
     });
-        
+
 </script>
 
-<div class="page-content">
-    <div class="clearfix"></div>
-    <div class="container">
-        <div class="page-toolbar">
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Agent Welcome Letter</div>
-                <div class="page-toolbar-subtitle"></div>
-            </div>
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 
-            <div class="page-toolbar-block pull-right">
-            </div>
+<div class="container mt-5">
+    <h2 class="text-center mb-4 create-title">Agent Welcome Letter</h2>
+    <form id="paymentForm" class="form-container" action="/admin/AgentWelcomeLetter" method="post" target="_blank">
 
+        <!-- Associate ID -->
+        <div class="form-group">
+            <label for="associateId" class="form-label">Enter Agent ID:</label>
+            <input type="text" class="form-control" id="associateId" placeholder="Enter ID" name="AgentId" required>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <form action="/admin/AgentWelcomeLetter" method="post" target="_blank">
-            <div class="row " id="hide">
-                <div class="col-md-2"></div>
 
-                <div class="col-md-4">
-                    <label style="font-weight: bold">Enter the Agent Id :</label>
-                    <input type="text" name="AgentId" class="form-control" />
-                </div>
-                <div class="col-md-2">
-                    <br />
-                    <button id="btn" type="submit" class="btn btn-primary btn-md" style="margin-top: 2px;">Print Welcome Letter</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="clearfix"></div>
+
+
+        <!-- Submit Button -->
+        <div class="text-center d-grid gap-2">
+            <button type="submit" class="btn create-btn">Print Welcome Letter</button>
+        </div>
+    </form>
 </div>
+
+
+
 
 
 

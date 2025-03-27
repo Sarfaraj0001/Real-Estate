@@ -1,4 +1,5 @@
-﻿@using ODHDEVELOPERS.Models;
+﻿
+@using ODHDEVELOPERS.Models;
 @{
     ViewBag.Title = "Enquary_list";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -7,65 +8,43 @@
     var a = 0;
 }
 
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<div class="index_body">
+    <div class="table-container">
+        <div class="header-row">Enquary List</div>
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Sr No.</th>
+                    <th>Name</th>
+                    <th>Email ID</th>
+                    <th>Mobile</th>
+                    <th>Entry Date</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+      
+
+            <tbody>
+
+                @foreach (var ii in list)
+                {
+                    a = a + 1;
+                    <tr>
+                        <td>@a</td>
+                        <td>@ii.name</td>
+                        <td>@ii.emailid</td>
+                        <td>@ii.mobile</td>
+                        <td>@ii.cdate.ToString("dd/MM/yyyy")</td>
+                        <td>@ii.message</td>
+                    </tr>
+                }
 
 
-<div class="page-content">
+            </tbody>
+        </table>
 
-                <div class="container">
-
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Enquary List</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                        <div class="page-toolbar-block pull-right">
-                           
-                        </div>           
-                        
-                    </div> 
-                 <div class="row" style="width:100%">
-                        <div class="col-md-6" style="width:100%">
-                            
-                            <div class="block" style="width:100%">
-                               <div class="block-content controls"></div>
-                                   <table  class="table-responsive table-bordered table" id="myTable" style="width:100%;">
-                                <thead>
-                                  
-                                    <tr >
-                                        <th >Sr No.</th>
-                                        <th>Name</th>
-                                        <th >Email ID</th>
-                                        <th >Mobile</th>
-                                        <th >Entry Date</th>
-                                        <th >Message</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                           @foreach(var ii in list)
-                           {
-                               a = a + 1;
-                               <tr>
-                                   <td >@a</td>
-                                    <td>@ii.name</td>
-                                    <td >@ii.emailid</td>
-                                    <td >@ii.mobile</td>
-                                    <td >@ii.cdate.ToString("dd/MM/yyyy")</td>
-                                   <td ><textarea readonly="true">@ii.message</textarea></td>
-                               </tr>
-                           }
-                                   
-                                </tbody>
-                            </table>   
-                                    </div>
-                            </div>
-                                        
-                   </div>
-
-</div> </div>
-
-
-    
+    </div>
+</div>
 

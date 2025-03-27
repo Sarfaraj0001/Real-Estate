@@ -7,7 +7,7 @@
     var incometype = string.Empty;
     var mr = db.Members.Single(m => m.Id == 1);
     var r = db.CompanyInfos.Single(ci => ci.AdminId == User.Identity.Name);
-  
+
 
     logo = r.CompanyLogo;
     companyname = r.CompanyName;
@@ -15,146 +15,120 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "Update";
 }
+<link href="~/assets/css1/main css/Pages.css" rel="stylesheet" />
 
-<div class="page-content">
-
-    <div class="container" style="width: 775px; padding-left: 0px; padding-right: 0px;">
-
-        <div class="page-toolbar" style="width: 770px;">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title"></div>
-
-                <h4><b>Welcome, @br.CompanyName</b></h4>
-            </div>
-            <div style="margin-top: 0px; float: right; margin-right: 10px;">
-            </div>
-
-        </div>
-
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <i class="icon-edit"></i>
-                <h3>Update</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
-
-                <div class="shortcuts">
-                    <a href="~/Admin/UpdateBranch" class="shortcut">
-                        <img alt="" src="~/Images/icon/36.png" />
-                        <span class="shortcut-label">@mr.branchname</span>
-                    </a>
-
-                    <a href="~/Admin/UpdateOperator" class="shortcut">
-                        <img alt="" src="~/Images/icon/69.png" />
-                        <span class="shortcut-label">Collection Point</span>
-                    </a>
-
-                    <a href="~/Admin/UpdateHR" class="shortcut">
-                        <img alt="" src="~/Images/icon/68.png" />
-                        <span class="shortcut-label">HR</span>
-                    </a>
-                    <a href="~/Admin/UpdatePlan" class="shortcut">
-                        <img alt="" src="~/Images/icon/10.png" />
-                        <span class="shortcut-label">@mr.planname Category</span>
-                    </a>
-                      <a href="~/Admin/UpdateBlock" class="shortcut">
-                        <img alt="" src="~/Images/icon/block.png" />
-                        <span class="shortcut-label">Block</span>
-                    </a>
-                    <a href="~/Admin/UpdatePlotLimit" class="shortcut">
-                        <img alt="" src="~/Images/icon/limit.jpg" />
-                        <span class="shortcut-label">Edit Plot Limit</span>
-                    </a>
-                    <a href="~/Admin/EMIMaster" class="shortcut">
-                        <img alt="" src="~/Images/icon/10.png" />
-                        <span class="shortcut-label">EMI Master</span>
-                    </a>
-                  @*  @if (@mr.type == "Old")
-                    {
-                        <a href="~/Admin/UpdateNewPlan" class="shortcut">
-                            <img alt="" src="~/Images/icon/21.png" />
-                            <span class="shortcut-label">New @mr.planname</span>
-                        </a>
-                        <a href="~/Admin/UpdateRDPlanAmount" class="shortcut">
-                            <img alt="" src="~/Images/icon/rd.jpg" />
-                            <span class="shortcut-label">@plan1.shortcutname Amount</span>
-                        </a>
-                        <a href="~/Admin/UpdateFDPlanAmount" class="shortcut">
-                            <img alt="" src="~/Images/icon/fd.png" />
-                            <span class="shortcut-label">@plan2.shortcutname Amount</span>
-                        </a>
-                          
-                        <a href="~/Admin/UpdateNFPlanAmount" class="shortcut">
-                            <img alt="" src="~/Images/icon/futureplans.jpg" />
-                            <span class="shortcut-label">@plan3.shortcutname Amount</span>
-                        </a>
-                        <a href="~/Admin/UpdatePPSPlanAmount" class="shortcut">
-                            <img alt="" src="~/Images/icon/pension.jpg" />
-                            <span class="shortcut-label">@plan4.shortcutname Amount</span>
-                        </a>
-                    }*@
-
-                 @*   @if (@mr.type == "New")
-                    {
-                        <a href="~/Admin/UpdateRDPlan" class="shortcut">
-                            <img alt="" src="~/Images/icon/rd.jpg" />
-                            <span class="shortcut-label">@plan1.Planname</span>
-                        </a>
-                        <a href="~/Admin/UpdateFDPlan" class="shortcut">
-                            <img alt="" src="~/Images/icon/fd.png" />
-                            <span class="shortcut-label">@plan2.Planname</span>
-                        </a>
-                              
-                        
-                    }*@
-
-                    <a href="~/Admin/UpdateRank" class="shortcut">
-                        <img alt="" src="~/Images/icon/rank.png" />
-                        <span class="shortcut-label">@mr.rankname</span>
-                    </a>
-                    <a href="~/Admin/UpdateExpense" class="shortcut">
-                        <img alt="" src="~/Images/icon/exp.png" />
-                        <span class="shortcut-label">Expense</span>
-                    </a>
-
-                    <a href="~/Admin/UpdateMember" class="shortcut">
-                        <img alt="" src="~/Images/icon/MemberIcon.png" />
-                        <span class="shortcut-label">Member</span>
-                    </a>
-                    @* <a href="~/Admin/UpdateAccount" class="shortcut">
-							<img alt="" src="~/Images/icon/savingacc.jpg" />
-							<span class="shortcut-label">Saving Account</span>
-                            
-						</a>*@
-                    <a href="~/Admin/UpdateAgentForm" class="shortcut">
-                        <img alt="" src="~/Images/icon/70.png" />
-                        <span class="shortcut-label">@mr.agentname</span>
-                    </a>
-                    <a href="~/Admin/UpdateBond" class="shortcut">
-                        <img alt="" src="~/Images/icon/71.png" />
-                        <span class="shortcut-label">@mr.custname</span>
-                    </a>
-                  @*  <a href="~/Admin/UpdateManualBond" class="shortcut">
-                        <img alt="" src="~/Images/icon/71.png" />
-                        <span class="shortcut-label">Manual @mr.custname</span>
-                    </a>
-                    <a href="~/Admin/UpdateAdjustmentBond" class="shortcut">
-                        <img alt="" src="~/Images/icon/71.png" />
-                        <span class="shortcut-label">Adjustment @mr.custname</span>
-                    </a>*@
-                </div>
-                <!-- /shortcuts -->
-
-            </div>
-            <!-- /widget-content -->
-
-        </div>
-
+<!-- Section 1: Final Report -->
+<div class="section">
+    
+    <div class="w-100 card-heading">
+        <h3 class="text-center text-white pt-2 pb-2">Update</h3>
     </div>
-    <!-- /widget-content -->
+    <!-- Main Container -->
+    <div class="row g-3">
+        <div class="container mt-5">
+            <!-- First Row -->
+            <div class="row g-3">
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdateBranch" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/location-pin.png" />
+                            <h6 class="card-title mt-3">@mr.branchname</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdateOperator" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/map.png" />
+                            <h6 class="card-title mt-3">Collection Point</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdateHR" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/hr.png" />
+                            <h6 class="card-title mt-3">Hr</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdatePlan" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/clipboard.png" />
+                            <h6 class="card-title mt-3">@mr.planname Category</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdateBlock" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/cubes.png" />
+                            <h6 class="card-title mt-3">Block</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdatePlotLimit" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/edit.png" />
+                            <h6 class="card-title mt-3">Edit Plot Limit</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-</div>
+            <!-- Second Row -->
+            <div class="row g-3 mt-3">
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/EMIMaster" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/ledger.png" />
+                            <h6 class="card-title mt-3">Emi Master</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdateRank" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/next-level.png" />
+                            <h6 class="card-title mt-3">@mr.rankname</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdateExpense" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/commission.png" />
+                            <h6 class="card-title mt-3">Expense</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="~/Admin/UpdateMember" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/team.png" />
+                            <h6 class="card-title mt-3">Member</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="#" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/manager.png" alt="Accountant" />
+                            <h6 class="card-title mt-3">Associate</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                    <a href="#" class="custom-card text-center h-100">
+                        <div class="card-body">
+                            <img class="imageSize" src="~/Create_logos/handshake.png" />
+                            <h6 class="card-title mt-3">Customer</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+

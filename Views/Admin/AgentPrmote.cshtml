@@ -6,7 +6,7 @@
     ViewBag.Title = "AgentPrmote";
 }
 <link rel="stylesheet" href="~/Content/jquery-ui.css" />
-
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
 <script type="text/javascript">
     $(document).ready(function () {
         $("#intro").autocomplete({
@@ -102,96 +102,47 @@
 </script>
 
 
-@using(Html.BeginForm())
+@using (Html.BeginForm())
 {
 
-    <div class="page-content">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4 create-title">Promote @mr.agentname</h2>
+        <div id="branchForm" class="form-container">
 
-        <div class="container">
 
-            <div class="page-toolbar">
 
-                <div class="page-toolbar-block">
-                    <div class="page-toolbar-title">Promote @mr.agentname</div>
-                    <div class="page-toolbar-subtitle"></div>
-                </div>
-                <div class="page-toolbar-block pull-right">
-                </div>
+            <!-- Collection Point Name -->
+            <div class="form-group">
+                <label for="collectionPointName" class="form-label">Enter @mr.agentname Id</label>
+                <input type="text" class="form-control " onmouseover="check(this.id)" name="intro" id="intro" placeholder="Enter Name or Id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="collectionPointName" class="form-label">Current @mr.rankname</label>
+                <input type="text" class="form-control" id="rank" name="rank" placeholder="Enter Current Rank">
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="collectionPointName" class="form-label">@mr.rankname To Promote</label>
+                <input type="text" class="form-control" id="promoterank" name="promoterank" onmouseover="checkintrankadmin(this.id)" placeholder="Enter New Rank" required>
+            </div>
+
+
+            <!-- Create Button -->
+            <div class="text-center d-grid gap-2">
+                <button type="submit" class="btn create-btn">@mr.agentname Promote</button>
+            </div>
+
+
+          
+
+
 
 
             </div>
-            <div class="row">
-                <div class="col-md-6" style="width: 100%">
-
-                    <div class="block">
-
-                        <div class="block-content controls">
-
-                            <div class="row-form">
-                                <div class="row-form">
-                                    <div class="col-md-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <label class="width">Enter @mr.agentname Id</label></span>
-                                            <input type="text" class="form-control" onmouseover="check(this.id)" name="intro" id="intro" required />
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="row-form">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">Current @mr.rankname</label></span>
-                                                <input type="text" id="rank" name="rank" class="form-control" />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="row-form">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <label class="width">@mr.rankname To Promote</label></span>
-                                                <input type="text" id="promoterank" name="promoterank" onmouseover="checkintrankadmin(this.id)" class="form-control" required />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row-form">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-
-                                            <label id="msg"></label>
-                                            <br />
-                                            <button type="submit" class="btn btn-primary">@mr.agentname Promote</button>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-    </div>
-}
+                    
+            }

@@ -1,14 +1,115 @@
 ﻿@model ODHDEVELOPERS.Models.BlockTab
 @using ODHDEVELOPERS.Models;
 @{
-    UsersContext db=new UsersContext();
-    var mr = db.Members.Single(m => m.Id == 1);   
+    UsersContext db = new UsersContext();
+    var blockDetails = db.BlockTabs.ToList();
+    var mr = db.Members.Single(m => m.Id == 1);
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "CreateBlock";
-    
+
     //for accessing all cityname
     var allplan = db.Plans.Where(d => d.status == 1).ToList();
-    
+
+}
+<link href="~/assets/css1/main css/index.css" rel="stylesheet" />
+<link href="~/assets/css1/main css/Forms.css" rel="stylesheet" />
+<div class="container mt-5">
+    <!-- Title -->
+    <h2 class="text-center create-title">Create New Block</h2>
+
+
+    @using (Html.BeginForm())
+    {
+
+        <!-- Form -->
+        <div id="blockForm" class="form-container">
+            <!-- Project Name Dropdown -->
+            <div class="form-group">
+                <label for="projectName" class="form-label">Enter @mr.planname Name</label>
+
+                <select class="form-control" name="Plancode" id="Plancode" onchange="selectphase(this.id)" required>
+                    <option value="">Select</option>
+                    @foreach (var i in allplan)
+                    {
+                        <option value="@i.Plancode">@i.Planname</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Phase Name Dropdown -->
+            <div class="form-group">
+                <label for="phaseName" class="form-label" id="phaseid" name="phaseid">Phase Name</label>
+                <select class="form-control" id="phaseName" required>
+                    <option value="" disabled selected>Select Phase Name</option>
+                    <option value="phase1">Phase 1</option>
+                    <option value="phase2">Phase 2</option>
+                    <option value="phase3">Phase 3</option>
+                    <option value="valley">Valley</option>
+                </select>
+            </div>
+
+            <!-- Block Name Input -->
+            <div class="form-group">
+                <label for="blockName" class="form-label">Block Name</label>
+                <input type="text" class="form-control" name="block" id="block" placeholder="Enter Block Name" required>
+            </div>
+
+            <!-- Min Value Input -->
+            <div class="form-group">
+                <label for="minValue" class="form-label">Min Value</label>
+                <input type="number" class="form-control" name="min" id="min" placeholder="Enter Min Value" required>
+            </div>
+
+            <!-- Max Value Input -->
+            <div class="form-group">
+                <label for="maxValue" class="form-label">Max Value</label>
+                <input type="number" class="form-control" name="max" id="max" placeholder="Enter Max Value" required>
+            </div>
+
+            <!-- Create Button -->
+            <div class="text-center">
+                <button type="submit" class="btn create-btn">Create</button>
+            </div>
+            <p style="color: maroon;"><b>@ViewBag.msg</b></p>
+        </div>
+    }
+</div>
+@if (blockDetails != null)
+{
+    <div class="index_body">
+        <div class="table-container">
+            <div class="header-row">Block Details</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Block</th>
+                        <th>Min</th>
+                        <th>Max</th>
+                        <th>Status</th>
+                        <th>Plan Code</th>
+                        <th>Plan Name</th>
+                        <th>Create Date</th>
+                        <th>Phase Id</th>
+                    </tr>
+                </thead>
+                @foreach (var item in blockDetails)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.block</td>
+                            <td>@item.min</td>
+                            <td>@item.max</td>
+                            <td>@item.status</td>
+                            <td>@item.Plancode</td>
+                            <td>@item.Planname</td>
+                            <td>@item.createdate</td>
+                            <td>@item.phaseid</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
 }
 
 <script type="text/javascript">
@@ -25,126 +126,9 @@
                 phaseid.append('<option value="">Select</option>');
                 for (var i = 0; i < t.length; i++) {
                     phaseid.append('<option value="' + t[i].Id + '">' + t[i].Phase + '</option>');
-                }                
+                }
             });
-        } 
+        }
 
     }
 </script>
-<div class="page-content">
-
-    <div class="container">
-
-        <div class="page-toolbar">
-
-            <div class="page-toolbar-block">
-                <div class="page-toolbar-title">Create Block</div>
-                <div class="page-toolbar-subtitle"></div>
-            </div>
-
-            <div class="page-toolbar-block pull-right">
-            </div>
-
-        </div>
-
-        <div class="row" style="width: 100%">
-            <div class="col-md-6" style="width: 100%">
-
-                <div class="block" style="width: 100%">
-                    <div class="block-content controls">
-
-
-                        @using (Html.BeginForm())
-                        {
-            
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Enter @mr.planname Name</label>
-                                        </span>
-
-                                        <select class="form-control" name="Plancode" id="Plancode" onchange="selectphase(this.id)" required >
-                                            <option value="">Select</option>
-                                            @foreach(var i in allplan)
-                                            {
-                                            <option value="@i.Plancode">@i.Planname</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    
-                                </div>
-
-                            </div>
-                            <div class="row-form" >
-
-                                   <div class="col-md-9">
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <label class="width">Phase</label>
-                                           </span>
-                                           <select class="form-control" id="phaseid" name="phaseid"  required>
-                                               <option value="">Select </option>
-
-                                           </select>
-
-                                       </div>
-                                   </div>
-                               </div>
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Enter Block Name</label>
-                                        </span>
-                                        <input type="text" class="form-control" name="block" id="block" required />
-                                    </div>
-
-                                </div>
-
-                            </div>
-         
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Enter Min Value</label>
-                                        </span>
-                                        <input type="text" class="form-control" name="min" id="min" required />
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="row-form">
-
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="width">Enter Max Value</label>
-                                        </span>
-                                        <input type="text" class="form-control" name="max" id="max" required />
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="page-toolbar-block pull-right">
-                                <div class="widget-info widget-from">
-                                    <button type="submit" class="btn btn-primary pull-right">Create Block</button>
-                                </div>
-                            </div>
-         
-                            <p style="color: maroon;"><b>@ViewBag.msg</b></p>
-                        }
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>

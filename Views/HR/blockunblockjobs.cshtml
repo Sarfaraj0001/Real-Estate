@@ -32,109 +32,98 @@
 
     }
 </script>*@
-<div class="page-content">
-                <div class="container">
-<div class="page-toolbar">
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Block/Unblock Jobs</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                    </div> 
-                    <div class="row" >
-                        <div class="col-md-6" style="width:100%">  
-                            <div class="block" >
-                                <div class="block-content controls" >
-                                    <div class="row-form"  >
-                                  <div class="col-md-12" style="overflow-x:auto;width:100%;">
-                                       
-                                           @if (listcount.Count()!=0)
-                                           {
-                                          <table border="1" style="margin-left:1%; margin-right:1%; margin-bottom:30px; width:100%">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Sr.No.</th>
-                                                      <th>Job Type</th>
-                                                      <th>job Discription</th>
-                                                      <th>Experience(s)</th>
-                                                      <th>Industry(s)</th>
-                                                      <th>Role</th>
-                                                      <th>Functionalarea</th>
-                                                      <th>Salary</th>
-                                                      <th>Title</th>
-                                                      <th>Keyword</th>
-                                                      <th>Job Locationstate</th>
-                                                      <th>City</th>
-                                                      <th>Companye E-mail</th>
-                                                      <th>Publish Date</th>
-                                                      <th>From date</th>
-                                                      <th>To Date</th>
-                                                      <th>Status</th>
-                                                      <th>Action</th>
-                                                  </tr>
-                                              </thead>
-                                              @foreach(var item in db.careertable1s.ToList())
-                                              {
-                                              <tbody>
-                                                  <tr>
-                                                      <td>@srno</td>
-                                                      <td>@item.jobtype</td>
-                                                      <td>@item.jobdiscription</td>
-                                                      <td>@item.experience</td>
-                                                      <td>@item.industry</td>
-                                                      <td>@item.role</td>
-                                                      <td>@item.functionalarea</td>
-                                                      <td>@item.salary</td>
-                                                      <td>@item.Title</td>
-                                                      <td>@item.Keyword</td>
-                                                      <td>@item.joblocationstate</td>
-                                                      <td>@item.city</td>
-                                                      <td>@item.companyemail</td>
-                                                      <td>@item.publisdate.ToString("dd/MM/yyyy")</td>
-                                                      <td>@item.Fromdate.ToString("dd/MM/yyyy")</td>
-                                                      <td>@item.Todate.ToString("dd/MM/yyyy")</td>
-                                                      @if(item.status==0)
-                                                      {
-                                                      <td style="color:red;">Inactive</td>
-                                                      }
-                                                      else
-                                                      {
-                                                         <td style="color:green;">Active</td>
-                                                      }
-                                                         @*@if(item.status==0)
-                                                      {
-                                                      <td><input type="button" value="Unblock" class="btn btn-success" onclick="blockjobs(this.id)" id="@item.jobid"/></td>
-                                                      }
-                                                      else
-                                                      {
-                                                      <td><input type="button" value="Block" class="btn btn-danger" onclick="blockjobs(this.id)" id="@item.jobid"/></td>
-                                                      }*@
-                                                       @if (@item.status == 0)
-                                                {
-                                                    <td style="text-align: center;"><a href="@Url.Action("mediastatus1", "HR", new { opid = @item.Id, status = item.status })" class="btn btn-primary">Active</a></td>
-                                                }
-                                             else
-                                             {
-                                                 <td style="text-align: center;"><a href="@Url.Action("mediastatus1", "HR", new { opid = @item.Id, status = item.status })" class="btn btn-danger">Block</a></td>
-                                             }
-                                                  </tr>
-                                              </tbody>
-                                                  srno++;
-                                              }
-                                          </table> 
-                                           }
-                                           else
-                                           {
-                                               <center><label style="color:red;">No record found</label></center>
-                                           }
-                                       
-                                      </div>
-                                            </div>
 
-                                      
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                            </div>
-                          </div>  
+<div class="page-content">
+
+
+    <!-- Display Results -->
+    <div class="container mt-4 FormContainer">
+        @*<h2 class="text-center mb-4">View Jobs</h2>*@
+
+        <div class="index_body mt-5">
+            <div class="table-container">
+                <div class="header-row" style="">Block/Unblock Jobs</div>
+
+                <table class="table table-bordered" style="width: 100%; border-collapse: collapse; margin: 0 auto;">
+                    <thead>
+                        <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                            <th style="width: 5%; text-align: center; padding: 8px;">Sr.No.</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Job Type</th>
+                            <th style="width: 15%; text-align: center; padding: 8px;">Job Description</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Experience</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Industry</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Role</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Functional Area</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Salary</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Title</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Keyword</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Job Location</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">City</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Company E-mail</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Publish Date</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">From Date</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">To Date</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Status</th>
+                            <th style="width: 10%; text-align: center; padding: 8px;">Active</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (listcount.Count() != 0)
+                        {
+
+                            foreach (var item in db.careertable1s.ToList())
+                            {
+
+                                <tr>
+                                    <td style="padding: 8px;">@srno</td>
+                                    <td style="padding: 8px;">@item.jobtype</td>
+                                    <td style="padding: 8px;">@item.jobdiscription</td>
+                                    <td style="padding: 8px;">@item.experience</td>
+                                    <td style="padding: 8px;">@item.industry</td>
+                                    <td style="padding: 8px;">@item.role</td>
+                                    <td style="padding: 8px;">@item.functionalarea</td>
+                                    <td style="padding: 8px;">@item.salary</td>
+                                    <td style="padding: 8px;">@item.Title</td>
+                                    <td style="padding: 8px;">@item.Keyword</td>
+
+                                    <td style="padding: 8px;">@item.joblocationstate</td>
+                                    <td style="padding: 8px;">@item.city</td>
+                                    <td style="padding: 8px;">@item.companyemail</td>
+                                    <td style="padding: 8px;">@item.publisdate.ToString("dd/MM/yyyy")</td>
+                                    <td style="padding: 8px;">@item.Fromdate.ToString("dd/MM/yyyy")</td>
+                                    <td style="padding: 8px;">@item.Todate.ToString("dd/MM/yyyy")</td>
+                                    @if (item.status == 0)
+                                    {
+                                        <td style="color: red; padding: 8px;">Inactive</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color: green; padding: 8px;">Active</td>
+                                    }
+
+                                    @if (@item.status == 0)
+                                    {
+                                        <td style="text-align: center; padding: 8px;"><a href="@Url.Action("mediastatus1", "HR", new { opid = @item.Id, status = item.status })" class="btn btn-primary">Active</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: center; padding: 8px;"><a href="@Url.Action("mediastatus1", "HR", new { opid = @item.Id, status = item.status })" class="btn btn-danger">Block</a></td>
+                                    }
+                                </tr>
+                                srno++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="17" style="text-align: center; padding: 8px;">No records found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

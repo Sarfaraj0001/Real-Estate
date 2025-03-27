@@ -3,7 +3,7 @@
     UsersContext db = new UsersContext();
     var br = db.Operators.Single(b => b.OperatorId == User.Identity.Name);
     var mr = db.Members.Single(m => m.Id == 1);
- 
+
     var plan1 = db.Plans.Single(p1 => p1.Plancode == 1);
     var plan2 = db.Plans.Single(p2 => p2.Plancode == 2);
     var plan3 = db.Plans.Single(p3 => p3.Plancode == 3);
@@ -11,52 +11,33 @@
     var f1 = db.VFormatTabs.Single(f => f.Id == 1);
     var f2 = db.VFormatTabs.Single(f => f.Id == 2);
     var f3 = db.VFormatTabs.Single(f => f.Id == 3);
-    Layout = "~/Views/Shared/_OperatorLayout.cshtml"; 
+    Layout = "~/Views/Shared/_OperatorLayout.cshtml";
     ViewBag.Title = "UpdateMenu";
 }
 
-<div class="page-content">
 
-                <div class="container">
+<link href="~/assets/css1/main css/Pages.css" rel="stylesheet" />
 
-<div class="page-toolbar">
-                        
-                        <div class="page-toolbar-block">
-                            <div class="page-toolbar-title">Welcome @br.OperatorName</div>
-                            <div class="page-toolbar-subtitle"></div>
-                        </div>
-                        
-                      
 
+<!-- Section 1: Final Report -->
+<div class="section">
+
+    <div class="w-100 card-heading">
+        <h3 class="text-center text-white pt-2 pb-2">UPDATE</h3>
+    </div>
+    <!-- Main Container -->
+    <div class="container mt-5">
+        <!-- Payment Cards Row -->
+        <div class="row d-flex justify-content-center g-3">
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <a href="~/Operator/AgentKYC" class="custom-card text-center h-100">
+                    <div class="card-body">
+                        <img class="imageSize" src="~/Create_logos/commission (1).png" />
+                        <h6 class="card-title mt-3">Agent KYC</h6>
                     </div>
-
-                    <div class="widget stacked">
-					
-				<div class="widget-header">
-					<i class="icon-edit"></i>
-					<h3>Update</h3>
-				</div> <!-- /widget-header -->
-				
-				<div class="widget-content">
-					
-					<div class="shortcuts">
-               
-                         
-                        <a href="~/Operator/AgentKYC" class="shortcut">
-							<img alt="" src="~/Images/icon/voucher.png" />
-							<span class="shortcut-label">Agent KYC</span>
-                            <br />
-						</a>
-						
-                        
-					
-						
-                        
-					</div> <!-- /shortcuts -->	
-				
-				</div> <!-- /widget-content -->
-				
-			</div>
-                     </div>
-
-     </div>
+                </a>
+            </div>
+           
+        </div>
+    </div>
+</div>
